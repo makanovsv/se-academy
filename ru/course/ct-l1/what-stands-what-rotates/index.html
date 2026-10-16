@@ -1,0 +1,217 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Как устроен КТ-сканер: что стоит на месте, а что вращается · КТ-сервис — Уровень 1</title><meta name="description" content="Поставить любую жалобу на КТ на цепочку от сети до PACS, сказать, где стоит неисправная часть — на неподвижной стороне или на роторе, и определить, где лежит причина — до пациента или после него."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="en" href="/se-academy/course/ct-l1/what-stands-what-rotates/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
+.muted{color:var(--muted)}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
+</style></head><body>
+<div class="preview">Предварительная версия · материалы на инженерной проверке · портал ещё не открыт</div>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/ru/courses/" aria-current>Курсы</a><a href="/se-academy/ru/#paths">Программы</a><a href="/se-academy/ru/library/">Библиотека</a><a href="/se-academy/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/se-academy/ru/my/">Моё обучение</a><a href="/se-academy/course/ct-l1/what-stands-what-rotates/" hreflang="en">EN</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/se-academy/ru/course/ct-l1/">← Курс</a><div class="ctitle">КТ-сервис — Уровень 1</div><div><div class="ruler" data-ruler="ct-l1"><i data-n="1" class="here"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="Пройдено {d} из 8 уроков" data-none="Не начат">Не начат</div></div><ol><li class="here" data-done-of="ct-l1:1"><a href="/se-academy/ru/course/ct-l1/what-stands-what-rotates/"><span class="n">01</span><span>Как устроен КТ-сканер: что стоит на месте, а что вращается</span></a></li><li class="" data-done-of="ct-l1:2"><a href="/se-academy/ru/course/ct-l1/power-and-high-voltage/"><span class="n">02</span><span>Цепь питания и высокое напряжение: отключить, разрядить, проверить<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:3"><a href="/se-academy/ru/course/ct-l1/radiation-safety/"><span class="n">03</span><span>Радиационная безопасность инженера КТ<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:4"><a href="/se-academy/ru/course/ct-l1/tube-warmup-and-heat/"><span class="n">04</span><span>Рентгеновская трубка: прогрев, тренировка и тепло<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:5"><a href="/se-academy/ru/course/ct-l1/operator-calibrations/"><span class="n">05</span><span>Калибровки оператора: калибровка по воздуху и ежедневная проверка на фантоме<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:6"><a href="/se-academy/ru/course/ct-l1/cooling-three-loops/"><span class="n">06</span><span>Охлаждение: три контура последовательно<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:7"><a href="/se-academy/ru/course/ct-l1/planned-maintenance/"><span class="n">07</span><span>Плановое ТО по чек-листу<span class="lock">закрыт</span></span></a></li><li class="" data-done-of="ct-l1:8"><a href="/se-academy/ru/course/ct-l1/quality-control-documentation/"><span class="n">08</span><span>Контроль качества изображения на фантоме ACR и акт ТО<span class="lock">закрыт</span></span></a></li><li class="exam"><a href="/se-academy/ru/course/ct-l1/exam/"><span class="n">—</span><span>Итоговый экзамен</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Урок 1 / 8 · 20 min</span></div><h1>Как устроен КТ-сканер: что стоит на месте, а что вращается</h1><p class="lead">Поставить любую жалобу на КТ на цепочку от сети до PACS, сказать, где стоит неисправная часть — на неподвижной стороне или на роторе, и определить, где лежит причина — до пациента или после него.</p>
+<h2>Одна цепочка от розетки до рентгенолога</h2><p>КТ-сканер выглядит как одна машина, но на деле это цепочка систем, и любая жалоба, которую вы когда-либо услышите, сидит где-то на этой цепочке. Выучите её по порядку, потому что этот порядок — ещё и порядок, в котором идут энергия и информация.</p><p>Сетевое питание приходит в распределительный шкаф. Оттуда оно питает неподвижные части гентри, стол пациента, консоль оператора и компьютер реконструкции изображений и переходит на вращающуюся часть гентри. На роторе высоковольтный генератор превращает это питание в киловольты и миллиамперы, которые нужны рентгеновской трубке. Трубка формирует веерный или конусный пучок рентгеновского излучения; его формируют фильтры и коллиматор, он проходит через пациента и попадает на детектор на противоположной стороне ротора. Детектор превращает рентгеновское излучение в слабые электрические токи; система сбора данных (DAS), установленная прямо рядом с ним, превращает эти токи в числа. Числа переходят обратно с ротора на неподвижную сторону, компьютер реконструкции превращает миллионы проекций в срезы, а консоль отправляет изображения в архив и в PACS.</p><p>Прежде чем идти дальше, напишите эту цепочку по памяти. Когда рентгенолаборант звонит и говорит «сканер встал» или «снимки какие-то странные», ваша первая задача — поставить симптом на одно звено этой цепочки. На ней держится весь остальной курс.</p><ul><li>Сетевое питание и распределительный шкаф</li><li>Передача питания на ротор</li><li>Высоковольтный генератор (на роторе)</li><li>Рентгеновская трубка, фильтры, фильтр-«бабочка» (bowtie), коллиматор</li><li>Пациент</li><li>Детектор и система сбора данных (на роторе)</li><li>Передача данных с ротора</li><li>Компьютер реконструкции, консоль, архив, PACS</li></ul><h2>Граница вращения: самая важная линия в машине</h2><p>У гентри есть неподвижная рама (статор) и большое вращающееся кольцо (ротор). На современном сканере ротор несёт генератор, трубку, коллиматор, детектор и DAS — в сумме несколько сотен килограммов оборудования — и вращает всё это со скоростью меньше секунды на оборот. На таких скоростях каждый узел на роторе выталкивается наружу с силой, во много раз превышающей его собственный вес. Поэтому болты, разъёмы и балансировочные грузы на роторе значат больше, чем на любом другом медицинском аппарате, который вы будете обслуживать.</p><p>Ни один кабель не может следовать за кольцом, которое непрерывно крутится в одну сторону. Границу вращения пересекают только две вещи, и пересекают они её совсем по-разному. Питание идёт на ротор через контактное кольцо: токопроводящие дорожки с одной стороны и скользящие по ним щётки с другой — механический трущийся контакт. Данные уходят с ротора по бесконтактному каналу — оптическому, ёмкостному или радиочастотному, в зависимости от конструкции, — который ни к чему не прикасается. В некоторых конструкциях и питание передаётся бесконтактно; какой тип у вас, вы узнаете из документации производителя.</p><p>Запомните одну связь между этими двумя частями, потому что она объясняет целое семейство неисправностей. Там, где стоят щётки, они изнашиваются, и при износе дают мелкую токопроводящую пыль внутри гентри. Эта пыль оседает на дорожках контактного кольца, на изоляторах и на бесконтактном канале передачи данных. Поэтому изношенные щётки вызывают искрение и случайные проблемы с питанием на роторе, а пыль от них может вызывать ошибки передачи данных и полосы на изображении. Один расходник может вывести из строя две системы — вот почему осмотр щёток и чистка тракта данных входят в плановое ТО вместе.</p><h2>Что едет на роторе</h2><p>У каждой части на роторе есть свой типичный способ отказать. На уровне 1 вы эти части не ремонтируете, но обязаны знать, что делает каждая из них, чтобы правильно описать симптом в акте ТО.</p><ul><li>Высоковольтный генератор: даёт напряжение на трубке (кВ) и ток трубки (мА). Неисправности проявляются как ошибки по кВ или мА, сообщения о пробоях (арках) или экспозиция, которая обрывается на середине.</li><li>Рентгеновская трубка: самый дорогой расходник в машине. Нагретый катод испускает электроны, вращающийся анод их тормозит и даёт рентгеновское излучение и очень много тепла. Износ проявляется пробоями, ростом шума на изображении при неизменном протоколе, всё более долгими ожиданиями охлаждения и изменившимся звуком при раскрутке анода. Ей посвящён урок 4.</li><li>Фильтры, фильтр-«бабочка» и коллиматор: формируют пучок до того, как он дойдёт до пациента. «Бабочка» толще по краям, чем в центре, чтобы выровнять дозу по телу, которое толще посередине. Коллиматор задаёт ширину пучка вдоль оси пациента, а вместе с ней — число и толщину срезов.</li><li>Детектор: дуга из модулей, каждый из которых состоит из сцинтиллятора, превращающего рентгеновское излучение в свет, и фотодиодов, превращающих свет в ток. Обычно единица замены — модуль.</li><li>DAS: стоит рядом с детектором, потому что токи детектора крошечные и потерялись бы в электрических помехах, если тянуть их далеко. Она интегрирует и оцифровывает сигнал.</li><li>Охлаждение на роторе: вентиляторы, а во многих конструкциях — теплообменник «масло — воздух» или «масло — вода» для трубки.</li></ul><h2>Что остаётся на земле</h2><p>Неподвижная сторона выглядит не так эффектно, но на практике даёт большую долю простоев. Рама гентри несёт главный подшипник вращения, привод (ремённый или прямой привод от двигателя), механизм наклона на сканерах с наклоном, лазеры позиционирования, органы управления оператора на кожухах гентри и кнопки аварийного останова. У стола пациента свой привод, направляющие, датчик положения (энкодер) и ручное расцепление. У консоли и компьютера реконструкции есть диски, вентиляторы, сетевые подключения и программные лицензии. Вне сканера — распределительный шкаф, на крупных системах часто чиллер или блок водяного охлаждения, и кондиционирование помещения.</p><p>Главный подшипник и привод — механические узлы, которые предупреждают задолго до отказа: новый гул, вибрация, изменение звука при разгоне ротора. Стол важнее, чем кажется, потому что спиральное сканирование реконструируется по положению стола. Если стол движется не точно так, как ему приказано, толщина среза и геометрия будут неверными, хотя каждое изображение выглядит чистым. Считайте люфт стола или неравномерное движение проблемой качества изображения, а не только механики.</p><h2>До пациента или после</h2><p>Когда цепочка у вас в голове, задавайте по каждой жалобе на изображение один вопрос: проблема возникла до того, как излучение дошло до пациента, или после? Ответ сужает поиск до половины машины.</p><p>Проблемы до пациента (генератор, трубка, фильтры, коллиматор) меняют количество или качество излучения. Они обычно затрагивают всё изображение: больше шума везде, сдвиг КТ-чисел, неравномерная яркость от центра к краю, обрыв экспозиции. Проблемы после пациента (детектор, DAS, передача данных) оставляют изображение в целом приличным, но добавляют локальные, геометрически правильные дефекты: кольца, полосы вдоль каналов, пропущенные проекции.</p><p>Классический пример — кольцо. Каждый канал детектора за один оборот смотрит на пациента со всех углов, всегда на одном и том же расстоянии от центра вращения. Если один канал читает чуть неверно, реконструкция размазывает эту ошибку по окружности этого радиуса, и вы видите кольцо. Радиус кольца примерно подсказывает, где на дуге детектора сидит плохой канал. Кольца часто вызваны дрейфом калибровки или температурой и убираются штатной калибровкой по воздуху (урок 5); кольцо, которое пережило правильно выполненную калибровку по воздуху на прогретом сканере, указывает на модуль детектора или канал DAS. Эта разница и есть граница между штатной задачей и ремонтом.</p><h2>Откуда на самом деле берутся простои</h2><p>Инженеры, новые в КТ, ожидают, что в их списке вызовов будут преобладать трубка и детектор. Опыт работы в поле на зрелых сканерах даёт другую картину. Причины ниже типичны для старого парка, примерно от самых частых к самым редким; на ваших объектах будет по-своему, но эту картину стоит держать в голове.</p><p>Обратите внимание: несколько самых частых причин — вовсе не сканер, а помещение, электропитание и то, как систему эксплуатируют. Это ваш самый сильный аргумент в разговоре с заказчиком, и он заслуживает отдельной строки рекомендаций в каждом акте ТО.</p><ul><li>Охлаждение помещения: летом кондиционер не справляется, система ждёт охлаждения или останавливается по температуре, а винят все сканер.</li><li>Рентгеновская трубка: изнашивается при работе, причём предсказуемо, если вы следите за её счётчиками.</li><li>Щётки контактного кольца, где они есть: расходник, о котором легко забыть.</li><li>Заполненные диски, проблемы с сетью или PACS: сканер «встал» по нетехнической причине.</li><li>Дрейф калибровки детектора: кольца, которые убирает штатная калибровка.</li><li>Отказавший модуль детектора: кольца, которые калибровка не убирает.</li><li>Качество электропитания: просадки напряжения под нагрузкой, перекос фаз, плохое заземление.</li><li>Неисправности привода стола или энкодера.</li><li>Главный подшипник вращения: редко, дорого, и он предупреждает заранее.</li></ul><h2>Ваши границы на уровне 1</h2><p>Этот курс готовит вас к тому, чтобы держать сканер безопасным, откалиброванным и обслуженным средствами, которые система даёт пользователям и допущенному сервисному персоналу, плюс вашими руками и приборами. Сюда входят осмотр и чистка, собственные самотесты системы, штатные калибровки и проверки на фантоме, чтение журналов ошибок и счётчиков трубки, проверка охлаждения, электропитания, заземления и климата в помещении.</p><p>Сюда не входят вход на сервисные уровни, защищённые паролем, изменение сервисных параметров, заводские калибровки детектора, обновления системного программного обеспечения и любые работы, требующие допуска производителя, которого у вас нет. Дозиметрия, измерения индекса дозы КТ и законная поверка средств измерений — дело медицинского физика или аккредитованной организации. Когда находите что-то за пределами своих границ, вы фиксируете это в акте ТО, объясняете заказчику и привлекаете нужную сторону. Знать, где заканчиваются ваши границы, — часть работы, а не слабость.</p>
+<div class="case"><div class="label">из практики</div><h3>Сканер, который ломался каждый день после обеда в июле</h3><p>Больница сообщила, что её КТ-сканер стал «ненадёжным»: с начала второй половины дня он постоянно останавливался между пациентами в ожидании охлаждения и дважды встал с ошибками по температуре. Рентгенолаборанты подозревали трубку. Инженер сначала выписал из журнала время ошибок: все после полудня, ни одной утром. Он измерил температуру и влажность в зоне оборудования в 9:00 и в 15:00 и обнаружил, что дневные показания заметно выше утренних и выходят за диапазон из документации по установке. Кондиционер помещения когда-то подбирали под сканер поменьше, а его фильтры были забиты. Счётчики трубки и число пробоев в журнале ничего необычного не показывали. После того как фильтры почистили, а больница добавила мощности охлаждения, дневные остановки прекратились.</p><p class="note">Поставьте симптом на цепочку, прежде чем винить самую дорогую деталь. Привязка ко времени, климат в помещении и журнал ошибок часто указывают на инфраструктуру, а не на сканер.</p></div>
+<h2>Чек-лист на объекте</h2><ul class="check"><li>Нарисовать цепочку от сети до PACS и отметить, какие звенья находятся на роторе.</li><li>По жалобе на изображение сначала решить, где причина — до пациента или после.</li><li>Спросить, когда возникает проблема: время суток, после выходных, после тяжёлого потока пациентов.</li><li>Прочитать журнал ошибок на время и повторяемость, прежде чем снимать кожухи.</li><li>Измерить температуру и влажность в помещении и сравнить с документацией по установке.</li><li>Проверить свободное место на дисках и связь с PACS, когда жалоба звучит как «сканер встал».</li><li>Записать всё, что выходит за ваши границы, и кто должен этим заниматься.</li></ul>
+<h2>Проверьте себя</h2><div class="quiz"><fieldset class="q" data-answer="2"><legend>1. Рентгенолаборант сообщает о резком кольце в одном и том же месте на каждом скане головы. Общий шум и КТ-числа выглядят нормально. Где на цепочке вы ищете в первую очередь?</legend><label><input type="radio" name="q0" value="0"> Высоковольтный генератор</label><label><input type="radio" name="q0" value="1"> Кондиционирование помещения</label><label><input type="radio" name="q0" value="2"> После пациента: калибровка детектора, затем канал или модуль детектора</label><label><input type="radio" name="q0" value="3"> Подключение к PACS</label><p class="why" hidden>Локальный, геометрически правильный дефект вроде кольца возникает после пациента. Первый подозреваемый — дрейф калибровки, второй — канал или модуль.</p></fieldset><fieldset class="q" data-answer="0"><legend>2. Какие две вещи пересекают границу вращения типичного гентри КТ и каким образом?</legend><label><input type="radio" name="q1" value="0"> Питание — через контактное кольцо (часто со щётками), данные — по бесконтактному каналу</label><label><input type="radio" name="q1" value="1"> И питание, и данные — по длинному гибкому кабелю, который наматывается и разматывается</label><label><input type="radio" name="q1" value="2"> Данные — через щётки, питание — по оптическому каналу</label><label><input type="radio" name="q1" value="3"> Только данные; у ротора свои аккумуляторы</label><p class="why" hidden>Непрерывное вращение исключает кабели. Питание передаётся через контактное кольцо, данные — по бесконтактному оптическому, ёмкостному или радиоканалу.</p></fieldset><fieldset class="q" data-answer="3"><legend>3. После большой нагрузки сканер начинает выдавать ошибки передачи данных и периодические полосы. Планового ТО на объекте не было больше года, а на контактном кольце сканера стоят щётки. Какую связь нужно проверить?</legend><label><input type="radio" name="q2" value="0"> Износ трубки, вызывающий ошибки данных</label><label><input type="radio" name="q2" value="1"> Дрейф энкодера стола</label><label><input type="radio" name="q2" value="2"> Переполненное хранилище PACS</label><label><input type="radio" name="q2" value="3"> Износ щёток, дающий токопроводящую пыль, которая загрязняет контактное кольцо и бесконтактный канал данных</label><p class="why" hidden>Пыль от щёток расходится внутри гентри и может нарушить и передачу питания, и бесконтактный тракт данных. Осмотр щёток и чистка тракта данных идут вместе.</p></fieldset><fieldset class="q" data-answer="1"><legend>4. Изображения чистые, но рентгенолог говорит, что очаги, измеренные на контрольных спиральных сканах, не совпадают по положению, а толщина среза выглядит неправильной. С кольцами и шумом всё в порядке. Какой узел — главный подозреваемый?</legend><label><input type="radio" name="q3" value="0"> Сцинтиллятор детектора</label><label><input type="radio" name="q3" value="1"> Движение стола пациента: люфт, привод или датчик положения</label><label><input type="radio" name="q3" value="2"> Катод рентгеновской трубки</label><label><input type="radio" name="q3" value="3"> Калибровка монитора консоли</label><p class="why" hidden>Спиральная реконструкция зависит от точного знания, где находится стол. Люфт стола или ошибки энкодера портят геометрию и толщину среза, при этом каждое изображение выглядит чистым.</p></fieldset><fieldset class="q" data-answer="2"><legend>5. Заказчик просит вас обновить системное программное обеспечение сканера и сбросить сервисный параметр, для которого нужен пароль производителя. Такого допуска у вас нет. Что вы делаете?</legend><label><input type="radio" name="q4" value="0"> Делаете это с паролем, найденным в интернете, раз заказчик попросил</label><label><input type="radio" name="q4" value="1"> Отказываетесь и уходите без комментариев</label><label><input type="radio" name="q4" value="2"> Фиксируете запрос и причину, по которой он за пределами ваших границ, объясняете заказчику и привлекаете допущенную сторону</label><label><input type="radio" name="q4" value="3"> Делаете обновление ПО, но не меняете параметр</label><p class="why" hidden>Сервисные уровни под паролем и обновления ПО требуют допуска производителя. Ваша задача — задокументировать, объяснить и передать работу по адресу, а не обходить защиту.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Проверить ответы</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="ct-l1:1" data-done-text="Пройдено">Отметить пройденным</button><a class="btn ghost" href="/se-academy/ru/course/ct-l1/power-and-high-voltage/">Следующий урок →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/ru/about/">О проекте</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (МФЦА, Казахстан). Независимые учебные материалы, написанные сервисными инженерами. Не связаны с производителями и не одобрены ими; названия брендов и моделей используются только для обозначения оборудования. Всегда следуйте сервисной документации производителя и местным нормам.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>
