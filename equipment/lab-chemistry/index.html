@@ -190,9 +190,39 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
  .enrol{position:static}footer .wrap{grid-template-columns:1fr}
 }
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
+/* fault-finding flow (SVG, service-manual style) */
+.flow,.parts{margin:34px 0;padding:0}
+.flow figcaption,.parts figcaption{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.flow figcaption b,.parts figcaption b{font-size:18px}
+.flow svg{display:block;max-width:760px;border:1px solid var(--rule);padding:8px;background:#fff}
+.parts table{table-layout:auto;width:100%}
+.parts table.grid td.pn{font-weight:700;color:var(--blue);width:40px;white-space:nowrap}
+.parts table.grid td:nth-child(2){width:24%}
+@media (max-width:640px){.flow .f-row{grid-template-columns:1fr;gap:0}.flow .f-no{margin-top:6px}.flow .f-no::before{display:none}.flow .f-start,.flow .f-yes,.flow .f-end{max-width:none}}
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink)}
+.ladder>div{border-right:1px solid var(--rule);padding:18px 18px 22px}
+.ladder>div:last-child{border-right:0}
+.ladder .st-n{font-size:56px;font-weight:700;line-height:1;color:var(--blue)}
+.ladder h3{margin:10px 0 6px}
+.ladder p{font-size:14px;color:var(--muted);margin:0 0 12px}
+.ladder ul{list-style:none;padding:0;margin:0;font-size:14px}
+.ladder li{border-top:1px solid var(--rule);padding:7px 0}
+@media (max-width:900px){.ladder{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.ladder{grid-template-columns:1fr}.ladder>div{border-right:0;border-bottom:1px solid var(--rule)}}
+.tier-head{display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:end;border-top:2px solid var(--ink);padding-top:16px;margin:44px 0 18px}
+.tier-head:first-child{margin-top:0}
+.tier-head .st-n{font-size:64px;font-weight:700;line-height:.9;color:var(--blue)}
+.tier-head p{margin:4px 0 0;color:var(--muted)}
+/* faculty */
+.faculty{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule-strong)}
+.person{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:22px}
+.person .ph{width:88px;height:88px;background:var(--blue);color:#fff;font-weight:700;font-size:30px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.person.open .ph{background:var(--paper);color:var(--blue);border:2px dashed var(--blue)}
+.person ul{padding-left:18px;margin:10px 0}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/instructors/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/lab-chemistry/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning ladder</a><a href="/library/" aria-current>Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/lab-chemistry/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/">Academy</a> / <a href="/library/">Library</a> / Clinical chemistry analyzer</div><div class="label" style="margin-top:22px">How it works</div><h1 style="margin:10px 0 16px">Automated clinical chemistry analyzer</h1><p class="lead">An automated photometer: it pipettes samples and reagents into cuvettes, incubates them at a controlled temperature, and measures colour change or ion potentials to calculate analyte concentrations.</p></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Principle</h2></div><p class="lead">Most routine chemistry tests are photometric: a sample is mixed with reagents that produce a coloured product or change in absorbance in proportion to the analyte (end-point methods) or to the rate of an enzymatic reaction (kinetic methods). The analyser automates this: a sample probe and reagent probes aspirate and dispense microlitre volumes into cuvettes on a reaction disk held at a stable temperature (commonly 37 °C), mixers stir the reaction, and a photometer measures absorbance at chosen wavelengths through each cuvette over time. Turbidimetric methods measure light lost to scattering (immunoassays for specific proteins). Electrolytes such as sodium, potassium and chloride are usually measured by ion-selective electrodes (ISE), which develop a potential related to ion activity. Results are calculated against calibrators and checked with quality-control samples. Analytical quality depends as much on water, temperature, pipetting precision and clean cuvettes as on the optics, so most service work is fluidics and cleanliness.</p></div></section>
@@ -201,7 +231,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">04</span><h2>Safety</h2></div><div class="cols3"><div><h3>Site and infrastructure</h3><ul><li>Purified water system meeting the manufacturer's water quality specification (resistivity/conductivity, microbiological limits) and supply flow; water quality monitored.</li><li>Drain for liquid waste or approved waste containers, compliant with local biohazard and chemical waste rules.</li><li>Stable mains supply with UPS of adequate capacity; protective earth.</li><li>Room temperature and humidity within manufacturer limits and stable; no direct sunlight or air conditioning blowing on the analyser.</li><li>Level, vibration-free bench or floor with service clearance around the analyser.</li><li>Network connection to the LIS.</li></ul></div><div><h3>Preventive maintenance basics</h3><ul><li>Inspect and clean sample and reagent probes; check alignment and level detection; replace worn probes.</li><li>Replace syringe seals, valve parts and tubing per schedule; check for leaks and bubbles.</li><li>Clean and check cuvettes, run cuvette blank and photometer checks; replace lamp per hours or energy check.</li><li>Verify incubation temperature with a calibrated thermometer.</li><li>Clean wash station nozzles and check detergent and water supply.</li><li>Maintain ISE: replace electrodes and reference as needed, check slopes.</li><li>Verify water quality and clean water tank, filters and lines; check waste lines.</li><li>After maintenance run calibration and QC to confirm performance; document.</li></ul></div><div class="warn"><h3>Safety</h3><ul><li>Treat all samples and the analyser's wetted parts and waste as potentially infectious; wear gloves, gown and eye protection and decontaminate before service.</li><li>Reagents and detergents can be corrosive or toxic; follow safety data sheets.</li><li>Moving arms and probes can cause puncture injuries; stop the analyser or enter maintenance mode before reaching into the work area.</li><li>Lamps run hot; allow to cool before replacement and do not touch the glass.</li><li>Dispose of waste and replaced parts as biohazardous according to local regulations.</li></ul></div></div></div></section>
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">05</span><h2>Model pages</h2></div><div class="lib"><a href="/model/mindray-bs-240/"><span>Mindray</span><b>BS-240</b><span>Benchtop, fully automated discrete clinical chemistry analyzer with an optional ISE module, used in small and mid-size hospital and private laboratories for routine biochemistry.</span></a></div></div></section>
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">06</span><h2>Manufacturers</h2></div><p>Roche Diagnostics · Abbott · Siemens Healthineers · Beckman Coulter · Ortho Clinical Diagnostics (QuidelOrtho) · Mindray · Sysmex · Randox · Snibe · Dirui · Erba Mannheim · Hitachi High-Tech</p></div></section></main>
-<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/about/">About</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a><br><a href="/legal/terms/">Terms</a> · <a href="/legal/privacy/">Privacy</a> · <a href="/legal/refunds/">Refunds</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/about/">About</a> · <a href="/instructors/">Teach with us</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a><br><a href="/legal/terms/">Terms</a> · <a href="/legal/privacy/">Privacy</a> · <a href="/legal/refunds/">Refunds</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
 <script>
 (function(){
  const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
@@ -216,7 +246,48 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
  document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
  paint();
 })();
-</script><script>window.SEA={"api":"https://api.serviceengineer.academy","lang":"en","t":{"signIn":"Sign in","signOut":"Sign out","loginH":"Sign in","loginLead":"Enter your e-mail. We will send a one-time sign-in link — no password needed.","emailPh":"your@email.com","send":"Send the link","sent":"Check your inbox: the link is valid for 30 minutes.","checking":"Signing you in…","badToken":"This link has expired or was already used. Request a new one.","loading":"Loading the lesson…","noAccess":"This lesson is part of the paid course.","examName":"Your full name as it should appear on the certificate","examStart":"Start the exam","examSubmit":"Submit answers","timeLeft":"Time left","passed":"Passed","failed":"Not passed","score":"Score","openCert":"Open the certificate","retake":"You can retake the exam tomorrow.","limit":"Attempt limit reached for today.","needLogin":"Sign in to take the exam.","verifyOk":"Valid certificate","verifyNo":"No certificate with this number."},"T":{"field":"field case","checklistH":"On-site checklist","quizH":"Check yourself","checkBtn":"Check answers"},"my":"/my/"};</script><script>// Student layer: sign-in, paid lessons, server progress, online exam. Talks to api.serviceengineer.academy.
+</script><script>window.SEA={"api":"https://api.serviceengineer.academy","lang":"en","t":{"signIn":"Sign in","signOut":"Sign out","loginH":"Sign in","loginLead":"Enter your e-mail. We will send a one-time sign-in link — no password needed.","emailPh":"your@email.com","send":"Send the link","sent":"Check your inbox: the link is valid for 30 minutes.","checking":"Signing you in…","badToken":"This link has expired or was already used. Request a new one.","loading":"Loading the lesson…","noAccess":"This lesson is part of the paid course.","examName":"Your full name as it should appear on the certificate","examStart":"Start the exam","examSubmit":"Submit answers","timeLeft":"Time left","passed":"Passed","failed":"Not passed","score":"Score","openCert":"Open the certificate","retake":"You can retake the exam tomorrow.","limit":"Attempt limit reached for today.","needLogin":"Sign in to take the exam.","verifyOk":"Valid certificate","verifyNo":"No certificate with this number."},"T":{"field":"field case","checklistH":"On-site checklist","quizH":"Check yourself","checkBtn":"Check answers","flowH":"Fault-finding flow","yes":"Yes","no":"No","flowEnd":"All checks pass","partsH":"Unit breakdown","partsHead":["Part","What it does","How it fails"]},"my":"/my/"};window.SEAX={flowHTML:(f, t) => {
+  if (!f || !f.checks || !f.checks.length) return "";
+  const e = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const wrap = (s, n) => {
+    const out = [];
+    let line = "";
+    for (const w of String(s ?? "").split(/\s+/)) {
+      if (line && (line + " " + w).length > n) { out.push(line); line = w; } else line = line ? line + " " + w : w;
+    }
+    if (line) out.push(line);
+    return out;
+  };
+  const W = 760, X = 200, AX = 440, AW = 300, LH = 18, FS = 14;
+  const text = (lines, cx, cy, opts = "") => lines.map((l, i) => `<text x="${cx}" y="${cy + (i - (lines.length - 1) / 2) * LH + 5}" text-anchor="middle"${opts}>${e(l)}</text>`).join("");
+  const arrow = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="fl"/><path d="${x2 === x1 ? `M${x2 - 5} ${y2 - 9}L${x2} ${y2}L${x2 + 5} ${y2 - 9}` : `M${x2 - 9} ${y2 - 5}L${x2} ${y2}L${x2 - 9} ${y2 + 5}`}" class="fa"/>`;
+  let y = 16, svg = "";
+  // start terminator
+  const st = wrap(f.start, 30), sh = Math.max(44, st.length * LH + 18);
+  svg += `<rect x="${X - 150}" y="${y}" width="300" height="${sh}" rx="${sh / 2}" class="fs"/>` + text(st, X, y + sh / 2, ' font-weight="700"');
+  y += sh;
+  f.checks.forEach((c, i) => {
+    const q = wrap(c.q, 22), dh = Math.max(110, q.length * LH + 56), dw = 320;
+    const a = wrap(c.fault, 36), ah = Math.max(56, a.length * LH + 22);
+    const top = y + 30, mid = top + dh / 2;
+    svg += arrow(X, y, X, top);
+    svg += `<path d="M${X} ${top}L${X + dw / 2} ${mid}L${X} ${top + dh}L${X - dw / 2} ${mid}Z" class="fd"/>` + text(q, X, mid);
+    svg += `<text x="${X - dw / 2 - 10}" y="${mid + 5}" text-anchor="end" class="fn">${i + 1}</text>`;
+    svg += arrow(X + dw / 2, mid, AX, mid) + `<text x="${X + dw / 2 + 8}" y="${mid - 8}" class="fyn">${e(t.no)}</text>`;
+    svg += `<rect x="${AX}" y="${mid - ah / 2}" width="${AW}" height="${ah}" class="fb"/>` + text(a, AX + AW / 2, mid);
+    y = top + dh;
+    svg += `<text x="${X + 10}" y="${y + 19}" class="fyn">${e(t.yes)}</text>`;
+  });
+  const en = wrap(f.end, 30), eh = Math.max(44, en.length * LH + 18), top = y + 30;
+  svg += arrow(X, y, X, top);
+  svg += `<rect x="${X - 150}" y="${top}" width="300" height="${eh}" rx="${eh / 2}" class="fs"/>` + text(en, X, top + eh / 2, ' font-weight="700"');
+  const H = top + eh + 16;
+  return `<figure class="flow"><figcaption><span class="label">${e(t.flowH)}</span><b>${e(f.title)}</b></figcaption><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${e(f.title)}" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="${FS}"><style>.fl{stroke:#111;stroke-width:1.5}.fa{fill:none;stroke:#111;stroke-width:1.5}.fs{fill:#fff;stroke:#111;stroke-width:2}.fd{fill:#fff;stroke:#002fa7;stroke-width:2}.fb{fill:#f7f7f8;stroke:#111;stroke-width:1.5}.fn{fill:#002fa7;font-weight:700;font-size:20px}.fyn{font-weight:700;font-size:12px;fill:#111;text-transform:uppercase}text{fill:#111}</style>${svg}</svg></figure>`;
+},partsHTML:(p, t) => {
+  if (!p || !p.items || !p.items.length) return "";
+  const e = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  return `<figure class="parts"><figcaption><span class="label">${e(t.partsH)}</span><b>${e(p.title)}</b></figcaption><table class="grid"><thead><tr><th></th>${t.partsHead.map((h) => `<th>${e(h)}</th>`).join("")}</tr></thead><tbody>${p.items.map((x, i) => `<tr><td class="pn">${String(i + 1).padStart(2, "0")}</td><td><b>${e(x.name)}</b></td><td>${e(x.role)}</td><td>${e(x.fails)}</td></tr>`).join("")}</tbody></table></figure>`;
+}};</script><script>// Student layer: sign-in, paid lessons, server progress, online exam. Talks to api.serviceengineer.academy.
 (function () {
   const S = window.SEA, t = S.t;
   const api = (path, body) =>
@@ -237,9 +308,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
     document.querySelectorAll("[data-mark]").forEach((b) => { const [s, n] = b.dataset.mark.split(":"); if (lsGet(s).includes(+n)) { b.textContent = b.dataset.doneText; b.disabled = true; } });
   }
 
+  // flowchart and unit breakdown: the same functions as extras.mjs, inlined by the build as window.SEAX
+  const flowHTML = (f) => window.SEAX.flowHTML(f, S.T);
+  const partsHTML = (p) => window.SEAX.partsHTML(p, S.T);
+
   function renderLesson(l) {
     let h = "";
     for (const s of l.sections || []) h += "<h2>" + esc(s.h) + "</h2>" + (s.body || []).map((p) => "<p>" + esc(p) + "</p>").join("") + list(s.list);
+    h += partsHTML(l.parts) + flowHTML(l.flow);
     if (l.case) h += '<div class="case"><div class="label">' + esc(S.T.field) + "</div><h3>" + esc(l.case.title) + "</h3><p>" + esc(l.case.story) + '</p><p class="note">' + esc(l.case.lesson) + "</p></div>";
     if (l.checklist && l.checklist.length) h += "<h2>" + esc(S.T.checklistH) + '</h2><ul class="check">' + l.checklist.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ul>";
     h += "<h2>" + esc(S.T.quizH) + '</h2><div class="quiz">' + (l.quiz || []).map((q, qi) => '<fieldset class="q" data-answer="' + q.answer + '"><legend>' + (qi + 1) + ". " + esc(q.q) + "</legend>" + q.options.map((o, oi) => '<label><input type="radio" name="q' + qi + '" value="' + oi + '"> ' + esc(o) + "</label>").join("") + '<p class="why" hidden>' + esc(q.why) + "</p></fieldset>").join("") + '<div class="btns"><button class="btn ghost small" type="button" data-check2>' + esc(S.T.checkBtn) + '</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>';
