@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>What a patient monitor measures and how · Patient Monitor Service — Level 1</title><meta name="description" content="Understand the measuring principle of each monitor parameter - ECG, SpO2, NIBP, IBP, temperature and CO2 - well enough to know what a simulator can and cannot prove, and where each channel usually fails."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/mon-l1/what-a-monitor-measures/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
+.muted{color:var(--muted)}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
+</style></head><body>
+<div class="preview">Preview build · content under engineering review · not yet open to the public</div>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/courses/" aria-current>Courses</a><a href="/se-academy/#paths">Learning paths</a><a href="/se-academy/library/">Library</a><a href="/se-academy/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/se-academy/my/">My learning</a><a href="/se-academy/ru/course/mon-l1/what-a-monitor-measures/" hreflang="ru">RU</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/se-academy/course/mon-l1/">← Course</a><div class="ctitle">Patient Monitor Service — Level 1</div><div><div class="ruler" data-ruler="mon-l1"><i data-n="1" class="here"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 6 lessons completed" data-none="Not started">Not started</div></div><ol><li class="here" data-done-of="mon-l1:1"><a href="/se-academy/course/mon-l1/what-a-monitor-measures/"><span class="n">01</span><span>What a patient monitor measures and how</span></a></li><li class="" data-done-of="mon-l1:2"><a href="/se-academy/course/mon-l1/architecture-and-accessories/"><span class="n">02</span><span>Monitor architecture, accessories and the installation<span class="lock">locked</span></span></a></li><li class="" data-done-of="mon-l1:3"><a href="/se-academy/course/mon-l1/patient-safety/"><span class="n">03</span><span>Patient safety: applied parts, defibrillation protection and leakage<span class="lock">locked</span></span></a></li><li class="" data-done-of="mon-l1:4"><a href="/se-academy/course/mon-l1/pm-inspection/"><span class="n">04</span><span>Planned maintenance: inspection and functional check<span class="lock">locked</span></span></a></li><li class="" data-done-of="mon-l1:5"><a href="/se-academy/course/mon-l1/simulator-manometer/"><span class="n">05</span><span>Verification with a patient simulator, a manometer and test gas<span class="lock">locked</span></span></a></li><li class="" data-done-of="mon-l1:6"><a href="/se-academy/course/mon-l1/electrical-safety-report/"><span class="n">06</span><span>Electrical safety per IEC 62353 and the service report<span class="lock">locked</span></span></a></li><li class="exam"><a href="/se-academy/course/mon-l1/exam/"><span class="n">—</span><span>Final exam</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Lesson 1 / 6 · 20 min</span></div><h1>What a patient monitor measures and how</h1><p class="lead">Understand the measuring principle of each monitor parameter - ECG, SpO2, NIBP, IBP, temperature and CO2 - well enough to know what a simulator can and cannot prove, and where each channel usually fails.</p>
+<h2>One box, six independent instruments</h2><p>A multiparameter monitor looks like one device, but for a service engineer it is better thought of as several separate measuring instruments that share a screen, a power supply, an alarm system and a network connection. The ECG channel has nothing in common with the NIBP pump. The SpO2 module does not know the CO2 module exists. Each has its own front end, its own accessory, its own way of failing and its own way of being tested.</p><p>This is the most useful idea in the whole course. When a nurse says 'the monitor is broken', it is almost never the monitor. It is one channel, and most often the accessory of that channel: an ECG lead wire, an SpO2 sensor, a cuff, a sampling line. The physics in this lesson is not here to make you a clinician. It is here so that, for every channel, you know three things: what physical quantity is really measured, what the monitor calculates from it, and which of those two steps your test equipment actually checks.</p><p>That third point matters more than it seems. Some channels can be checked absolutely: a calibrated manometer tells you exactly whether the NIBP transducer reads pressure correctly. Other channels can only be checked for consistency: a simulator tells you that the module follows its own algorithm, not that the algorithm is right for a real patient. Knowing the difference keeps you from writing claims in a service report that your measurement does not support.</p><h2>ECG: millivolts through a differential amplifier</h2><p>The heart produces electrical potentials that reach the skin at the level of roughly one millivolt for the QRS complex. The patient's body, meanwhile, picks up mains interference that can be far larger, and it is the same on all electrodes. The ECG front end therefore uses a differential amplifier: it amplifies the difference between electrodes and rejects what is common to them. How well it does this is its common-mode rejection. Most designs also drive a small correction signal back into the patient through one electrode (the right-leg or neutral electrode) to reduce the common-mode voltage further.</p><p>Around this amplifier sit several functions that generate service calls. Lead-off detection passes a very small current through the electrodes and watches the result; a broken lead wire or a dried electrode looks the same to it as a disconnected electrode. Filters shape the bandwidth: a wide diagnostic bandwidth shows the ST segment faithfully, while narrower monitoring and filter modes suppress baseline wander and muscle noise. A clinician who sees a 'different-looking' ECG between two monitors is often seeing two different filter settings. Pacemaker detection looks for the very short, fast pacing spikes and marks them, so that the heart-rate counter does not count a pacing pulse as a heartbeat.</p><p>Heart rate itself is calculated, not measured: the monitor detects QRS complexes and averages the intervals between them. Tall T-waves, noise or pacing spikes can be counted wrongly. A simulator delivers a clean, known waveform and lets you confirm that the amplitude, rate and lead-off functions behave correctly. It does not tell you how the arrhythmia algorithm performs on real, noisy patients, and you should not claim that it does.</p><h2>SpO2: two colours of light and a calibration curve</h2><p>A pulse oximeter sensor has light-emitting diodes on one side of the finger, earlobe or foot and a photodetector on the other. It uses two wavelengths, one in the red and one in the infrared. Oxygenated and deoxygenated haemoglobin absorb these two colours differently. Most of the light absorption is constant - skin, bone, venous blood - but with each heartbeat the arterial blood volume pulses, and the absorption changes a little. The module separates that small pulsatile part from the large constant part at each wavelength and takes the ratio between the two wavelengths.</p><p>That ratio is not converted to saturation by a physical formula. It is converted through an empirical calibration curve that each technology owner built from studies on human volunteers, using their own sensor design, LED wavelengths and processing. This is the reason SpO2 technologies are not interchangeable. A sensor from one technology plugged into a module of another may fit the connector and still give errors or wrong values, because the module expects a different sensor and a different curve.</p><p>For service, this has a direct consequence. An SpO2 simulator does not check that the monitor reads true oxygen saturation; it cannot, because there is no real blood. It presents a defined optical or electrical signal, and the monitor converts it through its own curve. The simulator must therefore be set for the correct technology and curve, and the test proves that the module and its signal path work and follow their curve. The accuracy of the curve itself was established by the manufacturer's clinical testing, not by you. Pulse rate, signal-strength indicators and alarm behaviour can all be checked on the simulator.</p><h2>NIBP: an oscillometric estimate</h2><p>The automatic non-invasive blood pressure channel has a pump, one or more valves, a pressure transducer and a cuff on the patient's arm or leg. The pump inflates the cuff above the point where the artery is closed, then the system releases pressure in steps or continuously. As the cuff pressure passes through the patient's arterial pressures, the pulsing artery makes small oscillations in the cuff pressure. The module records the size of these oscillations against cuff pressure.</p><p>The oscillations are largest close to the mean arterial pressure, which is the most directly measured value. Systolic and diastolic pressures are derived from the shape of the oscillation curve by the manufacturer's algorithm. Different manufacturers use different algorithms, so two healthy monitors can give slightly different results on the same patient. That is not a fault.</p><p>For service, split the NIBP channel into two parts. The first is pure physics: does the transducer read the cuff pressure correctly, does the pneumatic system hold pressure without leaking, and does the over-pressure protection release the cuff if pressure goes too high? You test these absolutely, with a calibrated manometer and a rigid test volume, in the manufacturer's service mode. The second part is the algorithm: an NIBP simulator produces repeatable oscillation patterns and lets you check that the module measures consistently and completes its cycles in a normal time. A simulator reading that differs a little from the nominal setting is usually a difference between the simulator's model and the monitor's algorithm, not a fault. The tolerances for both parts come from the manufacturer's documentation.</p><h2>IBP and temperature: two resistive sensors</h2><p>Invasive blood pressure is measured through a fluid-filled line from a catheter in an artery or a central vein to a disposable transducer. The transducer contains a strain-gauge bridge: four resistances arranged as a Wheatstone bridge, whose balance changes slightly with pressure. The monitor supplies an excitation voltage to the bridge and measures the small output voltage, which is proportional to both the pressure and the excitation. Disposable transducers are built to a common sensitivity, so the monitor can work with them through the correct interface cable.</p><p>Two things in IBP are purely practical and cause most complaints. The first is zeroing: the transducer must be opened to atmosphere at the level of the patient's heart and zeroed, because its offset drifts and because the height of the transducer relative to the heart adds or subtracts a column of fluid pressure. A transducer about 10 cm below heart level reads roughly 7 mmHg high. The second is the fluid line: air bubbles, clots, kinks and overly long or compliant tubing damp or distort the waveform. Neither is a monitor fault. A patient simulator replaces the transducer and presents a known bridge output, which tests the monitor channel and the interface cable, not the disposable line.</p><p>Temperature probes are usually thermistors, resistors whose value falls as temperature rises along a known curve. The monitor measures the resistance and converts it. Different probe families use different resistance curves, so a probe from the wrong family plugged into a channel will read wrong without any alarm. A simulator presents precise resistances that correspond to known temperatures and checks the conversion.</p><h2>CO2 and gas modules: infrared absorption</h2><p>Carbon dioxide absorbs infrared light strongly in a narrow band. A capnograph passes infrared light through a sample of the patient's breath and measures how much is absorbed at that band; more absorption means more CO2. The result is shown as a waveform and as end-tidal CO2, in mmHg, kPa or percent depending on configuration.</p><p>There are two designs. In mainstream capnography the measuring cell sits directly on the airway between the tube and the breathing circuit, and the gas is measured where it flows. In sidestream capnography a small pump draws a continuous sample from the airway through a thin sampling line to a measuring bench inside the module. Sidestream needs a water trap or a filter line to keep condensate and secretions out, and it fails in a predictable way: water or secretions block the line, the pump wears, and the module reports an occlusion. Multigas modules used in anaesthesia add infrared measurement of anaesthetic agents and nitrous oxide, and often a separate oxygen sensor.</p><p>The CO2 channel is one of the few on a monitor that you can check against a real physical reference: a certified calibration gas of known CO2 concentration, applied as the manufacturer describes. The certificate of that gas, and its expiry date, become part of your service record.</p><ul><li>Checked absolutely with a reference: NIBP cuff pressure (manometer), CO2 concentration (certified gas), temperature conversion (precise resistances), IBP channel gain (known bridge signal).</li><li>Checked for consistency only: SpO2 (simulator through the module's own curve), NIBP systolic and diastolic values (simulator through the module's own algorithm), ECG analysis algorithms.</li><li>Not checked by the engineer at all: the clinical accuracy of the SpO2 curve and the NIBP algorithm, which the manufacturer establishes by clinical studies.</li></ul>
+<div class="case"><div class="label">field case</div><h3>The NIBP that 'read 8 high'</h3><p>A ward returned a monitor because its NIBP read higher than the manual sphygmomanometer the nurses used. The engineer connected an NIBP simulator: systolic read a few mmHg above the simulator's nominal value, repeatably. A colleague suggested a recalibration. Instead, the engineer entered the service mode and compared the transducer with a calibrated manometer on a rigid test volume at several pressures: all points were well inside the manufacturer's tolerance, and the leak test passed. The same simulator setting on a second monitor of another brand gave a different, equally repeatable offset. The ward's complaint came from comparing two different methods on a patient whose arm needed a larger cuff.</p><p class="note">Separate what you can measure absolutely (static pressure, leak) from what depends on an algorithm. Do not recalibrate a transducer that is correct to make a simulator or a manual reading agree.</p></div>
+<h2>On-site checklist</h2><ul class="check"><li>For every complaint, identify the channel first, then the accessory of that channel.</li><li>Know for each channel whether your test is absolute (reference) or consistency only (simulator through the module's algorithm).</li><li>Set the SpO2 simulator for the technology and curve of the module under test.</li><li>Check NIBP static pressure with a calibrated manometer before drawing any conclusion from simulator readings.</li><li>For IBP complaints, ask about zeroing and transducer height before suspecting the monitor.</li><li>Confirm the temperature probe family matches the channel.</li><li>Record the certificate and expiry of any calibration gas you use.</li></ul>
+<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. An SpO2 simulator set to 90% gives 90% on one monitor and 93% on another monitor of a different SpO2 technology. Both read correctly on their own manufacturer's test settings. What is the most likely explanation?</legend><label><input type="radio" name="q0" value="0"> The second monitor's SpO2 module is faulty</label><label><input type="radio" name="q0" value="1"> The simulator is not set for the curve of the second technology; SpO2 simulation is technology-specific</label><label><input type="radio" name="q0" value="2"> The sensor LEDs of the first monitor are weak</label><label><input type="radio" name="q0" value="3"> The simulator's battery is low</label><p class="why" hidden>Saturation is calculated through an empirical curve owned by each technology. A simulator must be set for the right curve; a difference between technologies on one setting is not a fault.</p></fieldset><fieldset class="q" data-answer="0"><legend>2. A nurse reports that arterial pressure on one bed reads about 7 mmHg higher than expected since the bed was raised. The waveform looks normal. What do you suggest first?</legend><label><input type="radio" name="q1" value="0"> Re-level the transducer to heart level and zero it</label><label><input type="radio" name="q1" value="1"> Replace the IBP module</label><label><input type="radio" name="q1" value="2"> Replace the interface cable</label><label><input type="radio" name="q1" value="3"> Run the NIBP leak test</label><p class="why" hidden>The height of the transducer relative to the heart adds a fluid column; about 10 cm corresponds to roughly 7 mmHg. Levelling and zeroing come before any hardware suspicion.</p></fieldset><fieldset class="q" data-answer="2"><legend>3. Which NIBP check gives you an absolute statement about the monitor's accuracy?</legend><label><input type="radio" name="q2" value="0"> Comparing with a manual sphygmomanometer on a nurse</label><label><input type="radio" name="q2" value="1"> Reading systolic and diastolic from an NIBP simulator</label><label><input type="radio" name="q2" value="2"> Comparing static cuff pressure with a calibrated manometer in service mode</label><label><input type="radio" name="q2" value="3"> Comparing with another monitor on the same patient</label><p class="why" hidden>Static pressure against a calibrated manometer checks the transducer directly. Simulator and clinical comparisons depend on algorithms and on method differences.</p></fieldset><fieldset class="q" data-answer="2"><legend>4. A temperature channel reads about two degrees off with a new batch of probes, and no alarm is shown. The simulator check on the channel passes. What is the likely cause?</legend><label><input type="radio" name="q3" value="0"> Thermistor amplifier drift</label><label><input type="radio" name="q3" value="1"> The patient has a fever</label><label><input type="radio" name="q3" value="2"> The new probes belong to a different resistance-curve family than the channel expects</label><label><input type="radio" name="q3" value="3"> The display software rounds the values</label><p class="why" hidden>The channel passes with precise resistances, so the conversion is fine. Probes from another family follow a different curve and read wrong without any alarm.</p></fieldset><fieldset class="q" data-answer="3"><legend>5. A sidestream capnography module repeatedly shows an occlusion message in the ICU. What is the right order of suspicion?</legend><label><input type="radio" name="q4" value="0"> Measuring bench, then software, then sampling line</label><label><input type="radio" name="q4" value="1"> Display, then the CO2 calibration gas, then the pump</label><label><input type="radio" name="q4" value="2"> Mains power, then network</label><label><input type="radio" name="q4" value="3"> Sampling line and water trap or filter, then the sampling pump, then the module</label><p class="why" hidden>Sidestream modules fail in a predictable way: condensate or secretions block the line and trap first; pump wear comes next.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Check answers</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="mon-l1:1" data-done-text="Completed">Mark as completed</button><a class="btn ghost" href="/se-academy/course/mon-l1/architecture-and-accessories/">Next lesson →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/about/">About</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>

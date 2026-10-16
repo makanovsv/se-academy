@@ -1,90 +1,217 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Why a patient needs a ventilator and what the clinician sees · Ventilator Service — Level 1</title><meta name="description" content="Translate a clinician's complaint about a ventilator - wrong volume, PEEP not held, oxygen alarm, 'it breathes by itself' - into a technical question about a specific part of the machine, its settings or its accessories."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/vent-l1/why-ventilation/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%2F%3E%3Cpath%20d%3D%22M10%2021%20V11%20M10%2016%20H15%20M18%2011%20h4%20a3%203%200%200%201%200%206%20h-4%20v4%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E"><style>:root{--bg:#0d0e10;--panel:#14161a;--panel2:#1a1d22;--line:#262a31;--text:#b9bec7;--strong:#eef1f5;--muted:#7b818c;--accent:#00a0e3;--accent2:#5cc8f2;--warn:#e5a54b;--ok:#4cc38a;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f7f8;--panel:#ffffff;--panel2:#f0f2f4;--line:#dfe3e8;--text:#3b4048;--strong:#101317;--muted:#6b7280;--accent:#0088c2;--accent2:#006b99;--warn:#a8650e;--ok:#18794e}}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Why a patient needs a ventilator and what the clinician sees · Ventilator Service — Level 1</title><meta name="description" content="Translate a clinician's complaint about a ventilator - wrong volume, PEEP not held, oxygen alarm, 'it breathes by itself' - into a technical question about a specific part of the machine, its settings or its accessories."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/vent-l1/why-ventilation/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans)}
-a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-header.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:5}
-header.top .wrap{display:flex;align-items:center;gap:20px;height:58px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--strong);font-weight:600;letter-spacing:.2px}.brand svg{width:26px;height:26px;color:var(--accent)}
-.brand small{font:500 11px var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-nav.main{margin-left:auto;display:flex;gap:18px;font-size:14px}nav.main a{color:var(--text)}
-.preview{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);font:12px/1.5 var(--mono);text-align:center;padding:6px 12px}
-h1,h2,h3{color:var(--strong);line-height:1.2;letter-spacing:-.01em}
-h1{font-size:clamp(30px,5vw,48px);margin:0 0 14px}h2{font-size:24px;margin:44px 0 14px}h3{font-size:17px;margin:0 0 6px}
-.eyebrow{font:500 12px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
-.lead{font-size:19px;color:var(--text);max-width:720px}
-.hero{padding:56px 0 30px}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--text)}
-a.card:hover{border-color:var(--accent);text-decoration:none}
-.card .k{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.card h3{margin-top:6px}
-.tiers{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.tier{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
-.tier .tag{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-.tier.pro{border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}.tier.pro .tag{color:var(--accent);border-color:var(--accent)}
-.fig{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
-.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 40px,1080px) * .78 + 250px)}
-.fig .cap{padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
-.crumbs{font:13px var(--mono);color:var(--muted);margin:26px 0 8px}.crumbs a{color:var(--muted)}
-table.chain{width:100%;border-collapse:collapse;font-size:15px}
-table.chain th,table.chain td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
-table.chain th{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-table.chain td:first-child{color:var(--strong);font-weight:600;white-space:nowrap}
-.cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.box ul{margin:6px 0 0;padding-left:18px}.box li{margin:4px 0}
-.box.safety{border-color:color-mix(in srgb,var(--warn) 55%,var(--line))}.box.safety h3{color:var(--warn)}
-details.fault{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 16px}
-details.fault summary{cursor:pointer;padding:13px 0;color:var(--strong);font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
-details.fault summary::before{content:"+";font:600 14px var(--mono);color:var(--accent);width:12px}
-details.fault[open] summary::before{content:"–"}
-details.fault .src{margin-left:auto;font:500 11px var(--mono);color:var(--muted);text-transform:uppercase}
-details.fault .src.field{color:var(--ok)}
-details.fault .body{padding:0 0 14px 22px}
-details.fault ol{margin:4px 0 8px;padding-left:20px}
-.pill{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;background:var(--panel2);color:var(--muted);margin-right:6px}
-.pill.draft{color:var(--warn)}
-.arch{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.note{border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0}
-table.pm{width:100%;border-collapse:collapse;font-size:15px}table.pm td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}table.pm td:last-child{white-space:nowrap;color:var(--muted);font-family:var(--mono);font-size:13px}
-footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;font-size:13px;color:var(--muted)}
-.btn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:10px 16px;font-weight:600}.btn:hover{text-decoration:none;filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--strong);border:1px solid var(--line)}
-@media (max-width:640px){nav.main{display:none}table.chain td:first-child{white-space:normal}.hero{padding:34px 0 16px}}
-.lang{font:500 12px var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--text)}
-.lang:hover{border-color:var(--accent);text-decoration:none}
-@media (max-width:640px){header.top .wrap{gap:10px}.lang{margin-left:auto}}
-.lessons{display:flex;flex-direction:column;gap:8px}
-.lesson-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text)}
-.lesson-row:hover{border-color:var(--accent);text-decoration:none}
-.lesson-row .ln{font:600 14px var(--mono);color:var(--accent)}.lesson-row b{color:var(--strong)}
-.lesson-row .tagline{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
 .muted{color:var(--muted)}
-.cert{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px;max-width:760px}
-.cert-in{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:8px}
-.cert-h{font:600 13px var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.cert-name{font-size:34px;color:var(--strong);font-weight:600}
-.cert-course{font-size:19px;color:var(--strong);font-weight:600}
-.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;font:12px var(--mono);color:var(--muted)}
-.box.locked{border-style:dashed;margin:24px 0}
-.lesson-nav{display:flex;justify-content:space-between;gap:16px;margin:40px 0 0;font-size:14px}
-.quiz fieldset{border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:12px 16px;background:var(--panel)}
-.quiz legend{color:var(--strong);font-weight:600;padding:0 4px}
-.quiz label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
-.quiz label.right{background:color-mix(in srgb,var(--ok) 18%,transparent)}
-.quiz label.wrong{background:color-mix(in srgb,#e5484d 18%,transparent)}
-.quiz .why{font-size:14px;color:var(--muted);margin:6px 0 0}
-ul.check{list-style:none;padding:0}ul.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px solid var(--line)}ul.check li::before{content:"";position:absolute;left:4px;top:10px;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:3px}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Preview build · content under engineering review · not yet open to the public</div>
-<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 21 V11 M10 16 H15 M18 11 h4 a3 3 0 0 1 0 6 h-4 v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Service Engineer <small>Academy</small></span></a><nav class="main"><a href="/se-academy/#equipment">Equipment</a><a href="/se-academy/#models">Models</a><a href="/se-academy/about/">About</a><a href="/se-academy/#access">Access</a></nav><a class="lang" href="/se-academy/ru/" hreflang="ru">RU</a></div></header>
-<main class="wrap"><div class="crumbs"><a href="/se-academy/">Academy</a> / <a href="/se-academy/course/vent-l1/">Ventilator Service — Level 1</a> / Lesson 1</div><div class="eyebrow">Lesson 1 · 20 min</div><h1>Why a patient needs a ventilator and what the clinician sees</h1><p class="lead">Translate a clinician's complaint about a ventilator - wrong volume, PEEP not held, oxygen alarm, 'it breathes by itself' - into a technical question about a specific part of the machine, its settings or its accessories.</p>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/courses/" aria-current>Courses</a><a href="/se-academy/#paths">Learning paths</a><a href="/se-academy/library/">Library</a><a href="/se-academy/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/se-academy/my/">My learning</a><a href="/se-academy/ru/course/vent-l1/why-ventilation/" hreflang="ru">RU</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/se-academy/course/vent-l1/">← Course</a><div class="ctitle">Ventilator Service — Level 1</div><div><div class="ruler" data-ruler="vent-l1"><i data-n="1" class="here"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 8 lessons completed" data-none="Not started">Not started</div></div><ol><li class="here" data-done-of="vent-l1:1"><a href="/se-academy/course/vent-l1/why-ventilation/"><span class="n">01</span><span>Why a patient needs a ventilator and what the clinician sees</span></a></li><li class="" data-done-of="vent-l1:2"><a href="/se-academy/course/vent-l1/pneumatic-chain/"><span class="n">02</span><span>The pneumatic chain: from the gas inlet to the patient and back<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:3"><a href="/se-academy/course/vent-l1/gas-supply/"><span class="n">03</span><span>Gas supply and the room<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:4"><a href="/se-academy/course/vent-l1/safety/"><span class="n">04</span><span>Safety of the engineer and the patient<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:5"><a href="/se-academy/course/vent-l1/self-test/"><span class="n">05</span><span>Self-test and pre-use check<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:6"><a href="/se-academy/course/vent-l1/pm-kit/"><span class="n">06</span><span>Preventive maintenance with the manufacturer's kit<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:7"><a href="/se-academy/course/vent-l1/verification/"><span class="n">07</span><span>Performance verification with a gas-flow analyzer<span class="lock">locked</span></span></a></li><li class="" data-done-of="vent-l1:8"><a href="/se-academy/course/vent-l1/documentation-transport-niv/"><span class="n">08</span><span>Documentation; transport and non-invasive ventilators in brief<span class="lock">locked</span></span></a></li><li class="exam"><a href="/se-academy/course/vent-l1/exam/"><span class="n">—</span><span>Final exam</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Lesson 1 / 8 · 20 min</span></div><h1>Why a patient needs a ventilator and what the clinician sees</h1><p class="lead">Translate a clinician's complaint about a ventilator - wrong volume, PEEP not held, oxygen alarm, 'it breathes by itself' - into a technical question about a specific part of the machine, its settings or its accessories.</p>
 <h2>The job a ventilator does</h2><p>Breathing has two jobs. The first is to move gas in and out of the lungs, so that carbon dioxide leaves the body. The second is to get enough oxygen across the lung into the blood. A patient ends up on a ventilator when one or both jobs fail: the breathing muscles are too weak or too tired, the brain is not driving breathing (deep sedation, anaesthesia, injury), or the lungs are so stiff or so full of fluid that normal effort cannot inflate them.</p><p>An ICU ventilator takes over or assists the first job by pushing gas into the lungs under positive pressure, then letting the lungs empty passively. It helps with the second job by raising the oxygen concentration of the gas and by keeping a little pressure in the lungs at the end of each breath so that the small air sacs do not collapse. That is all the physiology this course needs. You do not set the therapy; the clinician does. Your job is to make sure the machine delivers exactly what is set, measures exactly what is delivered, and raises an alarm when either goes wrong.</p><p>Keep one fact in front of you at all times: the ventilator breathes for a person who usually cannot breathe alone. A ventilator that stops, or delivers the wrong breath, harms the patient in minutes. Everything in this course, from the gas supply to the final verification, follows from that.</p><h2>The words on the screen</h2><p>You will hear these terms in every complaint. Learn what each one means physically, because each one points to a different part of the machine.</p><p>Pressures on ventilators are shown in cmH2O (centimetres of water) or in hPa or mbar. These are almost the same: 1 cmH2O is about 0.98 hPa, and 1 hPa equals 1 mbar. Volumes are in millilitres, flows in litres per minute. Minute volume is simply tidal volume multiplied by respiratory rate. If a nurse says the minute volume is low but the rate is correct, the question is about volume.</p><ul><li>Tidal volume (Vt): the volume of one breath. Delivered volume is measured on the inspiratory side; exhaled volume is measured on the expiratory side. When the two disagree, think of leaks or a flow sensor.</li><li>Respiratory rate: breaths per minute, set by the clinician or produced by the patient.</li><li>Inspiratory time or I:E ratio: how long the breath in lasts compared with the breath out.</li><li>FiO2: the fraction of inspired oxygen, from 21% (room air) to 100%. It depends on the gas supply, the mixing valves and the oxygen sensor that monitors it.</li><li>PEEP: positive end-expiratory pressure, the pressure the machine holds in the circuit at the end of exhalation. It is produced mainly by the expiratory valve.</li><li>Peak pressure: the highest airway pressure during the breath. Plateau pressure: the pressure during a short pause at the end of inspiration, when flow is zero.</li><li>Trigger: the threshold at which the machine decides the patient is trying to breathe and starts or supports a breath. It is either a pressure drop or a flow change in the circuit.</li></ul><h2>Modes: who decides the breath</h2><p>Manufacturers use dozens of mode names, many of them trademarks. Underneath, almost all modes are combinations of three ideas. If you know which idea a mode is built on, you know which reading should be stable and which one is allowed to change.</p><p>In volume-controlled ventilation the clinician sets the tidal volume and the flow pattern. The machine delivers that volume, and the airway pressure is whatever it takes to push it in. If the lungs get stiffer or the tube gets blocked, the pressure rises; the high-pressure alarm protects the patient. So in volume control, a complaint of 'pressures are high' is often a patient or circuit problem, while 'the volume is wrong' points at the machine's flow delivery or measurement.</p><p>In pressure-controlled ventilation the clinician sets a pressure and an inspiratory time. The machine holds that pressure, and the volume is whatever the lungs accept at that pressure. If the lungs get stiffer, the volume falls - correctly. So in pressure control, a complaint of 'the volume dropped' may be the patient, not the ventilator, while 'it does not reach the set pressure' points at the inspiratory valve, a leak, or the supply.</p><p>In pressure support, and in other spontaneous modes, the patient starts every breath. The machine detects the effort through the trigger, adds a set pressure to help, and ends the breath when the patient's flow falls. If the patient stops breathing, a backup (apnoea) ventilation takes over and an apnoea alarm sounds. Many modes mix these ideas: synchronised mandatory breaths with pressure-supported breaths between them, or a pressure-controlled breath that adjusts itself to reach a target volume. When you meet a mode name you do not know, open the operator's manual and find which of the three ideas it is built on.</p><h2>PEEP, FiO2 and the trigger - the three settings that generate most calls</h2><p>PEEP is held by the expiratory valve, which closes enough at the end of exhalation to keep the set pressure in the circuit. If PEEP drifts or cannot be reached, the usual suspects, in order, are a leak in the circuit or around the patient's tube, an expiratory valve that was reassembled wrongly after cleaning, a worn or torn valve diaphragm, and only then the valve drive or pressure measurement. A leak anywhere makes PEEP hard to hold, because the valve can only stop gas leaving through itself.</p><p>FiO2 depends on two gas supplies and on the mixing. A low or unstable oxygen reading points at the oxygen sensor first - especially a galvanic cell, which is a consumable that wears out - then at the oxygen supply pressure, then at the mixing valves. Never 'fix' an FiO2 complaint by calibrating the sensor until the reading matches what you hope is delivered. Measure the delivered oxygen with an independent, calibrated analyser first.</p><p>The trigger is where clinical setting and machine behaviour meet most often. If the trigger is set very sensitive, small pressure or flow changes - water moving in the tubing, a small leak, even the heartbeat transmitted through the lungs - can start breaths the patient did not ask for. Clinicians call this 'the ventilator breathes by itself' or 'the rate is too high'; the term is auto-triggering. If the trigger is too insensitive, or the circuit is leaking, the patient struggles and the machine responds late. Both look like faults, and both can be caused by settings, condensate or leaks rather than by a broken part.</p><h2>From complaint to technical question</h2><p>A complaint arrives in the language of the bedside. Your first task is to turn it into a question that you can test on a bench. Ask what mode was running, what was set, what was displayed, which alarm appeared, whether it happened with one patient or with several, and whether the circuit, filter or humidifier had just been changed. Ask to see the alarm log if the machine keeps one. Write the answers down before you open anything.</p><p>Then sort the complaint into one of four places: the settings and the patient, the circuit and accessories, the gas and power supply, or the machine itself. Experience across ICUs is consistent: most 'ventilator faults' turn out to be the circuit, water traps, a wet expiratory flow sensor, or a wall gas supply that holds pressure at rest and sags when gas flows. The engineer who opens the machine first loses time and parts.</p><p>Remember also what you are not. You do not change clinical settings on a patient, and you do not decide whether a patient can stay on a machine you suspect. If a clinician calls you to a ventilator in use, the patient is first moved to a backup - a manual resuscitation bag or another ventilator - by the clinical staff, with your help if they ask for it. Diagnosis starts after that, on a test lung.</p><ul><li>'Volume too low' in volume control: inspiratory flow delivery, flow sensors, leak.</li><li>'Volume too low' in pressure control: possibly the patient; check the circuit and leak before suspecting the machine.</li><li>'Exhaled volume does not match': leak, wet or dirty expiratory flow sensor, sensor calibration.</li><li>'PEEP not held': circuit leak, expiratory valve assembly and diaphragm.</li><li>'Oxygen alarm': oxygen sensor, oxygen supply, mixing - in that order, verified with an independent analyser.</li><li>'It breathes by itself': trigger setting, condensate in the circuit, small leaks.</li></ul><h2>Why the self-test is not the end of the story</h2><p>Every ICU ventilator has a self-test or pre-use check. It is valuable and must be run exactly as the manufacturer describes, but it checks the machine against its own sensors. If a flow sensor reads 10% high and the controller trusts it, the machine will deliver a smaller breath than set and still report everything as normal. Only an independent, calibrated gas-flow analyser connected to a test lung tells you what a patient would actually receive. Lessons 5 and 7 cover this in detail; for now, carry the idea into every conversation with the ward: 'passed the self-test' is not the same as 'delivers what is set'.</p>
-<div class="box" style="margin-top:28px"><div class="k" style="font:500 11px var(--mono);color:var(--ok);text-transform:uppercase">field case</div><h3>The ventilator that 'breathed by itself'</h3><p>An ICU called about a ventilator that, right after ventilation started, ran an erratic rate and PEEP for about half a minute before settling. The checkout passed and the leak was low. On the bench, with a small test lung and a large set tidal volume, the peak pressure also looked high, and the ward suspected the expiratory valve. The engineer ran the same settings and the same test lung on a second ventilator of the same model: the peak pressure was the same. Reducing the trigger sensitivity removed the erratic start completely. The air inlet water trap was also checked, because a wet air supply can put water into the flow valves, but it was dry.</p><p class="note">Before you suspect a valve, check whether the 'fault' is the trigger setting, the test set-up or the circuit. Compare with a second machine under identical conditions, and only then go inside.</p></div>
+<div class="case"><div class="label">field case</div><h3>The ventilator that 'breathed by itself'</h3><p>An ICU called about a ventilator that, right after ventilation started, ran an erratic rate and PEEP for about half a minute before settling. The checkout passed and the leak was low. On the bench, with a small test lung and a large set tidal volume, the peak pressure also looked high, and the ward suspected the expiratory valve. The engineer ran the same settings and the same test lung on a second ventilator of the same model: the peak pressure was the same. Reducing the trigger sensitivity removed the erratic start completely. The air inlet water trap was also checked, because a wet air supply can put water into the flow valves, but it was dry.</p><p class="note">Before you suspect a valve, check whether the 'fault' is the trigger setting, the test set-up or the circuit. Compare with a second machine under identical conditions, and only then go inside.</p></div>
 <h2>On-site checklist</h2><ul class="check"><li>Record mode, settings, displayed values and alarm text exactly as the clinician reports them.</li><li>Ask whether the problem follows the machine, the patient or the circuit (did it happen with another circuit or on another patient?).</li><li>Ask what was changed recently: circuit, filter, humidifier, expiratory valve after cleaning, gas outlet.</li><li>Confirm the patient has been moved to a backup before any diagnosis.</li><li>Reproduce the complaint on a test lung with the same mode and settings, and compare with a second machine if one is available.</li><li>Do not adjust or calibrate a sensor to match an expected value; measure with an independent analyser.</li></ul>
-<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. A nurse reports that in pressure-controlled ventilation the tidal volume has fallen over two hours. The set pressure is reached on every breath and there are no leak alarms. What is the most reasonable first interpretation?</legend><label><input type="radio" name="q0" value="0"> The inspiratory valve is failing and must be replaced</label><label><input type="radio" name="q0" value="1"> The patient's lungs may have become stiffer, so the same pressure delivers less volume; check the circuit before suspecting the machine</label><label><input type="radio" name="q0" value="2"> The oxygen sensor is worn out</label><label><input type="radio" name="q0" value="3"> The PEEP valve is stuck open</label><p class="why" hidden>In pressure control the machine holds the pressure and the volume follows the lungs. A falling volume at a correctly reached pressure is often the patient, not the ventilator.</p></fieldset><fieldset class="q" data-answer="3"><legend>2. In volume-controlled ventilation, the high-pressure alarm sounds repeatedly. Which part of the system is the least likely first suspect?</legend><label><input type="radio" name="q1" value="0"> A kinked or water-filled circuit</label><label><input type="radio" name="q1" value="1"> A blocked filter on the expiratory side</label><label><input type="radio" name="q1" value="2"> Changes in the patient's lungs or airway</label><label><input type="radio" name="q1" value="3"> The air supply regulator inside the ventilator</label><p class="why" hidden>In volume control the pressure rises when the path to or from the lungs is harder to push through. Circuit, filters and the patient come first; the supply regulator does not raise airway pressure.</p></fieldset><fieldset class="q" data-answer="0"><legend>3. A clinician says: 'The ventilator gives breaths the patient did not ask for, the rate is much higher than set.' What do you check first?</legend><label><input type="radio" name="q2" value="0"> Trigger sensitivity, condensate in the tubing and small leaks</label><label><input type="radio" name="q2" value="1"> The mains power supply</label><label><input type="radio" name="q2" value="2"> The oxygen cell</label><label><input type="radio" name="q2" value="3"> The display unit software version</label><p class="why" hidden>This is the classic picture of auto-triggering: a very sensitive trigger reacting to water movement, leaks or other small signals.</p></fieldset><fieldset class="q" data-answer="2"><legend>4. The FiO2 alarm sounds and the displayed oxygen is lower than set. A colleague proposes recalibrating the oxygen sensor at 100% so that the display matches the setting. What is wrong with this?</legend><label><input type="radio" name="q3" value="0"> Nothing, this is the standard fix</label><label><input type="radio" name="q3" value="1"> Calibration should only be done at 21%</label><label><input type="radio" name="q3" value="2"> It hides the problem if the delivered oxygen really is low; first measure delivered oxygen with an independent analyser</label><label><input type="radio" name="q3" value="3"> Oxygen sensors never need calibration</label><p class="why" hidden>Calibrating a sensor to match an unverified delivery can make a real delivery fault invisible. Verify with an independent, calibrated analyser first.</p></fieldset><fieldset class="q" data-answer="1"><legend>5. You are called to an ICU because a ventilator in use keeps alarming 'PEEP low'. The patient is still connected. What is your first action?</legend><label><input type="radio" name="q4" value="0"> Remove the expiratory valve to inspect the diaphragm</label><label><input type="radio" name="q4" value="1"> Ask the clinical staff to move the patient to a backup (bag or another ventilator) and only then start diagnosing on a test lung</label><label><input type="radio" name="q4" value="2"> Run the self-test immediately</label><label><input type="radio" name="q4" value="3"> Increase the PEEP setting to compensate</label><p class="why" hidden>A ventilator is never serviced while connected to a patient, and engineers do not change clinical settings. Backup first, diagnosis second.</p></fieldset><button class="btn" type="button" data-check>Check answers</button> <span data-score></span></div>
-<div class="lesson-nav"><span></span><a href="/se-academy/course/vent-l1/pneumatic-chain/">The pneumatic chain: from the gas inlet to the patient and back →</a></div><script>document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}))</script></main>
-<footer><div class="wrap">Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></footer>
-</body></html>
+<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. A nurse reports that in pressure-controlled ventilation the tidal volume has fallen over two hours. The set pressure is reached on every breath and there are no leak alarms. What is the most reasonable first interpretation?</legend><label><input type="radio" name="q0" value="0"> The inspiratory valve is failing and must be replaced</label><label><input type="radio" name="q0" value="1"> The patient's lungs may have become stiffer, so the same pressure delivers less volume; check the circuit before suspecting the machine</label><label><input type="radio" name="q0" value="2"> The oxygen sensor is worn out</label><label><input type="radio" name="q0" value="3"> The PEEP valve is stuck open</label><p class="why" hidden>In pressure control the machine holds the pressure and the volume follows the lungs. A falling volume at a correctly reached pressure is often the patient, not the ventilator.</p></fieldset><fieldset class="q" data-answer="3"><legend>2. In volume-controlled ventilation, the high-pressure alarm sounds repeatedly. Which part of the system is the least likely first suspect?</legend><label><input type="radio" name="q1" value="0"> A kinked or water-filled circuit</label><label><input type="radio" name="q1" value="1"> A blocked filter on the expiratory side</label><label><input type="radio" name="q1" value="2"> Changes in the patient's lungs or airway</label><label><input type="radio" name="q1" value="3"> The air supply regulator inside the ventilator</label><p class="why" hidden>In volume control the pressure rises when the path to or from the lungs is harder to push through. Circuit, filters and the patient come first; the supply regulator does not raise airway pressure.</p></fieldset><fieldset class="q" data-answer="0"><legend>3. A clinician says: 'The ventilator gives breaths the patient did not ask for, the rate is much higher than set.' What do you check first?</legend><label><input type="radio" name="q2" value="0"> Trigger sensitivity, condensate in the tubing and small leaks</label><label><input type="radio" name="q2" value="1"> The mains power supply</label><label><input type="radio" name="q2" value="2"> The oxygen cell</label><label><input type="radio" name="q2" value="3"> The display unit software version</label><p class="why" hidden>This is the classic picture of auto-triggering: a very sensitive trigger reacting to water movement, leaks or other small signals.</p></fieldset><fieldset class="q" data-answer="2"><legend>4. The FiO2 alarm sounds and the displayed oxygen is lower than set. A colleague proposes recalibrating the oxygen sensor at 100% so that the display matches the setting. What is wrong with this?</legend><label><input type="radio" name="q3" value="0"> Nothing, this is the standard fix</label><label><input type="radio" name="q3" value="1"> Calibration should only be done at 21%</label><label><input type="radio" name="q3" value="2"> It hides the problem if the delivered oxygen really is low; first measure delivered oxygen with an independent analyser</label><label><input type="radio" name="q3" value="3"> Oxygen sensors never need calibration</label><p class="why" hidden>Calibrating a sensor to match an unverified delivery can make a real delivery fault invisible. Verify with an independent, calibrated analyser first.</p></fieldset><fieldset class="q" data-answer="1"><legend>5. You are called to an ICU because a ventilator in use keeps alarming 'PEEP low'. The patient is still connected. What is your first action?</legend><label><input type="radio" name="q4" value="0"> Remove the expiratory valve to inspect the diaphragm</label><label><input type="radio" name="q4" value="1"> Ask the clinical staff to move the patient to a backup (bag or another ventilator) and only then start diagnosing on a test lung</label><label><input type="radio" name="q4" value="2"> Run the self-test immediately</label><label><input type="radio" name="q4" value="3"> Increase the PEEP setting to compensate</label><p class="why" hidden>A ventilator is never serviced while connected to a patient, and engineers do not change clinical settings. Backup first, diagnosis second.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Check answers</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="vent-l1:1" data-done-text="Completed">Mark as completed</button><a class="btn ghost" href="/se-academy/course/vent-l1/pneumatic-chain/">Next lesson →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/about/">About</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>

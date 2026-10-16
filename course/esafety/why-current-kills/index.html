@@ -1,90 +1,217 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Why current is dangerous for a patient: macroshock and microshock · Electrical Safety for Medical Equipment</title><meta name="description" content="Explain what makes electric current dangerous, tell macroshock from microshock, and understand why a current too small to feel can kill a patient with a conductive path to the heart - so that every limit in the rest of the course makes sense."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/esafety/why-current-kills/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%2F%3E%3Cpath%20d%3D%22M10%2021%20V11%20M10%2016%20H15%20M18%2011%20h4%20a3%203%200%200%201%200%206%20h-4%20v4%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E"><style>:root{--bg:#0d0e10;--panel:#14161a;--panel2:#1a1d22;--line:#262a31;--text:#b9bec7;--strong:#eef1f5;--muted:#7b818c;--accent:#00a0e3;--accent2:#5cc8f2;--warn:#e5a54b;--ok:#4cc38a;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f7f8;--panel:#ffffff;--panel2:#f0f2f4;--line:#dfe3e8;--text:#3b4048;--strong:#101317;--muted:#6b7280;--accent:#0088c2;--accent2:#006b99;--warn:#a8650e;--ok:#18794e}}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Why current is dangerous for a patient: macroshock and microshock · Electrical Safety for Medical Equipment</title><meta name="description" content="Explain what makes electric current dangerous, tell macroshock from microshock, and understand why a current too small to feel can kill a patient with a conductive path to the heart - so that every limit in the rest of the course makes sense."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/esafety/why-current-kills/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans)}
-a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-header.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:5}
-header.top .wrap{display:flex;align-items:center;gap:20px;height:58px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--strong);font-weight:600;letter-spacing:.2px}.brand svg{width:26px;height:26px;color:var(--accent)}
-.brand small{font:500 11px var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-nav.main{margin-left:auto;display:flex;gap:18px;font-size:14px}nav.main a{color:var(--text)}
-.preview{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);font:12px/1.5 var(--mono);text-align:center;padding:6px 12px}
-h1,h2,h3{color:var(--strong);line-height:1.2;letter-spacing:-.01em}
-h1{font-size:clamp(30px,5vw,48px);margin:0 0 14px}h2{font-size:24px;margin:44px 0 14px}h3{font-size:17px;margin:0 0 6px}
-.eyebrow{font:500 12px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
-.lead{font-size:19px;color:var(--text);max-width:720px}
-.hero{padding:56px 0 30px}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--text)}
-a.card:hover{border-color:var(--accent);text-decoration:none}
-.card .k{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.card h3{margin-top:6px}
-.tiers{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.tier{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
-.tier .tag{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-.tier.pro{border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}.tier.pro .tag{color:var(--accent);border-color:var(--accent)}
-.fig{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
-.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 40px,1080px) * .78 + 250px)}
-.fig .cap{padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
-.crumbs{font:13px var(--mono);color:var(--muted);margin:26px 0 8px}.crumbs a{color:var(--muted)}
-table.chain{width:100%;border-collapse:collapse;font-size:15px}
-table.chain th,table.chain td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
-table.chain th{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-table.chain td:first-child{color:var(--strong);font-weight:600;white-space:nowrap}
-.cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.box ul{margin:6px 0 0;padding-left:18px}.box li{margin:4px 0}
-.box.safety{border-color:color-mix(in srgb,var(--warn) 55%,var(--line))}.box.safety h3{color:var(--warn)}
-details.fault{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 16px}
-details.fault summary{cursor:pointer;padding:13px 0;color:var(--strong);font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
-details.fault summary::before{content:"+";font:600 14px var(--mono);color:var(--accent);width:12px}
-details.fault[open] summary::before{content:"–"}
-details.fault .src{margin-left:auto;font:500 11px var(--mono);color:var(--muted);text-transform:uppercase}
-details.fault .src.field{color:var(--ok)}
-details.fault .body{padding:0 0 14px 22px}
-details.fault ol{margin:4px 0 8px;padding-left:20px}
-.pill{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;background:var(--panel2);color:var(--muted);margin-right:6px}
-.pill.draft{color:var(--warn)}
-.arch{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.note{border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0}
-table.pm{width:100%;border-collapse:collapse;font-size:15px}table.pm td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}table.pm td:last-child{white-space:nowrap;color:var(--muted);font-family:var(--mono);font-size:13px}
-footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;font-size:13px;color:var(--muted)}
-.btn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:10px 16px;font-weight:600}.btn:hover{text-decoration:none;filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--strong);border:1px solid var(--line)}
-@media (max-width:640px){nav.main{display:none}table.chain td:first-child{white-space:normal}.hero{padding:34px 0 16px}}
-.lang{font:500 12px var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--text)}
-.lang:hover{border-color:var(--accent);text-decoration:none}
-@media (max-width:640px){header.top .wrap{gap:10px}.lang{margin-left:auto}}
-.lessons{display:flex;flex-direction:column;gap:8px}
-.lesson-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text)}
-.lesson-row:hover{border-color:var(--accent);text-decoration:none}
-.lesson-row .ln{font:600 14px var(--mono);color:var(--accent)}.lesson-row b{color:var(--strong)}
-.lesson-row .tagline{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
 .muted{color:var(--muted)}
-.cert{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px;max-width:760px}
-.cert-in{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:8px}
-.cert-h{font:600 13px var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.cert-name{font-size:34px;color:var(--strong);font-weight:600}
-.cert-course{font-size:19px;color:var(--strong);font-weight:600}
-.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;font:12px var(--mono);color:var(--muted)}
-.box.locked{border-style:dashed;margin:24px 0}
-.lesson-nav{display:flex;justify-content:space-between;gap:16px;margin:40px 0 0;font-size:14px}
-.quiz fieldset{border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:12px 16px;background:var(--panel)}
-.quiz legend{color:var(--strong);font-weight:600;padding:0 4px}
-.quiz label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
-.quiz label.right{background:color-mix(in srgb,var(--ok) 18%,transparent)}
-.quiz label.wrong{background:color-mix(in srgb,#e5484d 18%,transparent)}
-.quiz .why{font-size:14px;color:var(--muted);margin:6px 0 0}
-ul.check{list-style:none;padding:0}ul.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px solid var(--line)}ul.check li::before{content:"";position:absolute;left:4px;top:10px;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:3px}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Preview build · content under engineering review · not yet open to the public</div>
-<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 21 V11 M10 16 H15 M18 11 h4 a3 3 0 0 1 0 6 h-4 v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Service Engineer <small>Academy</small></span></a><nav class="main"><a href="/se-academy/#equipment">Equipment</a><a href="/se-academy/#models">Models</a><a href="/se-academy/about/">About</a><a href="/se-academy/#access">Access</a></nav><a class="lang" href="/se-academy/ru/" hreflang="ru">RU</a></div></header>
-<main class="wrap"><div class="crumbs"><a href="/se-academy/">Academy</a> / <a href="/se-academy/course/esafety/">Electrical Safety for Medical Equipment</a> / Lesson 1</div><div class="eyebrow">Lesson 1 · 20 min</div><h1>Why current is dangerous for a patient: macroshock and microshock</h1><p class="lead">Explain what makes electric current dangerous, tell macroshock from microshock, and understand why a current too small to feel can kill a patient with a conductive path to the heart - so that every limit in the rest of the course makes sense.</p>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/courses/" aria-current>Courses</a><a href="/se-academy/#paths">Learning paths</a><a href="/se-academy/library/">Library</a><a href="/se-academy/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/se-academy/my/">My learning</a><a href="/se-academy/ru/course/esafety/why-current-kills/" hreflang="ru">RU</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/se-academy/course/esafety/">← Course</a><div class="ctitle">Electrical Safety for Medical Equipment</div><div><div class="ruler" data-ruler="esafety"><i data-n="1" class="here"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 6 lessons completed" data-none="Not started">Not started</div></div><ol><li class="here" data-done-of="esafety:1"><a href="/se-academy/course/esafety/why-current-kills/"><span class="n">01</span><span>Why current is dangerous for a patient: macroshock and microshock</span></a></li><li class="" data-done-of="esafety:2"><a href="/se-academy/course/esafety/classes-applied-parts/"><span class="n">02</span><span>Protection classes (I, II, internally powered) and applied part types (B, BF, CF)<span class="lock">locked</span></span></a></li><li class="" data-done-of="esafety:3"><a href="/se-academy/course/esafety/leakage-earth-insulation/"><span class="n">03</span><span>Leakage currents, protective earth resistance and insulation<span class="lock">locked</span></span></a></li><li class="" data-done-of="esafety:4"><a href="/se-academy/course/esafety/testing-after-repair/"><span class="n">04</span><span>Testing after repair and periodic testing: how the analyzer works and the test sequence<span class="lock">locked</span></span></a></li><li class="" data-done-of="esafety:5"><a href="/se-academy/course/esafety/defibrillation-proof/"><span class="n">05</span><span>Defibrillation-proof applied parts and what they mean for service<span class="lock">locked</span></span></a></li><li class="" data-done-of="esafety:6"><a href="/se-academy/course/esafety/records-failing-devices/"><span class="n">06</span><span>Recording the tests, pass or fail, and what to do with a failing device<span class="lock">locked</span></span></a></li><li class="exam"><a href="/se-academy/course/esafety/exam/"><span class="n">—</span><span>Final exam</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Lesson 1 / 6 · 20 min</span></div><h1>Why current is dangerous for a patient: macroshock and microshock</h1><p class="lead">Explain what makes electric current dangerous, tell macroshock from microshock, and understand why a current too small to feel can kill a patient with a conductive path to the heart - so that every limit in the rest of the course makes sense.</p>
 <h2>It is the current, not the voltage</h2><p>Engineers often say 'it is only 24 volts' or 'it is mains, be careful'. Both statements talk about voltage, but tissue is damaged by current flowing through it. Voltage only matters because it pushes current through whatever resistance is in the way. The same 230 V can give you an unpleasant jolt through dry boots and kill you through a wet floor.</p><p>The body is a poor conductor on the outside and a fair conductor on the inside. Dry, intact skin has a high resistance; the inside of the body - blood, muscle, body fluids - is a salty electrolyte with a resistance of a few hundred ohms between hands and feet. Once the skin is bypassed, wetted, broken or covered with conductive gel, the resistance of the circuit collapses and the current at the same voltage rises many times.</p><p>Three more things decide what a given current does. The path: current from hand to hand or hand to foot crosses the chest, current from finger to finger on one hand mostly does not. The duration: the longer the current flows, the lower the level that causes fibrillation, and a current lasting through a full cardiac cycle is much more dangerous than a short pulse. The frequency: the 50 or 60 Hz of the mains is close to the worst possible frequency for the heart and for muscles. Much higher frequencies, like those used in electrosurgery, mainly heat tissue instead of stimulating it.</p><p>Keep this picture in mind: current, path, duration, frequency. Every protective measure in a medical device is about keeping one of these small or harmless.</p><h2>What current does to the body</h2><p>The effects of mains-frequency current through the body have been studied for decades and are summarised in the IEC 60479 series. The thresholds are statistical - they vary with body size, path, health and the individual - so read the figures below as orders of magnitude, not as safe or unsafe lines.</p><p>For current flowing hand to hand or hand to foot through intact skin, the classic ladder looks like this:</p><ul><li>Around 1 mA: the threshold of perception - a tingle you notice.</li><li>Several mA: painful; muscles start to react involuntarily.</li><li>Roughly 10-20 mA: the 'let-go' threshold - flexor muscles of the hand contract and the person cannot release the conductor. The let-go current is lowest around mains frequency.</li><li>Tens of mA sustained: breathing muscles can be affected; the person may not be able to breathe while the current flows.</li><li>Roughly 50-100 mA and above for about a second: risk of ventricular fibrillation - the heart muscle stops pumping in a coordinated way. Without defibrillation, this is fatal within minutes.</li><li>Amperes: burns, tissue destruction, cardiac arrest.</li></ul><h2>Macroshock: current through the skin</h2><p>Macroshock is the situation everybody imagines: a person touches a live part, current enters through the skin at one point and leaves through the skin at another, usually hand to hand or hand to feet. The current spreads through the whole volume of the chest, and only a small fraction of it actually passes through the heart muscle. That is why the fibrillation threshold for macroshock is in the tens to hundreds of milliamps.</p><p>Macroshock is a risk to everybody in the room: the patient, the nurse, the cleaner and you. It happens when the basic insulation of a device fails and its protective earth does not do its job, when a damaged cord exposes a conductor, when liquid enters an enclosure, or when an engineer works on an open device with mains connected.</p><p>The defences against macroshock are the ones you already know from general electrical work: insulation between mains and anything a person can touch, a protective earth connection that carries fault current away and trips the protection, double insulation where there is no earth, and correct installation with residual current devices or isolated supplies where local rules require them.</p><h2>Microshock: current straight to the heart</h2><p>Now change one thing. The patient has a conductive path that ends inside or on the heart: a temporary pacing wire, an intracardiac catheter, a central venous line filled with saline, a pressure transducer line in the right atrium, an electrode used during cardiac surgery. Current that enters through such a path is not spread over the chest. It is concentrated at a small area of myocardium, and the current density there is very high.</p><p>In this situation the fibrillation threshold drops by roughly three orders of magnitude: from tens of milliamps to tens or low hundreds of microamps. This is microshock. The commonly taught safety limit for current that may reach the heart directly is 10 µA - well below anything a person can feel, and below what most people think of as 'electricity' at all.</p><p>Microshock has three properties that make it treacherous. The patient cannot feel it, so there is no warning. The patient is often sedated, anaesthetised or unconscious, so there is no reaction. And the source is not a broken device in the dramatic sense - it is the ordinary, small leakage current that every mains-powered device produces, or a few hundred millivolts of difference between two earth points in the room, applied through a path that should never carry current.</p><p>This is why the strictest requirements in IEC 60601-1 are reserved for applied parts intended for direct cardiac application - type CF, which you will study in lesson 2. Their allowed patient leakage is an order of magnitude below that of parts that touch only the skin.</p><h2>Why the hospital makes it worse</h2><p>A patient in a hospital bed is far more vulnerable than a healthy person at home. Skin resistance is deliberately reduced: ECG and ESU electrodes are gelled to make good contact, skin is wet with fluids or disinfectant, and needles and catheters bypass the skin completely. The patient may be lying on a metal-framed bed connected to several devices at once - a monitor, an infusion pump, a ventilator, a warming blanket - each with its own leakage and its own connection to earth.</p><p>When several devices touch one patient, their leakage currents can add up, and the patient can become the conductor between two points at slightly different potentials. A fault in one device can push current through an applied part of another. A nurse who touches a faulty device with one hand and the patient's catheter with the other can become the bridge. Multiple socket outlets, extension leads without earth, and devices brought in from home or another ward add uncontrolled paths.</p><p>That is why rooms used for cardiac procedures have equipotential bonding and often isolated power supplies, and why the standard treats a combination of devices around a patient as a medical electrical system with its own requirements. Local installation rules differ between countries; your job is to know that these protections exist and not to defeat them.</p><h2>Where leakage current comes from</h2><p>Leakage current is not a fault in itself. Every mains-powered device has capacitance between its live conductors and everything around them: the windings of the transformer to its core and screen, the mains filter capacitors connected from line and neutral to earth, the power cord conductors to each other, the circuit board tracks to the chassis. At 50 or 60 Hz, those capacitances pass a small current. Insulation is also never perfect, and dirt, moisture and ageing let more current through.</p><p>In a correctly working Class I device, almost all of this current flows harmlessly down the protective earth conductor. The trouble starts in a single fault condition: if the protective earth is broken, the same current looks for another way to earth - through the enclosure into the person touching it, or through the applied part into the patient. If mains voltage appears on a patient from another device, the isolation of the applied part is all that stands between that voltage and the patient's heart.</p><p>Medical device standards are therefore built around the idea that one fault must not create a hazard. The device must be safe in normal condition and remain safe when any single protective means fails. The leakage tests you will perform measure exactly how much current would reach a person or a patient in those conditions.</p><h2>What this means for the service engineer</h2><p>Almost everything you do inside a device can change its leakage or its protection: replacing a power supply, refitting a mains filter, re-routing a cable near the mains part, replacing an earth screw or a lost star washer, changing a probe or a patient cable for a cheaper one, adding a connection to 'cure' interference. The device left the factory with its protection tested. After your repair, you are the last person who can confirm it is still there.</p><p>Two rules follow from this lesson. First, never measure or troubleshoot leakage on a device that is connected to a patient - take it out of clinical use first. Second, treat any report of a tingle, a shock or a 'buzzing' enclosure as a safety incident, not a nuisance: if a nurse can feel it, a patient with a central line may already be at risk.</p><ul><li>Work on mains-powered equipment only with the mains disconnected unless the procedure requires power; if it does, use an isolating transformer or follow your organisation's live-work rules.</li><li>Discharge capacitors before touching high-voltage sections; respect the manufacturer's warnings.</li><li>Do not defeat protective earth with adaptors or by cutting an earth pin to make a plug fit.</li><li>After any repair that touches the mains part, the protective earth, the enclosure or an applied part, perform an electrical safety test before returning the device to service.</li></ul>
-<div class="box" style="margin-top:28px"><div class="k" style="font:500 11px var(--mono);color:var(--ok);text-transform:uppercase">field case</div><h3>The tingle at the bedside</h3><p>A nurse in an intensive care unit reports a slight tingle when she touches the metal rail of a bed and the housing of an infusion pump at the same time. The ward has already called it 'static' twice. The engineer takes the bed space out of use and finds the pump, a monitor and a warming unit all plugged into an extension strip lying on the floor. The strip's earth conductor is broken inside the plug. Three Class I devices had no protective earth at all; their normal leakage was flowing to earth through whoever touched them. The patient in that bed had a central venous line. The strip is removed, the devices are tested and pass, and the ward bans uncontrolled extension strips.</p><p class="note">A tingle that staff can feel means a current far above what a patient with a conductive path to the heart can tolerate. Treat it as an incident, take the bed space out of use, and look for the lost earth before you look for a broken device.</p></div>
+<div class="case"><div class="label">field case</div><h3>The tingle at the bedside</h3><p>A nurse in an intensive care unit reports a slight tingle when she touches the metal rail of a bed and the housing of an infusion pump at the same time. The ward has already called it 'static' twice. The engineer takes the bed space out of use and finds the pump, a monitor and a warming unit all plugged into an extension strip lying on the floor. The strip's earth conductor is broken inside the plug. Three Class I devices had no protective earth at all; their normal leakage was flowing to earth through whoever touched them. The patient in that bed had a central venous line. The strip is removed, the devices are tested and pass, and the ward bans uncontrolled extension strips.</p><p class="note">A tingle that staff can feel means a current far above what a patient with a conductive path to the heart can tolerate. Treat it as an incident, take the bed space out of use, and look for the lost earth before you look for a broken device.</p></div>
 <h2>On-site checklist</h2><ul class="check"><li>Remember: current through the heart kills, voltage only drives it; path, duration and mains frequency make it worse.</li><li>Macroshock: through the skin, tens of milliamps and above, a risk to everybody in the room.</li><li>Microshock: through a conductive path to the heart, tens of microamps, felt by nobody, prevented only by design and testing.</li><li>Never measure or troubleshoot leakage on a device connected to a patient.</li><li>Treat any report of a tingle or shock from equipment as a safety incident and take the equipment out of use.</li><li>Check for missing earths in the installation: extension strips, adaptors, damaged plugs and outlets.</li><li>After any repair touching mains, earth, enclosure or applied parts, run an electrical safety test before return to service.</li></ul>
-<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. What actually causes injury or ventricular fibrillation in an electric shock?</legend><label><input type="radio" name="q0" value="0"> The voltage of the source</label><label><input type="radio" name="q0" value="1"> The current flowing through tissue, especially the heart</label><label><input type="radio" name="q0" value="2"> The power rating of the device</label><label><input type="radio" name="q0" value="3"> The static charge on the enclosure</label><p class="why" hidden>Tissue is damaged by current. Voltage matters only because it drives current through the resistance of the body and the circuit.</p></fieldset><fieldset class="q" data-answer="2"><legend>2. Why is the fibrillation threshold so much lower in microshock than in macroshock?</legend><label><input type="radio" name="q1" value="0"> Because microshock is always at a higher frequency</label><label><input type="radio" name="q1" value="1"> Because the patient is usually lying down</label><label><input type="radio" name="q1" value="2"> Because the current enters through a conductive path at the heart and is concentrated on a small area of myocardium</label><label><input type="radio" name="q1" value="3"> Because hospital mains voltage is higher</label><p class="why" hidden>In macroshock most of the current spreads through the chest and bypasses the heart. A catheter or pacing wire delivers all of it at the heart, so the current density there is very high.</p></fieldset><fieldset class="q" data-answer="0"><legend>3. Which current is commonly taught as the safety limit for current that may reach the heart directly?</legend><label><input type="radio" name="q2" value="0"> 10 µA</label><label><input type="radio" name="q2" value="1"> 1 mA</label><label><input type="radio" name="q2" value="2"> 10 mA</label><label><input type="radio" name="q2" value="3"> 100 mA</label><p class="why" hidden>10 µA is the commonly cited microshock safety limit and the basis for the strict patient leakage limits of type CF applied parts.</p></fieldset><fieldset class="q" data-answer="1"><legend>4. In a correctly working Class I device, where does most of the normal leakage current flow?</legend><label><input type="radio" name="q3" value="0"> Through the patient connections</label><label><input type="radio" name="q3" value="1"> Through the protective earth conductor to earth</label><label><input type="radio" name="q3" value="2"> Back into the neutral via the user</label><label><input type="radio" name="q3" value="3"> Nowhere - a correct device has no leakage</label><p class="why" hidden>Every mains device has leakage through capacitance and insulation. In a Class I device the protective earth carries it away; if the earth is broken, it flows through whoever or whatever touches the device.</p></fieldset><fieldset class="q" data-answer="2"><legend>5. A nurse reports a tingle when touching a monitor and the bed rail. What is the correct first action?</legend><label><input type="radio" name="q4" value="0"> Explain that it is static electricity</label><label><input type="radio" name="q4" value="1"> Run a leakage test while the patient stays connected to see the real value</label><label><input type="radio" name="q4" value="2"> Take the equipment and bed space out of use and check for a lost earth and faulty device</label><label><input type="radio" name="q4" value="3"> Wait for the next planned maintenance</label><p class="why" hidden>A current staff can feel is far above what a patient with a cardiac path can tolerate. Remove the risk first; never test with a patient connected.</p></fieldset><button class="btn" type="button" data-check>Check answers</button> <span data-score></span></div>
-<div class="lesson-nav"><span></span><a href="/se-academy/course/esafety/classes-applied-parts/">Protection classes (I, II, internally powered) and applied part types (B, BF, CF) →</a></div><script>document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}))</script></main>
-<footer><div class="wrap">Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></footer>
-</body></html>
+<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. What actually causes injury or ventricular fibrillation in an electric shock?</legend><label><input type="radio" name="q0" value="0"> The voltage of the source</label><label><input type="radio" name="q0" value="1"> The current flowing through tissue, especially the heart</label><label><input type="radio" name="q0" value="2"> The power rating of the device</label><label><input type="radio" name="q0" value="3"> The static charge on the enclosure</label><p class="why" hidden>Tissue is damaged by current. Voltage matters only because it drives current through the resistance of the body and the circuit.</p></fieldset><fieldset class="q" data-answer="2"><legend>2. Why is the fibrillation threshold so much lower in microshock than in macroshock?</legend><label><input type="radio" name="q1" value="0"> Because microshock is always at a higher frequency</label><label><input type="radio" name="q1" value="1"> Because the patient is usually lying down</label><label><input type="radio" name="q1" value="2"> Because the current enters through a conductive path at the heart and is concentrated on a small area of myocardium</label><label><input type="radio" name="q1" value="3"> Because hospital mains voltage is higher</label><p class="why" hidden>In macroshock most of the current spreads through the chest and bypasses the heart. A catheter or pacing wire delivers all of it at the heart, so the current density there is very high.</p></fieldset><fieldset class="q" data-answer="0"><legend>3. Which current is commonly taught as the safety limit for current that may reach the heart directly?</legend><label><input type="radio" name="q2" value="0"> 10 µA</label><label><input type="radio" name="q2" value="1"> 1 mA</label><label><input type="radio" name="q2" value="2"> 10 mA</label><label><input type="radio" name="q2" value="3"> 100 mA</label><p class="why" hidden>10 µA is the commonly cited microshock safety limit and the basis for the strict patient leakage limits of type CF applied parts.</p></fieldset><fieldset class="q" data-answer="1"><legend>4. In a correctly working Class I device, where does most of the normal leakage current flow?</legend><label><input type="radio" name="q3" value="0"> Through the patient connections</label><label><input type="radio" name="q3" value="1"> Through the protective earth conductor to earth</label><label><input type="radio" name="q3" value="2"> Back into the neutral via the user</label><label><input type="radio" name="q3" value="3"> Nowhere - a correct device has no leakage</label><p class="why" hidden>Every mains device has leakage through capacitance and insulation. In a Class I device the protective earth carries it away; if the earth is broken, it flows through whoever or whatever touches the device.</p></fieldset><fieldset class="q" data-answer="2"><legend>5. A nurse reports a tingle when touching a monitor and the bed rail. What is the correct first action?</legend><label><input type="radio" name="q4" value="0"> Explain that it is static electricity</label><label><input type="radio" name="q4" value="1"> Run a leakage test while the patient stays connected to see the real value</label><label><input type="radio" name="q4" value="2"> Take the equipment and bed space out of use and check for a lost earth and faulty device</label><label><input type="radio" name="q4" value="3"> Wait for the next planned maintenance</label><p class="why" hidden>A current staff can feel is far above what a patient with a cardiac path can tolerate. Remove the risk first; never test with a patient connected.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Check answers</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="esafety:1" data-done-text="Completed">Mark as completed</button><a class="btn ghost" href="/se-academy/course/esafety/classes-applied-parts/">Next lesson →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/about/">About</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>

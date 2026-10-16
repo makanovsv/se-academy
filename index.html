@@ -1,91 +1,218 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Engineer Academy — how medical equipment works and how it breaks</title><meta name="description" content="Vendor-neutral training for medical equipment service engineers: MRI, CT, X-ray, ultrasound, ventilators, anaesthesia, monitors, lab."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%2F%3E%3Cpath%20d%3D%22M10%2021%20V11%20M10%2016%20H15%20M18%2011%20h4%20a3%203%200%200%201%200%206%20h-4%20v4%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E"><style>:root{--bg:#0d0e10;--panel:#14161a;--panel2:#1a1d22;--line:#262a31;--text:#b9bec7;--strong:#eef1f5;--muted:#7b818c;--accent:#00a0e3;--accent2:#5cc8f2;--warn:#e5a54b;--ok:#4cc38a;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f7f8;--panel:#ffffff;--panel2:#f0f2f4;--line:#dfe3e8;--text:#3b4048;--strong:#101317;--muted:#6b7280;--accent:#0088c2;--accent2:#006b99;--warn:#a8650e;--ok:#18794e}}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Engineer Academy — how medical equipment works and how it breaks</title><meta name="description" content="Vendor-neutral training for medical equipment service engineers: MRI, CT, X-ray, ultrasound, ventilators, anaesthesia, monitors, lab."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans)}
-a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-header.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:5}
-header.top .wrap{display:flex;align-items:center;gap:20px;height:58px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--strong);font-weight:600;letter-spacing:.2px}.brand svg{width:26px;height:26px;color:var(--accent)}
-.brand small{font:500 11px var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-nav.main{margin-left:auto;display:flex;gap:18px;font-size:14px}nav.main a{color:var(--text)}
-.preview{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);font:12px/1.5 var(--mono);text-align:center;padding:6px 12px}
-h1,h2,h3{color:var(--strong);line-height:1.2;letter-spacing:-.01em}
-h1{font-size:clamp(30px,5vw,48px);margin:0 0 14px}h2{font-size:24px;margin:44px 0 14px}h3{font-size:17px;margin:0 0 6px}
-.eyebrow{font:500 12px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
-.lead{font-size:19px;color:var(--text);max-width:720px}
-.hero{padding:56px 0 30px}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--text)}
-a.card:hover{border-color:var(--accent);text-decoration:none}
-.card .k{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.card h3{margin-top:6px}
-.tiers{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.tier{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
-.tier .tag{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
-.tier.pro{border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}.tier.pro .tag{color:var(--accent);border-color:var(--accent)}
-.fig{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
-.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 40px,1080px) * .78 + 250px)}
-.fig .cap{padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
-.crumbs{font:13px var(--mono);color:var(--muted);margin:26px 0 8px}.crumbs a{color:var(--muted)}
-table.chain{width:100%;border-collapse:collapse;font-size:15px}
-table.chain th,table.chain td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
-table.chain th{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-table.chain td:first-child{color:var(--strong);font-weight:600;white-space:nowrap}
-.cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.box ul{margin:6px 0 0;padding-left:18px}.box li{margin:4px 0}
-.box.safety{border-color:color-mix(in srgb,var(--warn) 55%,var(--line))}.box.safety h3{color:var(--warn)}
-details.fault{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 16px}
-details.fault summary{cursor:pointer;padding:13px 0;color:var(--strong);font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
-details.fault summary::before{content:"+";font:600 14px var(--mono);color:var(--accent);width:12px}
-details.fault[open] summary::before{content:"–"}
-details.fault .src{margin-left:auto;font:500 11px var(--mono);color:var(--muted);text-transform:uppercase}
-details.fault .src.field{color:var(--ok)}
-details.fault .body{padding:0 0 14px 22px}
-details.fault ol{margin:4px 0 8px;padding-left:20px}
-.pill{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;background:var(--panel2);color:var(--muted);margin-right:6px}
-.pill.draft{color:var(--warn)}
-.arch{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.note{border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0}
-table.pm{width:100%;border-collapse:collapse;font-size:15px}table.pm td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}table.pm td:last-child{white-space:nowrap;color:var(--muted);font-family:var(--mono);font-size:13px}
-footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;font-size:13px;color:var(--muted)}
-.btn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:10px 16px;font-weight:600}.btn:hover{text-decoration:none;filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--strong);border:1px solid var(--line)}
-@media (max-width:640px){nav.main{display:none}table.chain td:first-child{white-space:normal}.hero{padding:34px 0 16px}}
-.lang{font:500 12px var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--text)}
-.lang:hover{border-color:var(--accent);text-decoration:none}
-@media (max-width:640px){header.top .wrap{gap:10px}.lang{margin-left:auto}}
-.lessons{display:flex;flex-direction:column;gap:8px}
-.lesson-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text)}
-.lesson-row:hover{border-color:var(--accent);text-decoration:none}
-.lesson-row .ln{font:600 14px var(--mono);color:var(--accent)}.lesson-row b{color:var(--strong)}
-.lesson-row .tagline{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
 .muted{color:var(--muted)}
-.cert{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px;max-width:760px}
-.cert-in{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:8px}
-.cert-h{font:600 13px var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.cert-name{font-size:34px;color:var(--strong);font-weight:600}
-.cert-course{font-size:19px;color:var(--strong);font-weight:600}
-.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;font:12px var(--mono);color:var(--muted)}
-.box.locked{border-style:dashed;margin:24px 0}
-.lesson-nav{display:flex;justify-content:space-between;gap:16px;margin:40px 0 0;font-size:14px}
-.quiz fieldset{border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:12px 16px;background:var(--panel)}
-.quiz legend{color:var(--strong);font-weight:600;padding:0 4px}
-.quiz label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
-.quiz label.right{background:color-mix(in srgb,var(--ok) 18%,transparent)}
-.quiz label.wrong{background:color-mix(in srgb,#e5484d 18%,transparent)}
-.quiz .why{font-size:14px;color:var(--muted);margin:6px 0 0}
-ul.check{list-style:none;padding:0}ul.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px solid var(--line)}ul.check li::before{content:"";position:absolute;left:4px;top:10px;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:3px}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Preview build · content under engineering review · not yet open to the public</div>
-<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 21 V11 M10 16 H15 M18 11 h4 a3 3 0 0 1 0 6 h-4 v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Service Engineer <small>Academy</small></span></a><nav class="main"><a href="/se-academy/#equipment">Equipment</a><a href="/se-academy/#models">Models</a><a href="/se-academy/about/">About</a><a href="/se-academy/#access">Access</a></nav><a class="lang" href="/se-academy/ru/" hreflang="ru">RU</a></div></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">Independent · vendor-neutral · written by field engineers</div><h1>How medical equipment works,<br>and how it breaks.</h1><p class="lead">Training for the engineers who keep imaging, life-support and laboratory equipment running. Start with how each machine works, then go down to the brand and the exact model: real faults, checks in the right order, preventive maintenance and the parts worth keeping on the shelf.</p>
-<p><a class="btn" href="/se-academy/equipment/mri/">Open the MRI cutaway</a> &nbsp; <a class="btn ghost" href="#models">Browse models</a></p></section>
-<div class="fig" style="--h:1010px"><iframe src="/se-academy/figures/mri-1-5t.html" title="1.5 T MRI, cut at the mid-plane" loading="lazy"></iframe><div class="cap">Interactive. Hover to open the magnet; stop the compressor and watch the helium level. <a href="/se-academy/figures/mri-1-5t.html" target="_blank" rel="noopener">Open full screen ↗</a></div></div>
-<h2 id="courses">Certificate courses</h2><div class="grid"><a class="card" href="/se-academy/course/esafety/"><span class="k">Certificate course · 3 h</span><h3>Electrical Safety for Medical Equipment</h3><div>Leakage, earth, applied parts and testing after repair</div></a><a class="card" href="/se-academy/course/mri-l1/"><span class="k">Certificate course · 4 h</span><h3>MRI Service — Level 1</h3><div>Safety, cryogenics and preventive maintenance</div></a><a class="card" href="/se-academy/course/vent-l1/"><span class="k">Certificate course · 4 h</span><h3>Ventilator Service — Level 1</h3><div>Safety, checks and preventive maintenance</div></a></div>
-<h2 id="equipment">Equipment</h2><div class="grid"><a class="card" href="/se-academy/equipment/mri/"><span class="k">how it works</span><h3>MRI</h3><div>A superconducting magnet, three gradient coils and an RF chain that turn hydrogen nuclei into a spatially encoded radio signal, then into images.</div></a><a class="card" href="/se-academy/equipment/ct/"><span class="k">how it works</span><h3>CT</h3><div>An X-ray tube and a curved multi-row detector rotating around the patient on a slip-ring gantry, measuring attenuation from hundreds of angles and reconstructing cross-sectional images.</div></a><a class="card" href="/se-academy/equipment/xray/"><span class="k">how it works</span><h3>X-ray / DR</h3><div>A high-voltage generator drives an X-ray tube for a short exposure; a flat-panel detector turns the transmitted radiation into a digital projection image.</div></a><a class="card" href="/se-academy/equipment/ultrasound/"><span class="k">1 model page</span><h3>Ultrasound</h3><div>A probe of piezoelectric elements sends short acoustic pulses into tissue and listens for echoes; the system beamforms them into real-time images and Doppler flow data.</div></a><a class="card" href="/se-academy/equipment/ventilator/"><span class="k">2 model pages</span><h3>ICU ventilator</h3><div>A closed-loop gas delivery system that mixes air and oxygen, delivers controlled breaths through valves and sensors, and protects the patient with alarms and a safety valve.</div></a><a class="card" href="/se-academy/equipment/anesthesia/"><span class="k">1 model page</span><h3>Anaesthesia workstation</h3><div>A gas delivery system, vaporiser and rebreathing circle with a ventilator, built so that the patient always receives oxygen and the anaesthetist always knows what is being delivered.</div></a><a class="card" href="/se-academy/equipment/patient-monitor/"><span class="k">how it works</span><h3>Patient monitor</h3><div>A set of sensor front ends (ECG, SpO2, NIBP, IBP, temperature, CO2) feeding one processor that displays trends and raises alarms, often over a hospital network.</div></a><a class="card" href="/se-academy/equipment/lab-chemistry/"><span class="k">1 model page</span><h3>Clinical chemistry analyzer</h3><div>An automated photometer: it pipettes samples and reagents into cuvettes, incubates them at a controlled temperature, and measures colour change or ion potentials to calculate analyte concentrations.</div></a></div>
-<h2 id="models">Models</h2><p>Model pages are built from manufacturer-independent notes and from real field cases from our service work. Every page says what it is based on.</p><div class="grid"><a class="card" href="/se-academy/model/ge-avance-family/"><span class="k">Anaesthesia workstation · GE HealthCare</span><h3>Avance family (Datex-Ohmeda S/5 Avance, Avance CS2)</h3><div>Datex-Ohmeda / GE anaesthesia workstations with an electronic gas mixer, an integrated bellows ventilator and a compact breathing system, used in operating theatres for general anaesthesia from adults to children.</div></a><a class="card" href="/se-academy/model/ge-carescape-r860/"><span class="k">ICU ventilator · GE HealthCare</span><h3>Carescape R860</h3><div>Pneumatically driven ICU ventilator for adult, paediatric and neonatal patients that runs from wall (or compressor) air and oxygen and is used in intensive care units and step-down wards.</div></a><a class="card" href="/se-academy/model/ge-voluson-e-series/"><span class="k">Ultrasound · GE HealthCare</span><h3>Voluson E6 / E8 / E10</h3><div>Premium cart-based ultrasound system built around 3D/4D volume imaging, used mainly in obstetrics, gynaecology and fetal medicine departments.</div></a><a class="card" href="/se-academy/model/mindray-bs-240/"><span class="k">Clinical chemistry analyzer · Mindray</span><h3>BS-240</h3><div>Benchtop, fully automated discrete clinical chemistry analyzer with an optional ISE module, used in small and mid-size hospital and private laboratories for routine biochemistry.</div></a><a class="card" href="/se-academy/model/mindray-sv600/"><span class="k">ICU ventilator · Mindray</span><h3>SV600 / SV650</h3><div>Mindray's mid-to-high-end ICU ventilator for adult, paediatric and (with the neonatal module) neonatal patients, running on wall air and O2 or on an optional internal blower, used in ICUs, emergency departments and for in-hospital transport.</div></a></div>
-<h2 id="access">Access</h2><div class="tiers"><div class="tier"><span class="tag">Free</span><h3 style="margin-top:10px">How it works</h3><p>Every equipment type: principle, signal chain, site requirements, safety, symptom map, interactive figures.</p></div><div class="tier pro"><span class="tag">Pro · coming</span><h3 style="margin-top:10px">Brands and models</h3><p>Fault-finding by model, preventive maintenance, parts to stock, field notes, comparisons. Individual and team plans; certificate of completion.</p><p><a href="mailto:ceo@serviceengineer.app?subject=Academy%20early%20access">Ask for early access →</a></p></div><div class="tier"><span class="tag">Teams</span><h3 style="margin-top:10px">For service companies</h3><p>Seats for your engineers, progress per engineer, model packs matched to your installed base.</p></div></div></main>
-<footer><div class="wrap">Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></footer>
-</body></html>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/courses/">Courses</a><a href="/se-academy/#paths">Learning paths</a><a href="/se-academy/library/">Library</a><a href="/se-academy/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/se-academy/my/">My learning</a><a href="/se-academy/ru/" hreflang="ru">RU</a></div></div></header>
+<main><div class="wrap"><div class="hero"><div><div class="label">Training for medical equipment service engineers</div><h1 style="margin-top:14px">Learn to service the machines hospitals cannot do without.</h1><p class="lead" style="margin-top:22px">Certificate courses on MRI, CT, ultrasound, ventilators, anaesthesia, patient monitors and electrical safety. Written by field engineers, vendor-neutral, in English and Russian. Every course ends with an exam and a certificate anyone can verify.</p><div class="btns"><a class="btn" href="/se-academy/courses/">Browse courses</a><a class="btn ghost" href="/se-academy/course/esafety/why-current-kills/">Start a free lesson</a></div></div><div class="facts"><div class="fact"><b>3</b><span>certificate courses</span></div><div class="fact"><b>22</b><span>lessons</span></div><div class="fact"><b>11</b><span>hours of training</span></div></div></div></div>
+<section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>How it works</h2></div><div class="steps"><div class="step"><div class="n">1</div><h3>Learn</h3><p>Short lessons built around real faults, interactive figures and on-site checklists. The first lesson of every course is free.</p></div><div class="step"><div class="n">2</div><h3>Pass the exam</h3><p>Situational questions drawn from a bank, a time limit and a pass mark of 75 %. One free retake.</p></div><div class="step"><div class="n">3</div><h3>Get a verifiable certificate</h3><p>A certificate with your name, hours and score, a unique number and a public verification page for employers and customers.</p></div></div></div></section>
+<section class="band" id="courses"><div class="wrap"><div class="sec-head"><span class="num">02</span><h2>Course catalog</h2></div><div class="filters" data-filter-group="#catalog-grid"><button data-v="all" aria-pressed="true">All</button><button data-v="foundation" aria-pressed="false">Foundation</button><button data-v="mri" aria-pressed="false">MRI</button><button data-v="ct" aria-pressed="false">CT</button><button data-v="ultrasound" aria-pressed="false">Ultrasound</button><button data-v="ventilator" aria-pressed="false">Ventilators</button><button data-v="anesthesia" aria-pressed="false">Anaesthesia</button><button data-v="patient-monitor" aria-pressed="false">Patient monitors</button></div><div class="courses" id="catalog-grid"><a class="course-card" data-mod="foundation" href="/se-academy/course/esafety/"><div class="cover"><span class="mod">ES</span><span class="folio">01</span></div><div style="margin-bottom:10px"><span class="tag blue">Foundation</span></div><h3>Electrical Safety for Medical Equipment</h3><div class="sub">Leakage, earth, applied parts and testing after repair</div><div class="meta"><span>6 lessons</span><span>3 h</span><span class="price">$79</span></div><div><div class="ruler" data-ruler="esafety"><i data-n="1"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 6 lessons completed" data-none="Not started">Not started</div></div></a><a class="course-card" data-mod="mri" href="/se-academy/course/mri-l1/"><div class="cover"><span class="mod">MRI</span><span class="folio">02</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>MRI Service — Level 1</h3><div class="sub">Safety, cryogenics and preventive maintenance</div><div class="meta"><span>8 lessons</span><span>4 h</span><span class="price">$149</span></div><div><div class="ruler" data-ruler="mri-l1"><i data-n="1"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 8 lessons completed" data-none="Not started">Not started</div></div></a><a class="course-card" data-mod="ct" href="/se-academy/course/ct-l1/"><div class="cover"><span class="mod">CT</span><span class="folio">03</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>CT Service — Level 1</h3><div class="sub">Safety, calibration and preventive maintenance</div><div class="meta"><span class="soon">in preparation</span></div></a><a class="course-card" data-mod="ultrasound" href="/se-academy/course/us-l1/"><div class="cover"><span class="mod">US</span><span class="folio">04</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>Ultrasound Service — Level 1</h3><div class="sub">Probes, image quality and preventive maintenance</div><div class="meta"><span class="soon">in preparation</span></div></a><a class="course-card" data-mod="ventilator" href="/se-academy/course/vent-l1/"><div class="cover"><span class="mod">VENT</span><span class="folio">05</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>Ventilator Service — Level 1</h3><div class="sub">Safety, checks and preventive maintenance</div><div class="meta"><span>8 lessons</span><span>4 h</span><span class="price">$149</span></div><div><div class="ruler" data-ruler="vent-l1"><i data-n="1"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 8 lessons completed" data-none="Not started">Not started</div></div></a><a class="course-card" data-mod="anesthesia" href="/se-academy/course/anes-l1/"><div class="cover"><span class="mod">ANES</span><span class="folio">06</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>Anaesthesia Workstation Service — Level 1</h3><div class="sub">Gas circuit, leak tests and preventive maintenance</div><div class="meta"><span class="soon">in preparation</span></div></a><a class="course-card" data-mod="patient-monitor" href="/se-academy/course/mon-l1/"><div class="cover"><span class="mod">MON</span><span class="folio">07</span></div><div style="margin-bottom:10px"><span class="tag">Level 1</span></div><h3>Patient Monitor Service — Level 1</h3><div class="sub">Parameters, simulators and preventive maintenance</div><div class="meta"><span class="soon">in preparation</span></div></a></div></div></section>
+<section class="band"><div class="wrap"><div class="sec-head"><span class="num">03</span><h2>1.5 T MRI, cut at the mid-plane</h2></div><div class="fig"><iframe src="/se-academy/figures/mri-1-5t-light.html" title="1.5 T MRI, cut at the mid-plane" loading="lazy"></iframe><div class="cap">Interactive. Hover to open the magnet; stop the compressor and watch the helium level. <a href="/se-academy/figures/mri-1-5t-light.html" target="_blank" rel="noopener">Open full screen ↗</a></div></div></div></section>
+<section class="band" id="paths"><div class="wrap"><div class="sec-head"><span class="num">04</span><h2>Learning paths</h2></div><p class="lead" style="margin-bottom:24px">Each equipment track goes from safe preventive maintenance to fault-finding and component repair. Foundation courses apply to every track.</p><div class="paths"><div class="h"></div><div class="h">Foundation</div><div class="h">Level 1 · PM and safety</div><div class="h">Level 2 · Fault-finding</div><div class="h">Level 3 · Component repair</div><div class="row">Foundation</div><div><a href="/se-academy/course/esafety/">Electrical Safety for Medical Equipment</a></div><div class="soon">—</div><div class="soon">—</div><div class="soon">—</div><div class="row">MRI</div><div class="soon">—</div><div><a href="/se-academy/course/mri-l1/">MRI Service — Level 1</a></div><div class="soon">—</div><div class="soon">—</div><div class="row">CT</div><div class="soon">—</div><div><span class="soon">CT Service — Level 1 · in preparation</span></div><div class="soon">—</div><div class="soon">—</div><div class="row">X-ray</div><div class="soon">—</div><div class="soon">—</div><div class="soon">—</div><div class="soon">—</div><div class="row">Ultrasound</div><div class="soon">—</div><div><span class="soon">Ultrasound Service — Level 1 · in preparation</span></div><div class="soon">—</div><div class="soon">—</div><div class="row">Ventilators</div><div class="soon">—</div><div><a href="/se-academy/course/vent-l1/">Ventilator Service — Level 1</a></div><div class="soon">—</div><div class="soon">—</div><div class="row">Anaesthesia</div><div class="soon">—</div><div><span class="soon">Anaesthesia Workstation Service — Level 1 · in preparation</span></div><div class="soon">—</div><div class="soon">—</div><div class="row">Patient monitors</div><div class="soon">—</div><div><span class="soon">Patient Monitor Service — Level 1 · in preparation</span></div><div class="soon">—</div><div class="soon">—</div><div class="row">Lab chemistry</div><div class="soon">—</div><div class="soon">—</div><div class="soon">—</div><div class="soon">—</div></div></div></section>
+<section class="band"><div class="wrap"><div class="sec-head"><span class="num">05</span><h2>Library</h2></div><p class="lead" style="margin-bottom:24px">Free reference: how each type of equipment works, and service notes for specific models.</p><div class="lib"><a href="/se-academy/equipment/mri/"><span>How it works</span><b>MRI</b><span>A superconducting magnet, three gradient coils and an RF chain that turn hydrogen nuclei into a spatially encoded radio signal, then into images.</span></a><a href="/se-academy/equipment/ct/"><span>How it works</span><b>CT</b><span>An X-ray tube and a curved multi-row detector rotating around the patient on a slip-ring gantry, measuring attenuation from hundreds of angles and reconstructing cross-sectional images.</span></a><a href="/se-academy/equipment/xray/"><span>How it works</span><b>X-ray / DR</b><span>A high-voltage generator drives an X-ray tube for a short exposure; a flat-panel detector turns the transmitted radiation into a digital projection image.</span></a><a href="/se-academy/equipment/ultrasound/"><span>How it works</span><b>Ultrasound</b><span>A probe of piezoelectric elements sends short acoustic pulses into tissue and listens for echoes; the system beamforms them into real-time images and Doppler flow data.</span></a><a href="/se-academy/equipment/ventilator/"><span>How it works</span><b>ICU ventilator</b><span>A closed-loop gas delivery system that mixes air and oxygen, delivers controlled breaths through valves and sensors, and protects the patient with alarms and a safety valve.</span></a><a href="/se-academy/equipment/anesthesia/"><span>How it works</span><b>Anaesthesia workstation</b><span>A gas delivery system, vaporiser and rebreathing circle with a ventilator, built so that the patient always receives oxygen and the anaesthetist always knows what is being delivered.</span></a><a href="/se-academy/equipment/patient-monitor/"><span>How it works</span><b>Patient monitor</b><span>A set of sensor front ends (ECG, SpO2, NIBP, IBP, temperature, CO2) feeding one processor that displays trends and raises alarms, often over a hospital network.</span></a><a href="/se-academy/equipment/lab-chemistry/"><span>How it works</span><b>Clinical chemistry analyzer</b><span>An automated photometer: it pipettes samples and reagents into cuvettes, incubates them at a controlled temperature, and measures colour change or ion potentials to calculate analyte concentrations.</span></a></div><p style="margin-top:18px"><a href="/se-academy/library/">Model notes →</a></p></div></section>
+<section class="band"><div class="wrap"><div class="sec-head"><span class="num">06</span><h2>Certificates</h2></div><p class="lead">Every certificate has a public page. Enter the number to check it.</p><div class="btns"><a class="btn ghost" href="/se-academy/verify/">Verify a certificate</a></div></div></section></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/about/">About</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>
