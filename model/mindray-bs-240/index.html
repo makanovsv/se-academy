@@ -56,6 +56,27 @@ footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;font
 .lang{font:500 12px var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--text)}
 .lang:hover{border-color:var(--accent);text-decoration:none}
 @media (max-width:640px){header.top .wrap{gap:10px}.lang{margin-left:auto}}
+.lessons{display:flex;flex-direction:column;gap:8px}
+.lesson-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text)}
+.lesson-row:hover{border-color:var(--accent);text-decoration:none}
+.lesson-row .ln{font:600 14px var(--mono);color:var(--accent)}.lesson-row b{color:var(--strong)}
+.lesson-row .tagline{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+.muted{color:var(--muted)}
+.cert{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px;max-width:760px}
+.cert-in{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:8px}
+.cert-h{font:600 13px var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:34px;color:var(--strong);font-weight:600}
+.cert-course{font-size:19px;color:var(--strong);font-weight:600}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;font:12px var(--mono);color:var(--muted)}
+.box.locked{border-style:dashed;margin:24px 0}
+.lesson-nav{display:flex;justify-content:space-between;gap:16px;margin:40px 0 0;font-size:14px}
+.quiz fieldset{border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:12px 16px;background:var(--panel)}
+.quiz legend{color:var(--strong);font-weight:600;padding:0 4px}
+.quiz label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
+.quiz label.right{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.quiz label.wrong{background:color-mix(in srgb,#e5484d 18%,transparent)}
+.quiz .why{font-size:14px;color:var(--muted);margin:6px 0 0}
+ul.check{list-style:none;padding:0}ul.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px solid var(--line)}ul.check li::before{content:"";position:absolute;left:4px;top:10px;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:3px}
 </style></head><body>
 <div class="preview">Preview build · content under engineering review · not yet open to the public</div>
 <header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 21 V11 M10 16 H15 M18 11 h4 a3 3 0 0 1 0 6 h-4 v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Service Engineer <small>Academy</small></span></a><nav class="main"><a href="/se-academy/#equipment">Equipment</a><a href="/se-academy/#models">Models</a><a href="/se-academy/about/">About</a><a href="/se-academy/#access">Access</a></nav><a class="lang" href="/se-academy/ru/model/mindray-bs-240/" hreflang="ru">RU</a></div></header>
