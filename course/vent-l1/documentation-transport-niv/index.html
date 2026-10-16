@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Documentation; transport and non-invasive ventilators in brief · Ventilator Service — Level 1</title><meta name="description" content="Write a PM report that proves the ventilator is safe, with measured values, instruments and limits, and adapt PM and verification to transport and non-invasive ventilators: batteries, intentional mask leak and oxygen from cylinders."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/se-academy/ru/course/vent-l1/documentation-transport-niv/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2032%2032%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%226%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%2F%3E%3Cpath%20d%3D%22M10%2021%20V11%20M10%2016%20H15%20M18%2011%20h4%20a3%203%200%200%201%200%206%20h-4%20v4%22%20fill%3D%22none%22%20stroke%3D%22%2300a0e3%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E"><style>:root{--bg:#0d0e10;--panel:#14161a;--panel2:#1a1d22;--line:#262a31;--text:#b9bec7;--strong:#eef1f5;--muted:#7b818c;--accent:#00a0e3;--accent2:#5cc8f2;--warn:#e5a54b;--ok:#4cc38a;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f7f8;--panel:#ffffff;--panel2:#f0f2f4;--line:#dfe3e8;--text:#3b4048;--strong:#101317;--muted:#6b7280;--accent:#0088c2;--accent2:#006b99;--warn:#a8650e;--ok:#18794e}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--sans)}
+a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:5}
+header.top .wrap{display:flex;align-items:center;gap:20px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--strong);font-weight:600;letter-spacing:.2px}.brand svg{width:26px;height:26px;color:var(--accent)}
+.brand small{font:500 11px var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+nav.main{margin-left:auto;display:flex;gap:18px;font-size:14px}nav.main a{color:var(--text)}
+.preview{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);font:12px/1.5 var(--mono);text-align:center;padding:6px 12px}
+h1,h2,h3{color:var(--strong);line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 14px}h2{font-size:24px;margin:44px 0 14px}h3{font-size:17px;margin:0 0 6px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:19px;color:var(--text);max-width:720px}
+.hero{padding:56px 0 30px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--text)}
+a.card:hover{border-color:var(--accent);text-decoration:none}
+.card .k{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.card h3{margin-top:6px}
+.tiers{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.tier{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.tier .tag{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.tier.pro{border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}.tier.pro .tag{color:var(--accent);border-color:var(--accent)}
+.fig{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 40px,1080px) * .78 + 250px)}
+.fig .cap{padding:10px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+.crumbs{font:13px var(--mono);color:var(--muted);margin:26px 0 8px}.crumbs a{color:var(--muted)}
+table.chain{width:100%;border-collapse:collapse;font-size:15px}
+table.chain th,table.chain td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+table.chain th{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+table.chain td:first-child{color:var(--strong);font-weight:600;white-space:nowrap}
+.cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.box ul{margin:6px 0 0;padding-left:18px}.box li{margin:4px 0}
+.box.safety{border-color:color-mix(in srgb,var(--warn) 55%,var(--line))}.box.safety h3{color:var(--warn)}
+details.fault{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 16px}
+details.fault summary{cursor:pointer;padding:13px 0;color:var(--strong);font-weight:600;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.fault summary::before{content:"+";font:600 14px var(--mono);color:var(--accent);width:12px}
+details.fault[open] summary::before{content:"–"}
+details.fault .src{margin-left:auto;font:500 11px var(--mono);color:var(--muted);text-transform:uppercase}
+details.fault .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px 22px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+.pill{display:inline-block;font:500 11px var(--mono);padding:2px 8px;border-radius:99px;background:var(--panel2);color:var(--muted);margin-right:6px}
+.pill.draft{color:var(--warn)}
+.arch{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.note{border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0}
+table.pm{width:100%;border-collapse:collapse;font-size:15px}table.pm td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}table.pm td:last-child{white-space:nowrap;color:var(--muted);font-family:var(--mono);font-size:13px}
+footer{border-top:1px solid var(--line);margin-top:70px;padding:28px 0 40px;font-size:13px;color:var(--muted)}
+.btn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:10px 16px;font-weight:600}.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--strong);border:1px solid var(--line)}
+@media (max-width:640px){nav.main{display:none}table.chain td:first-child{white-space:normal}.hero{padding:34px 0 16px}}
+.lang{font:500 12px var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--text)}
+.lang:hover{border-color:var(--accent);text-decoration:none}
+@media (max-width:640px){header.top .wrap{gap:10px}.lang{margin-left:auto}}
+.lessons{display:flex;flex-direction:column;gap:8px}
+.lesson-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text)}
+.lesson-row:hover{border-color:var(--accent);text-decoration:none}
+.lesson-row .ln{font:600 14px var(--mono);color:var(--accent)}.lesson-row b{color:var(--strong)}
+.lesson-row .tagline{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+.muted{color:var(--muted)}
+.cert{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--panel)),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px;max-width:760px}
+.cert-in{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:10px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:8px}
+.cert-h{font:600 13px var(--mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:34px;color:var(--strong);font-weight:600}
+.cert-course{font-size:19px;color:var(--strong);font-weight:600}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:14px;font:12px var(--mono);color:var(--muted)}
+.box.locked{border-style:dashed;margin:24px 0}
+.lesson-nav{display:flex;justify-content:space-between;gap:16px;margin:40px 0 0;font-size:14px}
+.quiz fieldset{border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:12px 16px;background:var(--panel)}
+.quiz legend{color:var(--strong);font-weight:600;padding:0 4px}
+.quiz label{display:block;padding:4px 6px;border-radius:6px;cursor:pointer}
+.quiz label.right{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.quiz label.wrong{background:color-mix(in srgb,#e5484d 18%,transparent)}
+.quiz .why{font-size:14px;color:var(--muted);margin:6px 0 0}
+ul.check{list-style:none;padding:0}ul.check li{padding:6px 0 6px 28px;position:relative;border-bottom:1px solid var(--line)}ul.check li::before{content:"";position:absolute;left:4px;top:10px;width:13px;height:13px;border:1.5px solid var(--accent);border-radius:3px}
+</style></head><body>
+<div class="preview">Preview build · content under engineering review · not yet open to the public</div>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="3" width="26" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 21 V11 M10 16 H15 M18 11 h4 a3 3 0 0 1 0 6 h-4 v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Service Engineer <small>Academy</small></span></a><nav class="main"><a href="/se-academy/#equipment">Equipment</a><a href="/se-academy/#models">Models</a><a href="/se-academy/about/">About</a><a href="/se-academy/#access">Access</a></nav><a class="lang" href="/se-academy/ru/" hreflang="ru">RU</a></div></header>
+<main class="wrap"><div class="crumbs"><a href="/se-academy/">Academy</a> / <a href="/se-academy/course/vent-l1/">Ventilator Service — Level 1</a> / Lesson 8</div><div class="eyebrow">Lesson 8 · 22 min</div><h1>Documentation; transport and non-invasive ventilators in brief</h1><p class="lead">Write a PM report that proves the ventilator is safe, with measured values, instruments and limits, and adapt PM and verification to transport and non-invasive ventilators: batteries, intentional mask leak and oxygen from cylinders.</p><div class="box locked"><h3>🔒 This lesson is part of the paid course</h3><p>Enrol to open all lessons, the exam and the certificate.</p><p><a class="btn" href="/se-academy/course/vent-l1/#price">Enrol</a></p></div><div class="lesson-nav"><a href="/se-academy/course/vent-l1/verification/">← Performance verification with a gas-flow analyzer</a><a href="/se-academy/course/vent-l1/exam/">Exam →</a></div><script>document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}))</script></main>
+<footer><div class="wrap">Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></footer>
+</body></html>
