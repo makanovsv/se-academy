@@ -1,0 +1,217 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Что и как измеряет монитор пациента · Сервис мониторов пациента — Уровень 1</title><meta name="description" content="Понять принцип измерения каждого параметра монитора — ЭКГ, SpO₂, НИАД, ИАД, температуры и CO₂ — настолько, чтобы знать, что симулятор может доказать, а что нет, и где обычно отказывает каждый канал."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="en" href="/se-academy/course/mon-l1/what-a-monitor-measures/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:14px;height:14px;background:var(--blue)}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
+.muted{color:var(--muted)}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
+</style></head><body>
+<div class="preview">Предварительная версия · материалы на инженерной проверке · портал ещё не открыт</div>
+<header class="top"><div class="wrap"><a class="brand" href="/se-academy/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/se-academy/ru/courses/" aria-current>Курсы</a><a href="/se-academy/ru/#paths">Программы</a><a href="/se-academy/ru/library/">Библиотека</a><a href="/se-academy/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/se-academy/ru/my/">Моё обучение</a><a href="/se-academy/course/mon-l1/what-a-monitor-measures/" hreflang="en">EN</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/se-academy/ru/course/mon-l1/">← Курс</a><div class="ctitle">Сервис мониторов пациента — Уровень 1</div><div><div class="ruler" data-ruler="mon-l1"><i data-n="1" class="here"></i><i data-n="2"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="Пройдено {d} из 2 уроков" data-none="Не начат">Не начат</div></div><ol><li class="here" data-done-of="mon-l1:1"><a href="/se-academy/ru/course/mon-l1/what-a-monitor-measures/"><span class="n">01</span><span>Что и как измеряет монитор пациента</span></a></li><li class="" data-done-of="mon-l1:2"><a href="/se-academy/ru/course/mon-l1/architecture-and-accessories/"><span class="n">02</span><span>Устройство монитора, принадлежности и место установки<span class="lock">закрыт</span></span></a></li><li class="exam"><a href="/se-academy/ru/course/mon-l1/exam/"><span class="n">—</span><span>Итоговый экзамен</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Урок 1 / 2 · 20 min</span></div><h1>Что и как измеряет монитор пациента</h1><p class="lead">Понять принцип измерения каждого параметра монитора — ЭКГ, SpO₂, НИАД, ИАД, температуры и CO₂ — настолько, чтобы знать, что симулятор может доказать, а что нет, и где обычно отказывает каждый канал.</p>
+<h2>Один корпус — шесть независимых приборов</h2><p>Многопараметрический монитор выглядит как один аппарат, но сервисному инженеру удобнее считать его набором отдельных измерительных приборов, у которых общие только экран, блок питания, система тревог и сетевое подключение. Канал ЭКГ ничего общего не имеет с насосом НИАД. Модуль SpO₂ не знает о существовании модуля CO₂. У каждого свой входной каскад, своя принадлежность, свой характер отказов и свой способ проверки.</p><p>Это самая полезная мысль всего курса. Когда медсестра говорит «монитор сломался», почти никогда не сломан монитор. Сломан один канал, и чаще всего — принадлежность этого канала: провод отведения ЭКГ, датчик SpO₂, манжета, линия забора газа. Физика в этом уроке не для того, чтобы сделать из вас клинициста. Она нужна, чтобы по каждому каналу вы знали три вещи: какую физическую величину на самом деле измеряют, что монитор из неё вычисляет и какой из этих двух шагов действительно проверяет ваше контрольное оборудование.</p><p>Третий пункт важнее, чем кажется. Часть каналов можно проверить абсолютно: поверенный манометр точно скажет, правильно ли датчик НИАД показывает давление. Другие каналы проверяются только на согласованность: симулятор показывает, что модуль следует собственному алгоритму, но не то, что алгоритм верен для живого пациента. Понимая разницу, вы не напишете в акте ТО утверждений, которые ваше измерение не подтверждает.</p><h2>ЭКГ: милливольты через дифференциальный усилитель</h2><p>Сердце создаёт электрические потенциалы, которые доходят до кожи на уровне примерно одного милливольта для комплекса QRS. При этом тело пациента наводит на себя сетевую помеху, которая может быть намного больше, и она одинакова на всех электродах. Поэтому входной каскад ЭКГ построен на дифференциальном усилителе: он усиливает разность между электродами и подавляет то, что у них общее. Насколько хорошо он это делает, характеризует коэффициент ослабления синфазного сигнала. В большинстве схем, кроме того, через один электрод (правой ноги, нейтральный) в пациента подаётся небольшой корректирующий сигнал, чтобы ещё уменьшить синфазное напряжение.</p><p>Вокруг этого усилителя есть несколько функций, из-за которых и приходят вызовы. Детектор обрыва отведения пропускает через электроды очень малый ток и следит за результатом; оборванный провод отведения или высохший электрод для него выглядят так же, как отсоединённый электрод. Фильтры задают полосу пропускания: широкая диагностическая полоса честно показывает сегмент ST, а более узкие режимы мониторинга и фильтрации подавляют дрейф изолинии и мышечные помехи. Врач, который видит, что ЭКГ на двух мониторах «выглядит по-разному», чаще всего видит две разные настройки фильтров. Детектор кардиостимулятора ищет очень короткие крутые импульсы стимуляции и помечает их, чтобы счётчик ЧСС не посчитал импульс стимулятора за сокращение сердца.</p><p>Саму ЧСС монитор не измеряет, а вычисляет: он распознаёт комплексы QRS и усредняет интервалы между ними. Высокие зубцы T, помехи или импульсы стимулятора могут быть посчитаны неправильно. Симулятор подаёт чистый известный сигнал и позволяет подтвердить, что амплитуда, частота и детектор обрыва отведения работают правильно. Он ничего не говорит о том, как алгоритм анализа аритмий работает на реальных пациентах с помехами, и утверждать обратное нельзя.</p><h2>SpO₂: два цвета света и калибровочная кривая</h2><p>В датчике пульсоксиметра светодиоды стоят с одной стороны пальца, мочки уха или стопы, а фотоприёмник — с другой. Используются две длины волны: одна в красном диапазоне, другая в инфракрасном. Оксигенированный и восстановленный гемоглобин поглощают эти два цвета по-разному. Основная часть поглощения постоянна — кожа, кость, венозная кровь, — но с каждым ударом сердца объём артериальной крови пульсирует, и поглощение немного меняется. Модуль на каждой длине волны выделяет эту малую пульсирующую составляющую на фоне большой постоянной и берёт отношение между двумя длинами волн.</p><p>Это отношение пересчитывается в сатурацию не по физической формуле, а по эмпирической калибровочной кривой, которую каждый владелец технологии построил по исследованиям на добровольцах — со своей конструкцией датчика, своими длинами волн светодиодов и своей обработкой сигнала. Именно поэтому технологии SpO₂ не взаимозаменяемы. Датчик одной технологии, подключённый к модулю другой, может подойти по разъёму и всё равно давать ошибки или неверные значения: модуль ждёт другой датчик и другую кривую.</p><p>Для сервиса отсюда прямое следствие. Симулятор SpO₂ не проверяет, что монитор показывает истинную сатурацию, — и не может, потому что настоящей крови там нет. Он подаёт заданный оптический или электрический сигнал, а монитор пересчитывает его по своей кривой. Поэтому симулятор нужно выставить на правильную технологию и кривую, и проверка доказывает, что модуль и тракт сигнала работают и следуют своей кривой. Точность самой кривой подтвердили клинические испытания производителя, а не вы. Частоту пульса, индикатор силы сигнала и поведение тревог на симуляторе проверить можно.</p><h2>НИАД: осциллометрическая оценка</h2><p>Канал автоматического неинвазивного измерения артериального давления состоит из насоса, одного или нескольких клапанов, датчика давления и манжеты на руке или ноге пациента. Насос накачивает манжету выше давления, при котором артерия пережата, затем система сбрасывает давление ступенями или непрерывно. Когда давление в манжете проходит через артериальное давление пациента, пульсирующая артерия создаёт небольшие осцилляции давления в манжете. Модуль записывает размах этих осцилляций в зависимости от давления в манжете.</p><p>Осцилляции максимальны вблизи среднего артериального давления — это значение измеряется наиболее непосредственно. Систолическое и диастолическое давление выводятся из формы кривой осцилляций по алгоритму производителя. У разных производителей разные алгоритмы, поэтому два исправных монитора на одном пациенте могут давать немного разные результаты. Это не неисправность.</p><p>Для сервиса разделите канал НИАД на две части. Первая — чистая физика: правильно ли датчик показывает давление в манжете, держит ли пневмосистема давление без утечки, сбрасывает ли защита от избыточного давления манжету, если давление поднялось слишком высоко. Это проверяется абсолютно — поверенным манометром на жёсткой тестовой ёмкости в сервисном режиме производителя. Вторая часть — алгоритм: симулятор НИАД создаёт воспроизводимые картины осцилляций и позволяет проверить, что модуль измеряет стабильно и укладывается в нормальное время цикла. Если показания на симуляторе немного отличаются от заданного значения, это обычно разница между моделью симулятора и алгоритмом монитора, а не неисправность. Допуски для обеих частей берутся из документации производителя.</p><h2>ИАД и температура: два резистивных датчика</h2><p>Инвазивное артериальное давление измеряется через заполненную жидкостью линию от катетера в артерии или центральной вене до одноразового датчика. В датчике стоит тензометрический мост: четыре сопротивления, собранные по схеме моста Уитстона, баланс которого немного меняется с давлением. Монитор подаёт на мост напряжение возбуждения и измеряет малое выходное напряжение, пропорциональное и давлению, и напряжению возбуждения. Одноразовые датчики выпускаются с единой чувствительностью, поэтому монитор работает с ними через правильный интерфейсный кабель.</p><p>Две вещи в ИАД чисто практические, и именно они дают большинство жалоб. Первая — обнуление: датчик нужно открыть на атмосферу на уровне сердца пациента и обнулить, потому что его смещение дрейфует, а высота датчика относительно сердца прибавляет или отнимает давление столба жидкости. Датчик примерно на 10 см ниже уровня сердца завышает показания примерно на 7 мм рт. ст. Вторая — жидкостная линия: пузырьки воздуха, сгустки, перегибы и слишком длинная или податливая магистраль демпфируют или искажают кривую. Ни то ни другое не неисправность монитора. Симулятор пациента заменяет датчик и подаёт известный выходной сигнал моста — это проверка канала монитора и интерфейсного кабеля, а не одноразовой линии.</p><p>Датчики температуры обычно термисторные: это резисторы, сопротивление которых падает с ростом температуры по известной кривой. Монитор измеряет сопротивление и пересчитывает его. Разные семейства датчиков используют разные кривые сопротивления, поэтому датчик чужого семейства, подключённый к каналу, будет показывать неверно без всякой тревоги. Симулятор подаёт точные сопротивления, соответствующие известным температурам, и проверяет пересчёт.</p><h2>CO₂ и газовые модули: инфракрасное поглощение</h2><p>Углекислый газ сильно поглощает инфракрасное излучение в узкой полосе. Капнограф пропускает инфракрасный свет через пробу выдыхаемого пациентом газа и измеряет, сколько поглощено в этой полосе: больше поглощение — больше CO₂. Результат выводится кривой и значением CO₂ в конце выдоха — в мм рт. ст., кПа или процентах, в зависимости от настройки.</p><p>Конструкций две. В капнографии основного потока измерительная кювета стоит прямо в дыхательном пути, между трубкой и дыхательным контуром, и газ измеряется там, где он течёт. В капнографии бокового потока небольшой насос непрерывно отбирает пробу из дыхательного пути по тонкой линии забора газа к измерительному блоку внутри модуля. Боковому потоку нужен влагосборник или линия с фильтром, чтобы не пропускать конденсат и секрет, и отказывает он предсказуемо: вода или секрет забивают линию, насос изнашивается, модуль сообщает об окклюзии. Мультигазовые модули, применяемые в анестезиологии, дополнительно измеряют в инфракрасном диапазоне анестетики и закись азота и часто имеют отдельный датчик кислорода.</p><p>Канал CO₂ — один из немногих на мониторе, который можно проверить по настоящему физическому эталону: сертифицированной поверочной газовой смеси с известной концентрацией CO₂, подаваемой так, как описывает производитель. Сертификат этой смеси и срок её годности становятся частью вашей сервисной записи.</p><ul><li>Проверяется абсолютно по эталону: давление в манжете НИАД (манометр), концентрация CO₂ (сертифицированная газовая смесь), пересчёт температуры (точные сопротивления), коэффициент усиления канала ИАД (известный сигнал моста).</li><li>Проверяется только на согласованность: SpO₂ (симулятор через собственную кривую модуля), систолическое и диастолическое значения НИАД (симулятор через собственный алгоритм модуля), алгоритмы анализа ЭКГ.</li><li>Инженером не проверяется вообще: клиническая точность кривой SpO₂ и алгоритма НИАД — её подтверждает производитель клиническими исследованиями.</li></ul>
+<div class="case"><div class="label">из практики</div><h3>НИАД, которое «завышало на 8»</h3><p>Отделение вернуло монитор: НИАД показывало выше, чем ручной тонометр, которым пользовались медсёстры. Инженер подключил симулятор НИАД: систолическое было на несколько мм рт. ст. выше заданного на симуляторе значения, причём воспроизводимо. Коллега предложил перекалибровать. Вместо этого инженер вошёл в сервисный режим и сравнил датчик с поверенным манометром на жёсткой тестовой ёмкости в нескольких точках давления: все точки уверенно укладывались в допуск производителя, тест на утечку пройден. Та же настройка симулятора на втором мониторе другой марки дала другое, столь же воспроизводимое смещение. Жалоба отделения возникла из сравнения двух разных методов на пациенте, которому нужна была манжета большего размера.</p><p class="note">Отделяйте то, что можно измерить абсолютно (статическое давление, утечка), от того, что зависит от алгоритма. Не перекалибровывайте исправный датчик, чтобы подогнать его под симулятор или ручной тонометр.</p></div>
+<h2>Чек-лист на объекте</h2><ul class="check"><li>По каждой жалобе сначала определите канал, затем принадлежность этого канала.</li><li>Для каждого канала знайте, абсолютная у вас проверка (по эталону) или только на согласованность (симулятор через алгоритм модуля).</li><li>Выставляйте симулятор SpO₂ на технологию и кривую проверяемого модуля.</li><li>Проверьте статическое давление НИАД поверенным манометром, прежде чем делать выводы по показаниям симулятора.</li><li>При жалобах на ИАД сначала спросите про обнуление и высоту датчика, а потом уже подозревайте монитор.</li><li>Убедитесь, что семейство датчика температуры соответствует каналу.</li><li>Записывайте сертификат и срок годности каждой использованной поверочной газовой смеси.</li></ul>
+<h2>Проверьте себя</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. Симулятор SpO₂, выставленный на 90 %, даёт 90 % на одном мониторе и 93 % на другом мониторе с другой технологией SpO₂. На тестовых настройках своих производителей оба показывают правильно. Какое объяснение наиболее вероятно?</legend><label><input type="radio" name="q0" value="0"> Неисправен модуль SpO₂ второго монитора</label><label><input type="radio" name="q0" value="1"> Симулятор не выставлен на кривую второй технологии: имитация SpO₂ зависит от технологии</label><label><input type="radio" name="q0" value="2"> Слабые светодиоды датчика первого монитора</label><label><input type="radio" name="q0" value="3"> Разряжена батарея симулятора</label><p class="why" hidden>Сатурация вычисляется по эмпирической кривой, которая у каждой технологии своя. Симулятор нужно выставлять на нужную кривую; разница между технологиями на одной настройке — не неисправность.</p></fieldset><fieldset class="q" data-answer="0"><legend>2. Медсестра сообщает, что с тех пор, как подняли кровать, артериальное давление на этой койке показывает примерно на 7 мм рт. ст. выше ожидаемого. Кривая выглядит нормально. Что вы предложите в первую очередь?</legend><label><input type="radio" name="q1" value="0"> Выставить датчик на уровень сердца и обнулить его</label><label><input type="radio" name="q1" value="1"> Заменить модуль ИАД</label><label><input type="radio" name="q1" value="2"> Заменить интерфейсный кабель</label><label><input type="radio" name="q1" value="3"> Провести тест НИАД на утечку</label><p class="why" hidden>Высота датчика относительно сердца добавляет столб жидкости; около 10 см соответствуют примерно 7 мм рт. ст. Выставление уровня и обнуление идут раньше любых подозрений на аппаратную часть.</p></fieldset><fieldset class="q" data-answer="2"><legend>3. Какая проверка НИАД даёт абсолютное утверждение о точности монитора?</legend><label><input type="radio" name="q2" value="0"> Сравнение с ручным тонометром на медсестре</label><label><input type="radio" name="q2" value="1"> Считывание систолического и диастолического значений с симулятора НИАД</label><label><input type="radio" name="q2" value="2"> Сравнение статического давления в манжете с поверенным манометром в сервисном режиме</label><label><input type="radio" name="q2" value="3"> Сравнение с другим монитором на том же пациенте</label><p class="why" hidden>Статическое давление по поверенному манометру проверяет датчик напрямую. Сравнения с симулятором и клинические сравнения зависят от алгоритмов и различий методов.</p></fieldset><fieldset class="q" data-answer="2"><legend>4. С новой партией датчиков канал температуры врёт примерно на два градуса, тревоги нет. Проверка канала симулятором проходит. Какова вероятная причина?</legend><label><input type="radio" name="q3" value="0"> Дрейф усилителя термистора</label><label><input type="radio" name="q3" value="1"> У пациента температура</label><label><input type="radio" name="q3" value="2"> Новые датчики относятся к другому семейству кривых сопротивления, чем ожидает канал</label><label><input type="radio" name="q3" value="3"> Программа дисплея округляет значения</label><p class="why" hidden>С точными сопротивлениями канал проходит проверку, значит, пересчёт исправен. Датчики другого семейства следуют другой кривой и показывают неверно без всякой тревоги.</p></fieldset><fieldset class="q" data-answer="3"><legend>5. Модуль капнографии бокового потока в реанимации раз за разом выдаёт сообщение об окклюзии. В каком порядке правильно подозревать причины?</legend><label><input type="radio" name="q4" value="0"> Измерительный блок, затем ПО, затем линия забора газа</label><label><input type="radio" name="q4" value="1"> Дисплей, затем поверочная смесь CO₂, затем насос</label><label><input type="radio" name="q4" value="2"> Сетевое питание, затем сеть</label><label><input type="radio" name="q4" value="3"> Линия забора газа и влагосборник или фильтр, затем насос отбора пробы, затем модуль</label><p class="why" hidden>Модули бокового потока отказывают предсказуемо: сначала конденсат или секрет забивают линию и влагосборник; износ насоса — следующий по вероятности.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Проверить ответы</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="mon-l1:1" data-done-text="Пройдено">Отметить пройденным</button><a class="btn ghost" href="/se-academy/ru/course/mon-l1/architecture-and-accessories/">Следующий урок →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/se-academy/ru/about/">О проекте</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a></div><div>Service Engineer Academy · Service Engineer Ltd (МФЦА, Казахстан). Независимые учебные материалы, написанные сервисными инженерами. Не связаны с производителями и не одобрены ими; названия брендов и моделей используются только для обозначения оборудования. Всегда следуйте сервисной документации производителя и местным нормам.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script></body></html>
