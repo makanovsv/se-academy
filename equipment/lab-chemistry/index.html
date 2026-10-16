@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/lab-chemistry/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/instructors/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/lab-chemistry/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/">Academy</a> / <a href="/library/">Library</a> / Clinical chemistry analyzer</div><div class="label" style="margin-top:22px">How it works</div><h1 style="margin:10px 0 16px">Automated clinical chemistry analyzer</h1><p class="lead">An automated photometer: it pipettes samples and reagents into cuvettes, incubates them at a controlled temperature, and measures colour change or ion potentials to calculate analyte concentrations.</p></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Principle</h2></div><p class="lead">Most routine chemistry tests are photometric: a sample is mixed with reagents that produce a coloured product or change in absorbance in proportion to the analyte (end-point methods) or to the rate of an enzymatic reaction (kinetic methods). The analyser automates this: a sample probe and reagent probes aspirate and dispense microlitre volumes into cuvettes on a reaction disk held at a stable temperature (commonly 37 °C), mixers stir the reaction, and a photometer measures absorbance at chosen wavelengths through each cuvette over time. Turbidimetric methods measure light lost to scattering (immunoassays for specific proteins). Electrolytes such as sodium, potassium and chloride are usually measured by ion-selective electrodes (ISE), which develop a potential related to ion activity. Results are calculated against calibrators and checked with quality-control samples. Analytical quality depends as much on water, temperature, pipetting precision and clean cuvettes as on the optics, so most service work is fluidics and cleanliness.</p></div></section>
@@ -268,6 +268,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");

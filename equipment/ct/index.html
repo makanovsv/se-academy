@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/ct/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/instructors/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/ct/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/">Academy</a> / <a href="/library/">Library</a> / CT</div><div class="label" style="margin-top:22px">How it works</div><h1 style="margin:10px 0 16px">Multislice computed tomography</h1><p class="lead">An X-ray tube and a curved multi-row detector rotating around the patient on a slip-ring gantry, measuring attenuation from hundreds of angles and reconstructing cross-sectional images.</p><div class="btns"><a class="btn" href="/course/ct-l1/">Course: CT Service — Level 1</a></div></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Principle</h2></div><p class="lead">A rotating-anode X-ray tube, fed by a high-voltage generator (typically 80-140 kV), produces a fan or cone beam that is shaped by filters, a bowtie filter and a collimator. After passing through the patient, the remaining radiation hits a curved array of detector elements, usually ceramic scintillators coupled to photodiodes, arranged in many rows. A data acquisition system (DAS) on the rotor digitises every channel for each angular position. Tube, generator, detector and DAS all sit on a rotor that turns continuously; power reaches it through slip rings and data leaves it through a contactless link. While the table moves through the gantry (helical scan), the reconstructor uses the projections and the exact table position to compute attenuation values, expressed in Hounsfield units, for every voxel. A practical rule for fault finding: problems 'before the patient' (tube, generator, filtration) change dose, noise and brightness of the whole image; problems 'after the patient' (detector, DAS, data link) produce localised, geometrically regular defects such as rings and streaks.</p></div></section>
@@ -268,6 +268,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");

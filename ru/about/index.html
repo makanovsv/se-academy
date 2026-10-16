@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
-<header class="top"><div class="wrap"><a class="brand" href="/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/#paths">Программы</a><a href="/ru/library/">Библиотека</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/about/" hreflang="en">EN</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/#paths">Программы</a><a href="/ru/library/">Библиотека</a><a href="/ru/instructors/">Преподавателям</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/about/" hreflang="en">EN</a></div></div></header>
 <main><div class="wrap" style="max-width:860px;padding-bottom:60px"><div class="crumbs"><a href="/ru/">Академия</a> / О проекте</div><h1 style="margin:18px 0 24px">О проекте</h1><p class="lead">Заводское обучение сервисного инженера по КТ или МРТ может стоить больше десяти тысяч долларов за один курс. Большинство независимых сервисных компаний и инженерных служб больниц в мире не могут отправить туда своих людей. Мы пишем обучение, которого нам самим не хватало: как устроен аппарат, как он ломается и что проверять первым.</p>
 <p>Академия — часть Service Engineer Ltd (Международный финансовый центр «Астана», Казахстан), которая строит базу ремонтного знания по медтехнике из мануалов и реальных случаев. Руководит проектом сервисный инженер, работающий с медицинским оборудованием с 2014 года, в том числе 6,5 лет в GE Healthcare и сервисный супервайзер в Mindray.</p>
 <p>Мы не публикуем документацию производителей. Рисунки — наши; заметки о неисправностях написаны своими словами и указывают, на чём основаны. Названия брендов и моделей служат только для обозначения оборудования.</p><p><a href="mailto:ceo@serviceengineer.app?subject=Academy">ceo@serviceengineer.app</a></p></div></main>
@@ -263,6 +263,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");

@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/ultrasound/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/instructors/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/ultrasound/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/">Academy</a> / <a href="/library/">Library</a> / Ultrasound</div><div class="label" style="margin-top:22px">How it works</div><h1 style="margin:10px 0 16px">Diagnostic ultrasound imaging</h1><p class="lead">A probe of piezoelectric elements sends short acoustic pulses into tissue and listens for echoes; the system beamforms them into real-time images and Doppler flow data.</p><div class="btns"><a class="btn" href="/course/us-l1/">Course: Ultrasound Service — Level 1</a></div></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Principle</h2></div><p class="lead">The transducer contains an array of piezoelectric elements (or, in some designs, single crystal or capacitive micromachined elements) that convert electrical pulses into ultrasound, typically in the low-megahertz range for deep imaging and higher frequencies for superficial work, and convert returning echoes back into voltages. Because the system assumes a fixed average speed of sound in tissue (about 1540 m/s), the time of arrival of each echo gives its depth. A beamformer applies precise delays to the elements on transmit and receive to steer and focus the beam; after amplification, time-gain compensation, digitisation and envelope detection, each scan line becomes a column of brightness values (B-mode). Doppler modes measure the frequency or phase shift of echoes from moving blood to display velocity (colour, pulsed and continuous-wave Doppler). Most of the electronics is low voltage, but transmit pulses reach high voltage inside the system and probe. For the field engineer, the probe is by far the most frequent point of failure.</p></div></section>
@@ -268,6 +268,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");

@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/anesthesia/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/#paths">Learning paths</a><a href="/library/" aria-current>Library</a><a href="/instructors/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/equipment/anesthesia/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/">Academy</a> / <a href="/library/">Library</a> / Anaesthesia workstation</div><div class="label" style="margin-top:22px">How it works</div><h1 style="margin:10px 0 16px">Anaesthesia delivery workstation</h1><p class="lead">A gas delivery system, vaporiser and rebreathing circle with a ventilator, built so that the patient always receives oxygen and the anaesthetist always knows what is being delivered.</p><div class="btns"><a class="btn" href="/course/anes-l1/">Course: Anaesthesia Workstation Service — Level 1</a></div></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Principle</h2></div><p class="lead">The workstation receives oxygen, nitrous oxide (where used) and medical air from pipeline or back-up cylinders, reduces them to stable pressures and meters them into a fresh gas flow, either with mechanical flowmeters or electronic flow control. Safety devices such as an oxygen failure protection device and a hypoxic guard (mechanical or electronic link between O2 and N2O) prevent delivery of a hypoxic mixture. The fresh gas passes through a vaporiser that adds a controlled concentration of volatile agent, then enters a circle breathing system: exhaled gas passes through a CO2 absorber and is rebreathed, which saves agent and conserves heat and moisture, while an adjustable pressure-limiting (APL) valve and the scavenging system remove excess gas. A built-in ventilator (bellows, piston or turbine-driven) replaces the reservoir bag in mechanical mode. Monitoring of inspired O2, agent, CO2, airway pressure and volumes, plus a leak and compliance check before each case, closes the loop. Because the device sits between high-pressure gas and an unconscious patient, leak tightness and correct gas identity matter more than any electronic feature.</p></div></section>
@@ -268,6 +268,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");

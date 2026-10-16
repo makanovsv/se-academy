@@ -192,7 +192,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
-<header class="top"><div class="wrap"><a class="brand" href="/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/#paths">Программы</a><a href="/ru/library/" aria-current>Библиотека</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/equipment/anesthesia/" hreflang="en">EN</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/ru/"><span class="sq"></span><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/#paths">Программы</a><a href="/ru/library/" aria-current>Библиотека</a><a href="/ru/instructors/">Преподавателям</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/equipment/anesthesia/" hreflang="en">EN</a></div></div></header>
 <main><div class="wrap"><div class="crumbs"><a href="/ru/">Академия</a> / <a href="/ru/library/">Библиотека</a> / Наркозно-дыхательный аппарат</div><div class="label" style="margin-top:22px">Как устроено</div><h1 style="margin:10px 0 16px">Наркозно-дыхательная рабочая станция</h1><p class="lead">Система подачи газов, испаритель и реверсивный дыхательный контур с аппаратом ИВЛ, построенные так, чтобы пациент всегда получал кислород, а анестезиолог всегда знал, что именно подаётся.</p><div class="btns"><a class="btn" href="/ru/course/anes-l1/">Курс: Сервис наркозных аппаратов — Уровень 1</a></div></div>
 
 <section class="band"><div class="wrap"><div class="sec-head"><span class="num">01</span><h2>Принцип</h2></div><p class="lead">Рабочая станция получает кислород, закись азота (если используется) и медицинский воздух из централизованной разводки или резервных баллонов, понижает их до стабильного давления и дозирует в поток свежего газа — механическими ротаметрами или электронным управлением потоком. Защитные устройства — устройство защиты при падении давления O2 и гипоксическая защита (механическая или электронная связка O2 и N2O) — не дают подать гипоксическую смесь. Свежий газ проходит через испаритель, который добавляет заданную концентрацию ингаляционного анестетика, и попадает в реверсивный (циркуляционный) дыхательный контур: выдыхаемый газ проходит через адсорбер CO2 и вдыхается повторно, что экономит анестетик и сохраняет тепло и влагу, а клапан ограничения давления (APL) и система отвода газов удаляют избыток газа. Встроенный аппарат ИВЛ (с мехом, поршнем или турбиной) в режиме ИВЛ заменяет дыхательный мешок. Контур замыкают мониторинг вдыхаемого O2, анестетика, CO2, давления в дыхательных путях и объёмов, а также тест на утечку и податливость перед каждым случаем. Поскольку аппарат стоит между газом высокого давления и пациентом без сознания, герметичность и правильность газа важнее любой электронной функции.</p></div></section>
@@ -268,6 +268,14 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
 
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
