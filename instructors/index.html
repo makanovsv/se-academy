@@ -352,6 +352,7 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
     if (me && me.email) {
+      if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
       if (auth) { auth.textContent = t.signOut; auth.title = me.email; auth.addEventListener("click", (e) => { e.preventDefault(); api("/api/logout", {}).then(() => location.reload()); }); }
       // merge server progress into local storage
       for (const [course, lessons] of Object.entries(me.progress || {})) lsSet(course, [...new Set([...lsGet(course), ...lessons])]);
