@@ -1,0 +1,527 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Probe or system: the swap method and the symptom map · Ultrasound Service — Level 2: Fault-Finding</title><meta name="description" content="Separate a probe fault from a port fault and from a system fault with a fixed swap sequence, and map the symptom on the screen to the block most likely to have failed before opening a cover."><meta name="robots" content="noindex,nofollow"><link rel="alternate" hreflang="ru" href="/ru/course/us-l2/probe-or-system/"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23002fa7%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2234%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Crect%20x%3D%2250%22%20y%3D%2250%22%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M88.5%2050A38.5%2038.5%200%200%201%2050%2088.5L50%2079.5A29.5%2029.5%200%200%200%2079.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3Cpath%20d%3D%22M69.5%2050A19.5%2019.5%200%200%201%2050%2069.5L50%2060.5A10.5%2010.5%200%200%200%2060.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.preview{background:var(--wash);border-bottom:1px solid var(--rule);color:var(--muted);font-size:12px;text-align:center;padding:6px 16px}
+/* header */
+header.top{border-bottom:1px solid var(--rule-strong);background:var(--paper);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:stretch;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:-.01em;padding-right:24px;border-right:1px solid var(--rule)}
+.brand:hover{text-decoration:none}
+.brand .sq{width:30px;height:30px;flex:none;display:block}
+.brand span small{display:block;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.main{display:flex}
+nav.main a{display:flex;align-items:center;padding:0 18px;color:var(--ink);font-size:15px;border-right:1px solid var(--rule)}
+nav.main a:hover{text-decoration:none;background:var(--wash)}
+nav.main a[aria-current]{box-shadow:inset 0 -3px 0 var(--blue)}
+.top-right{margin-left:auto;display:flex}
+.top-right a{display:flex;align-items:center;padding:0 16px;color:var(--ink);font-size:14px;border-left:1px solid var(--rule)}
+.top-right a:hover{text-decoration:none;background:var(--wash)}
+.top-right .my{font-weight:600}
+/* type */
+h1,h2,h3{color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,72px);font-weight:700}
+h2{font-size:28px;font-weight:700;margin:0 0 18px}
+h3{font-size:18px;font-weight:700}
+p{margin:0 0 14px}
+.lead{font-size:20px;line-height:1.45;color:var(--text);max-width:720px}
+.muted{color:var(--muted)}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* grid sections */
+section.band{border-bottom:1px solid var(--rule);padding:56px 0}
+section.band:last-of-type{border-bottom:0}
+.sec-head{display:grid;grid-template-columns:200px 1fr;gap:24px;margin-bottom:28px;align-items:baseline}
+.sec-head .num{font-size:14px;font-weight:600;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:64px 0 56px;border-bottom:1px solid var(--rule)}
+.hero .facts{border-left:1px solid var(--rule);padding-left:28px;display:grid;gap:22px;align-content:start}
+.fact b{display:block;font-size:56px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.fact span{font-size:14px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;background:#00237e}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--wash)}
+.btn.small{padding:9px 14px;font-size:14px}
+button.btn{cursor:pointer;font-family:inherit}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.step{padding:22px 24px 0 0;border-right:1px solid var(--rule);margin-right:24px}
+.step:last-child{border-right:0}
+.step .n{font-size:64px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.04em}
+.step h3{margin:14px 0 8px}
+/* course cards */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.course-card{display:flex;flex-direction:column;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px;color:var(--text);min-height:300px;position:relative}
+.course-card:hover{text-decoration:none;background:var(--wash)}
+.course-card .cover{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.course-card .mod{font-size:52px;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:.9}
+.course-card .folio{font-size:13px;font-weight:600;color:var(--muted)}
+.course-card h3{margin:0 0 8px}
+.course-card .sub{color:var(--muted);font-size:14px;margin-bottom:auto}
+.course-card .meta{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:16px 0 10px;flex-wrap:wrap}
+.course-card .price{font-weight:700;color:var(--ink)}
+.course-card .soon{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ink);color:var(--ink)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.free{background:var(--blue);border-color:var(--blue);color:#fff}
+/* progress ruler (signature) */
+.ruler{display:flex;gap:2px;height:10px}
+.ruler i{flex:1;background:var(--paper);border:1px solid var(--rule)}
+.ruler i.done{background:var(--blue);border-color:var(--blue)}
+.ruler i.here{border-color:var(--ink);border-width:2px}
+.ruler-caption{font-size:12px;color:var(--muted);margin-top:6px}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);width:fit-content;margin-bottom:20px}
+.filters button{font:inherit;font-size:14px;background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.filters button:last-child{border-right:0}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff}
+/* paths */
+.paths{display:grid;grid-template-columns:200px repeat(4,1fr);border-top:1px solid var(--rule-strong);font-size:14px}
+.paths>div{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);padding:12px 14px;min-height:54px}
+.paths .h{font-weight:700;color:var(--ink);background:var(--wash)}
+.paths .row{font-weight:600;color:var(--ink)}
+.paths a{display:block}
+.paths .soon{color:var(--muted)}
+/* library */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--rule-strong);border-left:1px solid var(--rule)}
+.lib a{display:block;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:16px 18px;color:var(--text)}
+.lib a:hover{background:var(--wash);text-decoration:none}
+.lib b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+.lib span{font-size:14px;color:var(--muted)}
+/* figure */
+.fig{border:1px solid var(--ink);background:#0b0b0b}
+.fig iframe{display:block;width:100%;border:0;height:calc(min(100vw - 48px,1132px) * .78 + 250px)}
+.fig .cap{background:var(--paper);border-top:1px solid var(--ink);padding:10px 16px;font-size:13px;color:var(--muted)}
+/* course page */
+.course-top{display:grid;grid-template-columns:1fr 360px;gap:48px;padding:40px 0 48px;border-bottom:1px solid var(--rule)}
+.crumbs{font-size:13px;color:var(--muted);padding:18px 0 0}.crumbs a{color:var(--muted)}
+.enrol{border:1px solid var(--ink);padding:22px;align-self:start;position:sticky;top:84px;background:var(--paper)}
+.enrol .p{font-size:44px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.enrol .p s{font-size:18px;color:var(--muted);font-weight:400;margin-left:8px}
+.enrol ul{list-style:none;padding:0;margin:14px 0;font-size:14px}
+.enrol li{padding:7px 0;border-top:1px solid var(--rule)}
+.enrol .btn{width:100%;text-align:center;margin-top:8px}
+.enrol .team{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink);font-size:14px}
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.outcomes div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:40px 1fr}
+.outcomes div b{color:var(--blue);font-size:14px}
+.curriculum{border-top:1px solid var(--rule-strong)}
+.lesson-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule);color:var(--text);align-items:baseline}
+.lesson-row:hover{background:var(--wash);text-decoration:none}
+.lesson-row .ln{font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.03em}
+.lesson-row b{color:var(--ink)}
+.lesson-row .st{font-size:13px;color:var(--muted);text-align:right}
+.lesson-row.done .ln{color:var(--blue)}
+.cert{border:1px solid var(--ink);padding:10px;max-width:780px;background:var(--wash)}
+.cert-in{background:#fff;border:1px solid var(--rule);padding:34px 38px;display:grid;gap:8px}
+.cert-h{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cert-name{font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.cert-course{font-size:20px;font-weight:700;color:var(--ink)}
+.cert-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
+details.qa{border-bottom:1px solid var(--rule)}
+details.qa summary{cursor:pointer;padding:16px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;justify-content:space-between}
+details.qa summary::after{content:"+";color:var(--blue);font-weight:700}
+details.qa[open] summary::after{content:"−"}
+details.qa .body{padding:0 0 16px}
+/* lesson player */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.outline{border-right:1px solid var(--rule);padding:24px 20px;position:sticky;top:60px;align-self:start;max-height:calc(100vh - 60px);overflow:auto}
+.outline .ctitle{font-weight:700;color:var(--ink);font-size:15px;margin:6px 0 12px}
+.outline ol{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--rule)}
+.outline li a{display:grid;grid-template-columns:34px 1fr;gap:6px;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--text);font-size:14px;line-height:1.35}
+.outline li a:hover{text-decoration:none;color:var(--ink)}
+.outline li .n{font-weight:700;color:var(--muted)}
+.outline li.done .n{color:var(--blue)}
+.outline li.here a{color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--blue);padding-left:8px}
+.outline li .lock{display:block;font-size:12px;color:var(--muted)}
+.outline .exam a{font-weight:700;color:var(--ink)}
+.lesson{padding:28px 48px 80px;max-width:860px}
+.lesson .top-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+.lesson .ln-big{font-size:96px;font-weight:700;color:var(--blue);letter-spacing:-.05em;line-height:.85}
+.lesson h1{font-size:clamp(30px,4vw,44px);margin:16px 0 14px}
+.lesson h2{font-size:22px;margin:40px 0 12px;padding-top:18px;border-top:1px solid var(--ink)}
+.lesson ul{padding-left:20px}.lesson li{margin:5px 0}
+.case{border:1px solid var(--ink);padding:20px 22px;margin:36px 0 0}
+.case .label{color:var(--blue)}
+.case h3{margin:6px 0 10px}
+.note{border-left:3px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0}
+ul.check{list-style:none;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--rule);margin:0}
+ul.check li::before{content:"";position:absolute;left:2px;top:13px;width:13px;height:13px;border:1.5px solid var(--ink)}
+.quiz fieldset{border:0;border-top:1px solid var(--rule);margin:0;padding:16px 0}
+.quiz legend{font-weight:700;color:var(--ink);padding:0;margin-bottom:8px}
+.quiz label{display:block;padding:6px 8px;cursor:pointer;border:1px solid transparent}
+.quiz label:hover{background:var(--wash)}
+.quiz label.right{border-color:var(--ok);background:#eaf4ee}
+.quiz label.wrong{border-color:var(--bad);background:#fbeceb}
+.quiz .why{font-size:14px;color:var(--muted);margin:8px 0 0}
+.complete-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);margin-top:44px;padding-top:20px;flex-wrap:wrap}
+.locked{border:1px dashed var(--ink);padding:26px;margin:28px 0}
+.box{border:1px solid var(--rule);padding:18px}
+/* tables in library */
+table.grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1px solid var(--rule-strong)}
+table.grid th,table.grid td{text-align:left;vertical-align:top;padding:12px 12px 12px 0;border-bottom:1px solid var(--rule)}
+table.grid th{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.grid td:first-child{font-weight:700;color:var(--ink);width:26%}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.cols3>div{padding:18px 20px 18px 0;border-right:1px solid var(--rule);margin-right:20px}
+.cols3>div:last-child{border-right:0}
+.cols3 ul{padding-left:18px;margin:8px 0 0}.cols3 li{margin:5px 0}
+.cols3 .warn h3{color:var(--warn)}
+.arch{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule-strong)}
+.arch>div{padding:16px 20px 16px 0;border-bottom:1px solid var(--rule)}
+details.fault{border-bottom:1px solid var(--rule)}
+details.fault summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--ink);list-style:none;display:flex;gap:12px}
+details.fault summary .src{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+details.fault summary .src.field{color:var(--ok)}
+details.fault .body{padding:0 0 14px}
+details.fault ol{margin:4px 0 8px;padding-left:20px}
+table.pm{width:100%;border-collapse:collapse;border-top:1px solid var(--rule-strong)}table.pm td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}table.pm td:last-child{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font-size:12px;padding:3px 8px;border:1px solid var(--rule);color:var(--muted);margin:0 6px 6px 0}
+.pill.draft{border-color:var(--warn);color:var(--warn)}
+footer{border-top:1px solid var(--rule-strong);padding:28px 0 44px;font-size:13px;color:var(--muted);margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){
+ .hero,.course-top{grid-template-columns:1fr}.hero .facts{border-left:0;padding-left:0;grid-template-columns:repeat(3,1fr)}.fact b{font-size:38px}
+ .sec-head{grid-template-columns:1fr;gap:6px}.steps{grid-template-columns:1fr}.step{border-right:0;margin-right:0;border-bottom:1px solid var(--rule);padding-bottom:18px}
+ .player{grid-template-columns:1fr}.outline{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--rule)}.lesson{padding:24px 0 60px}
+ .paths{grid-template-columns:120px repeat(4,1fr);font-size:12px}.outcomes,.arch,.cols3{grid-template-columns:1fr}.cols3>div{border-right:0;margin-right:0;border-bottom:1px solid var(--rule)}
+ .enrol{position:static}footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){nav.main{display:none}.brand{border-right:0}.top-right a{padding:0 10px}.lesson-row{grid-template-columns:52px 1fr}.lesson-row .st{grid-column:2;text-align:left}.wrap{padding:0 16px}.paths{display:block}.paths>div{min-height:0}.paths .h{display:none}}
+/* fault-finding flow (SVG, service-manual style) */
+.flow,.parts{margin:34px 0;padding:0}
+.flow figcaption,.parts figcaption{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.flow figcaption b,.parts figcaption b{font-size:18px}
+.flow svg{display:block;max-width:760px;border:1px solid var(--rule);padding:8px;background:#fff}
+.parts table{table-layout:auto;width:100%}
+.parts table.grid td.pn{font-weight:700;color:var(--blue);width:40px;white-space:nowrap}
+.parts table.grid td:nth-child(2){width:24%}
+@media (max-width:640px){.flow .f-row{grid-template-columns:1fr;gap:0}.flow .f-no{margin-top:6px}.flow .f-no::before{display:none}.flow .f-start,.flow .f-yes,.flow .f-end{max-width:none}}
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink)}
+.ladder>div{border-right:1px solid var(--rule);padding:18px 18px 22px}
+.ladder>div:last-child{border-right:0}
+.ladder .st-n{font-size:56px;font-weight:700;line-height:1;color:var(--blue)}
+.ladder h3{margin:10px 0 6px}
+.ladder p{font-size:14px;color:var(--muted);margin:0 0 12px}
+.ladder ul{list-style:none;padding:0;margin:0;font-size:14px}
+.ladder li{border-top:1px solid var(--rule);padding:7px 0}
+@media (max-width:900px){.ladder{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.ladder{grid-template-columns:1fr}.ladder>div{border-right:0;border-bottom:1px solid var(--rule)}}
+.tier-head{display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:end;border-top:2px solid var(--ink);padding-top:16px;margin:44px 0 18px}
+.tier-head:first-child{margin-top:0}
+.tier-head .st-n{font-size:64px;font-weight:700;line-height:.9;color:var(--blue)}
+.tier-head p{margin:4px 0 0;color:var(--muted)}
+/* faculty */
+.faculty{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule-strong)}
+.person{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:22px}
+.person .ph{width:88px;height:88px;background:var(--blue);color:#fff;font-weight:700;font-size:30px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.person.open .ph{background:var(--paper);color:var(--blue);border:2px dashed var(--blue)}
+.person ul{padding-left:18px;margin:10px 0}
+
+/* ================= Platform theme (A, 17.10.2026): light, rounded cards, Coursera-like ================= */
+:root{--paper:#fff;--wash:#f5f7fb;--ink:#0f172a;--text:#1e293b;--muted:#5b6475;--rule:#e3e8f0;--rule-strong:#e3e8f0;--blue:#1d4ed8;--blue-wash:#e8eefc;--ok:#16a34a;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;--r:16px;--shadow:0 6px 18px rgba(15,23,42,.06);--shadow-lg:0 24px 60px rgba(15,23,42,.16)}
+body{background:var(--wash)}
+main{background:var(--wash)}
+.preview{background:var(--blue-wash);color:var(--blue);border:0;font-weight:500}
+header.top{border-bottom:1px solid var(--rule);background:#fff}
+header.top .wrap{height:68px}
+.brand{border-right:0}
+nav.main a,.top-right a{border:0;font-weight:500}
+nav.main a:hover,.top-right a:hover{background:none;color:var(--blue)}
+nav.main a[aria-current]{box-shadow:none;color:var(--blue)}
+.top-right a[data-auth]{background:var(--blue);color:#fff;border-radius:10px;margin:14px 0 14px 8px;padding:0 16px}
+.top-right a[data-auth]:hover{color:#fff;background:#1e40af}
+h1{letter-spacing:-.025em}
+.btn{border-radius:12px;padding:13px 22px}
+.btn:hover{background:#1e40af}
+.btn.ghost{background:#fff;color:var(--blue);border-color:var(--blue)}
+.btn.ghost:hover{background:var(--blue-wash)}
+section.band{border-bottom:0;padding:44px 0}
+.sec-head{display:block;margin-bottom:20px}
+.sec-head .num{display:none}
+.sec-head h2{font-size:30px}
+.hero{grid-template-columns:1.05fr 1fr;align-items:center;border-bottom:0;padding:56px 0 30px}
+.hero .facts{border-left:0;padding-left:0;display:flex;gap:34px;margin-top:26px}
+.fact b{font-size:30px}
+.hero-img{border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg);background:#111}
+.hero-img img{display:block;width:100%}
+.steps{border-top:0;gap:20px}
+.step{background:#fff;border:1px solid var(--rule);border-radius:var(--r);padding:22px;margin:0;box-shadow:var(--shadow)}
+.step .n{font-size:40px}
+/* course cards */
+.courses{border:0;gap:22px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.course-card{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:0 0 16px;min-height:0;overflow:hidden;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.course-card:hover{background:#fff;transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,23,42,.12)}
+.course-card .cover{aspect-ratio:16/9;margin:0 0 14px;padding:14px 16px;align-items:flex-end;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);background-size:cover;background-position:center;position:relative}
+.course-card .cover .mod{color:#fff;font-size:44px;opacity:.95;text-shadow:0 2px 12px rgba(0,0,0,.25)}
+.course-card .cover .folio{position:absolute;top:12px;right:14px;color:#fff;opacity:.85}
+.course-card[data-mod=foundation] .cover{background:linear-gradient(135deg,#0f766e,#14b8a6)}
+.course-card[data-mod=repair] .cover{background:linear-gradient(135deg,#c2410c,#f59e0b)}
+.course-card[data-mod=ct] .cover{background:linear-gradient(135deg,#4338ca,#818cf8)}
+.course-card[data-mod=ultrasound] .cover{background:linear-gradient(135deg,#0369a1,#38bdf8)}
+.course-card[data-mod=ventilator] .cover{background:linear-gradient(135deg,#0e7490,#22d3ee)}
+.course-card[data-mod=anesthesia] .cover{background:linear-gradient(135deg,#6d28d9,#a78bfa)}
+.course-card[data-mod=patient-monitor] .cover{background:linear-gradient(135deg,#be123c,#fb7185)}
+.course-card .cover.img{background-color:#111}
+.course-card .cover.img .mod{font-size:28px}
+.course-card>div:not(.cover),.course-card h3,.course-card .sub,.course-card .meta{padding-left:16px;padding-right:16px}
+.course-card .meta{margin:14px 0 8px}
+.course-card>div:last-child{padding:0 16px}
+.tag{border-radius:999px;border:0;background:var(--blue-wash);color:var(--blue);padding:4px 10px}
+.tag.blue{background:var(--blue-wash);color:var(--blue)}
+.tag.free{background:#dcfce7;color:var(--ok)}
+.ruler{height:8px;gap:3px}
+.ruler i{border:0;background:#e2e8f0;border-radius:999px}
+.ruler i.done{background:var(--blue)}
+.ruler i.here{outline:2px solid var(--ink);outline-offset:1px}
+/* ladder + tiers */
+.ladder{border-top:0;gap:18px}
+.ladder>div{background:#fff;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
+.ladder>div:last-child{border-right:1px solid var(--rule)}
+.ladder .st-n{font-size:40px}
+.tier-head{border-top:0;padding-top:0;grid-template-columns:60px 1fr}
+.tier-head .st-n{font-size:44px}
+/* library + lists */
+.lib{border:0;gap:16px}
+.lib a{background:#fff;border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow)}
+.lib a:hover{background:#fff;border-color:var(--blue)}
+/* course page */
+.course-top{border-bottom:0}
+.enrol{border:1px solid var(--rule);border-radius:20px;box-shadow:var(--shadow-lg);background:#fff}
+.enrol .team{border-top:1px solid var(--rule)}
+.outcomes{border-top:0;gap:12px}
+.outcomes div{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:14px 16px}
+.curriculum{border-top:0;background:#fff;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.lesson-row{padding:16px 20px;border-bottom:1px solid var(--rule)}
+.lesson-row:hover{background:var(--wash)}
+.lesson-row .ln{font-size:22px;color:var(--blue)}
+.cert{border-radius:var(--r);border-color:var(--rule)}
+details.qa{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:0 16px;margin-bottom:10px}
+/* lesson player */
+.player{background:#fff}
+.outline{background:var(--wash)}
+.lesson h2{border-top:0;padding-top:6px}
+.case{border:0;border-radius:var(--r);background:var(--blue-wash)}
+.locked{border:1px dashed var(--blue);border-radius:var(--r);background:var(--blue-wash)}
+.quiz label{border-radius:10px}
+.complete-bar{border-top:1px solid var(--rule)}
+.flow svg{border-radius:12px}
+/* faculty */
+.faculty{border-top:0;gap:18px}
+.person{background:#fff;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
+.person .ph{border-radius:50%}
+table.grid,table.pm{border-top:1px solid var(--rule)}
+footer{border-top:1px solid var(--rule);background:#fff}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
+h1{font-size:clamp(32px,4.4vw,54px)}
+.lesson h1{font-size:clamp(26px,3vw,38px)}
+.lesson .ln-big{font-size:64px}
+.fig{border:0;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg)}
+.fig .cap{border-top:1px solid var(--rule)}
+.course-card .cover .mod{font-size:34px;letter-spacing:-.02em}
+</style></head><body>
+<div class="preview">Early access · courses are being reviewed by field engineers</div>
+<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/us-l2/probe-or-system/" hreflang="ru">RU</a></div></div></header>
+<main><div class="player"><aside class="outline"><a class="label" href="/course/us-l2/">← Course</a><div class="ctitle">Ultrasound Service — Level 2: Fault-Finding</div><div><div class="ruler" data-ruler="us-l2"><i data-n="1" class="here"></i><i data-n="2"></i><i data-n="3"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i><i data-n="9"></i><i data-n="10"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 10 lessons completed" data-none="Not started">Not started</div></div><ol><li class="here" data-done-of="us-l2:1"><a href="/course/us-l2/probe-or-system/"><span class="n">01</span><span>Probe or system: the swap method and the symptom map</span></a></li><li class="" data-done-of="us-l2:2"><a href="/course/us-l2/artefact-atlas/"><span class="n">02</span><span>Atlas of image artefacts: what is physics and what is a fault<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:3"><a href="/course/us-l2/probe-diagnosis/"><span class="n">03</span><span>Probe fault diagnosis: elements, lens, cable, connector and testers<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:4"><a href="/course/us-l2/volume-and-tee-probes/"><span class="n">04</span><span>Mechanical 4D and TEE probes: motors, oil, encoders and insulation<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:5"><a href="/course/us-l2/transmit-receive/"><span class="n">05</span><span>Transmit, receive and probe switching<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:6"><a href="/course/us-l2/beamformer-processing/"><span class="n">06</span><span>Beamformer and signal processing: start-up errors, channel loss and Doppler faults<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:7"><a href="/course/us-l2/power-cooling/"><span class="n">07</span><span>Power supplies and cooling: won't start, shuts down, reboots<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:8"><a href="/course/us-l2/pc-os-software/"><span class="n">08</span><span>PC, operating system, disk and software<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:9"><a href="/course/us-l2/peripherals-integration/"><span class="n">09</span><span>Peripherals and integration: monitor, touch panel, printers, DICOM and network<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:10"><a href="/course/us-l2/post-repair-verification/"><span class="n">10</span><span>Verification after repair: proving the system is fit to return<span class="lock">locked</span></span></a></li><li class="exam"><a href="/course/us-l2/exam/"><span class="n">—</span><span>Final exam</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">01</span><span class="muted" style="font-size:14px">Lesson 1 / 10 · 22 min</span></div><h1>Probe or system: the swap method and the symptom map</h1><p class="lead">Separate a probe fault from a port fault and from a system fault with a fixed swap sequence, and map the symptom on the screen to the block most likely to have failed before opening a cover.</p>
+<h2>Where Level 1 stopped and Level 2 starts</h2><p>At Level 1 you learned to inspect a probe, read an air image and run a phantom test, and you learned the first rule of ultrasound service: most complaints are a probe. Level 2 begins where that rule runs out. The probe passed inspection, a second probe shows the same fault, or the system misbehaves with every probe. Now you have to find which block inside the cart has failed, and you have to do it without replacing boards at random, because beamformer boards, power supplies and probes are among the most expensive spare parts in the department.</p><p>The whole course rests on one habit: before you touch a screwdriver, move the fault. A fault that moves with the probe is in the probe. A fault that stays on one port is in that port or the path behind it. A fault that appears on every probe and every port is in the shared system. A fault that changes with the room, the outlet or the time of day may not be in the system at all. Each swap costs a minute and removes half of the suspects. A board swap costs a day and may remove none.</p><h2>The swap sequence, always in the same order</h2><p>Write the sequence on a card and keep it in your kit. Doing it in the same order every time is what makes it fast and what makes your report credible to the next engineer.</p><p>First, reproduce the complaint yourself with the preset, probe and mode the user describes. Save an image or a short clip. If you cannot reproduce it, ask exactly when it happens: which exam, which depth, which mode, after how long, in which room. Many 'intermittent' faults are tied to one mode or one temperature, and the question saves an hour.</p><p>Second, move the same probe to every other working port. Third, put a second probe of the same type, ideally known good from another system, on the original port and then on the others. Fourth, if you can, take the suspect probe to another system of the same model and look again. Fifth, try a probe of a different type on the suspect port. Record each result in a small table: probe by serial number, port, mode, result. That table is the most useful thing you will produce on the visit, because it is the evidence on which every later decision rests.</p><ul><li>Fault follows the probe on every port and on another system: probe.</li><li>Fault stays on one port with every probe: that port, its pins, its relays or switching path.</li><li>Fault appears on every probe and every port, in the same place on the screen relative to the channel layout: shared transmit, receive or beamformer channels.</li><li>Fault appears on every probe in one mode only (for example colour or CW): processing for that mode, or settings.</li><li>Fault changes when you move the system, change the outlet or switch off nearby equipment: external interference or mains, not the system.</li></ul><h2>Why a channel fault looks like a probe fault</h2><p>A probe with 128 or 192 elements is often connected to a system with fewer physical transmit and receive channels. Multiplexers and relays decide which elements are connected to which channels for each line. A dead system channel therefore does not produce a dead line. It removes one contributor from every line that uses it, and the image shows a darker vertical stripe exactly where a dead element would show it. To the user, and to an engineer in a hurry, the two are indistinguishable on one probe.</p><p>Two things separate them. The first is the swap: the stripe from a dead channel stays in the same channel position whatever probe you plug in. The second is geometry. A dead element sits at one physical place on the array, so its stripe sits at the same place across the image on every depth and every preset for that probe. A dead channel is mapped to different elements by different probes and sometimes by different apertures, so on a probe with a different element count or pitch the stripe moves to another place on the screen, and on a phased array, where every element contributes to every line, it may not appear as a stripe at all but as a general loss of sensitivity or a slightly noisier image. If the stripe moves to a different position when you change probe type, but appears on every probe, think channel, not element.</p><h2>The symptom map</h2><p>After the swap sequence you know whether the fault lives in the probe, a port or the shared system. The symptom map tells you which block inside the system to suspect first. It is a starting point for the lessons that follow, not a verdict; each line is a probability, and the logs and the built-in tests decide.</p><ul><li>Dark vertical stripe on all probes: receive or transmit channel group, a front-end sub-board or its seating (lessons 5 and 6).</li><li>Dark stripe on one port only: port pins, relay or multiplexer path for that port (lesson 5).</li><li>Noise, snow or fan-shaped interference on all probes: earth, mains or external interference first, then receiver boards or the low-voltage supply to the front end (lessons 2 and 7).</li><li>No image on any probe, system otherwise alive: transmit high-voltage supply, front-end supply, or a probe loading the transmit supply (lessons 5 and 7).</li><li>Colour, PW or CW missing or noisy, B-mode fine: Doppler processing, transmit supply at Doppler settings, or presets (lesson 6).</li><li>Reboots or shuts down under load (Doppler, 4D, long exams): power supply, cooling, PC (lessons 7 and 8).</li><li>Does not reach the application, hangs, freezes: PC, disk, memory, operating system, software (lesson 8).</li><li>Probe not recognised: probe identification, connector pins, port, or a probe outside the system's licence or software version (lessons 3 and 8).</li><li>Touch panel, keys, monitor, printer, PACS: peripherals and integration (lesson 9).</li></ul><h2>Read the system before you open it</h2><p>Every modern ultrasound system keeps an error log and has built-in front-end tests. Their names and access routes are model-specific and are described in the manufacturer's service documentation; some need service access that only an authorised engineer has. Use what you are entitled to use. Export the log to a USB stick before any restart, because some systems overwrite or lose entries, and note the time of the user's complaint so that you can find the matching entries.</p><p>Read the log for three things: the first error, not the last; errors that repeat at the same moment as the symptom; and power or temperature events just before a reboot. A transmit-voltage error a second before a restart tells a different story from a disk error a second before a freeze. Built-in front-end tests that report per-board or per-channel results are the fastest way to turn a stripe on the screen into a board name. Remember their limit: a test that passes says the circuit responded during the test, not that it works under every load and temperature.</p><h2>Rules that keep you out of trouble</h2><p>Change one thing at a time and record it. When the fault disappears after you have re-seated three boards and swapped a cable, you do not know what fixed it, and you will not know where to look when it returns. Photograph cable routing and board positions before you pull anything; on many systems sub-boards must go back in the same slot.</p><p>Do not move a suspect probe from system to system until you have looked at its connector and housing. A probe with a short or with liquid inside can damage a port or trip the transmit supply of a healthy system, and you will then have two faults instead of one. Inspect the connector pins with a light and a magnifier first, and if there is any sign of liquid, burning or a cracked housing, do not plug it into anything.</p><p>Work inside the cart only when the system is switched off, disconnected from the mains and left to discharge as the manufacturer describes. The transmit circuits carry high voltage while the system is scanning, and the power supplies hold stored energy after switch-off. Measurements on a live, open system are done only by trained personnel, following the procedure and test points in the manufacturer's service documentation, with the precautions it specifies.</p>
+<figure class="flow"><figcaption><span class="label">Fault-finding flow</span><b>Dark vertical stripe: probe, port or system channel</b></figcaption><svg viewBox="0 0 760 1100" width="100%" role="img" aria-label="Dark vertical stripe: probe, port or system channel" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="14"><style>.fl{stroke:#111;stroke-width:1.5}.fa{fill:none;stroke:#111;stroke-width:1.5}.fs{fill:#fff;stroke:#111;stroke-width:2}.fd{fill:#fff;stroke:#002fa7;stroke-width:2}.fb{fill:#f7f7f8;stroke:#111;stroke-width:1.5}.fn{fill:#002fa7;font-weight:700;font-size:20px}.fyn{font-weight:700;font-size:12px;fill:#111;text-transform:uppercase}text{fill:#111}</style><rect x="50" y="16" width="300" height="72" rx="36" class="fs"/><text x="200" y="39" text-anchor="middle" font-weight="700">The user reports a dark</text><text x="200" y="57" text-anchor="middle" font-weight="700">vertical stripe in the 2D</text><text x="200" y="75" text-anchor="middle" font-weight="700">image.</text><line x1="200" y1="88" x2="200" y2="118" class="fl"/><path d="M195 109L200 118L205 109" class="fa"/><path d="M200 118L360 173L200 228L40 173Z" class="fd"/><text x="200" y="160" text-anchor="middle">Is the stripe gone</text><text x="200" y="178" text-anchor="middle">with a second probe of</text><text x="200" y="196" text-anchor="middle">the same type?</text><text x="30" y="178" text-anchor="end" class="fn">1</text><line x1="360" y1="173" x2="440" y2="173" class="fl"/><path d="M431 168L440 173L431 178" class="fa"/><text x="368" y="165" class="fyn">No</text><rect x="440" y="144" width="300" height="58" class="fb"/><text x="590" y="169" text-anchor="middle">Stripe on both probes: suspect port</text><text x="590" y="187" text-anchor="middle">or system; continue down the ladder.</text><text x="210" y="247" class="fyn">Yes</text><line x1="200" y1="228" x2="200" y2="258" class="fl"/><path d="M195 249L200 258L205 249" class="fa"/><path d="M200 258L360 313L200 368L40 313Z" class="fd"/><text x="200" y="300" text-anchor="middle">Does the suspect probe</text><text x="200" y="318" text-anchor="middle">show a clean air image</text><text x="200" y="336" text-anchor="middle">on every port?</text><text x="30" y="318" text-anchor="end" class="fn">2</text><line x1="360" y1="313" x2="440" y2="313" class="fl"/><path d="M431 308L440 313L431 318" class="fa"/><text x="368" y="305" class="fyn">No</text><rect x="440" y="284" width="300" height="58" class="fb"/><text x="590" y="309" text-anchor="middle">Gap follows the probe: probe fault;</text><text x="590" y="327" text-anchor="middle">inspect, tag, send for evaluation.</text><text x="210" y="387" class="fyn">Yes</text><line x1="200" y1="368" x2="200" y2="398" class="fl"/><path d="M195 389L200 398L205 389" class="fa"/><path d="M200 398L360 453L200 508L40 453Z" class="fd"/><text x="200" y="440" text-anchor="middle">Is the image clean on</text><text x="200" y="458" text-anchor="middle">every port with a</text><text x="200" y="476" text-anchor="middle">known-good probe?</text><text x="30" y="458" text-anchor="end" class="fn">3</text><line x1="360" y1="453" x2="440" y2="453" class="fl"/><path d="M431 448L440 453L431 458" class="fa"/><text x="368" y="445" class="fyn">No</text><rect x="440" y="415" width="300" height="76" class="fb"/><text x="590" y="440" text-anchor="middle">Stripe on one port only: port pins,</text><text x="590" y="458" text-anchor="middle">relay or switching path of that</text><text x="590" y="476" text-anchor="middle">port.</text><text x="210" y="527" class="fyn">Yes</text><line x1="200" y1="508" x2="200" y2="538" class="fl"/><path d="M195 529L200 538L205 529" class="fa"/><path d="M200 538L360 593L200 648L40 593Z" class="fd"/><text x="200" y="580" text-anchor="middle">Is the image clean</text><text x="200" y="598" text-anchor="middle">with probes of other</text><text x="200" y="616" text-anchor="middle">types on all ports?</text><text x="30" y="598" text-anchor="end" class="fn">4</text><line x1="360" y1="593" x2="440" y2="593" class="fl"/><path d="M431 588L440 593L431 598" class="fa"/><text x="368" y="585" class="fyn">No</text><rect x="440" y="564" width="300" height="58" class="fb"/><text x="590" y="589" text-anchor="middle">Stripe on all probes: shared channel</text><text x="590" y="607" text-anchor="middle">group; run the front-end test.</text><text x="210" y="667" class="fyn">Yes</text><line x1="200" y1="648" x2="200" y2="678" class="fl"/><path d="M195 669L200 678L205 669" class="fa"/><path d="M200 678L360 733L200 788L40 733Z" class="fd"/><text x="200" y="720" text-anchor="middle">Do the built-in</text><text x="200" y="738" text-anchor="middle">front-end tests pass</text><text x="200" y="756" text-anchor="middle">for all channels?</text><text x="30" y="738" text-anchor="end" class="fn">5</text><line x1="360" y1="733" x2="440" y2="733" class="fl"/><path d="M431 728L440 733L431 738" class="fa"/><text x="368" y="725" class="fyn">No</text><rect x="440" y="704" width="300" height="58" class="fb"/><text x="590" y="729" text-anchor="middle">Note the failing board or channels;</text><text x="590" y="747" text-anchor="middle">re-seat, then replace that board.</text><text x="210" y="807" class="fyn">Yes</text><line x1="200" y1="788" x2="200" y2="818" class="fl"/><path d="M195 809L200 818L205 809" class="fa"/><path d="M200 818L360 882L200 946L40 882Z" class="fd"/><text x="200" y="860" text-anchor="middle">Are all front-end</text><text x="200" y="878" text-anchor="middle">sub-boards fully</text><text x="200" y="896" text-anchor="middle">seated and matching</text><text x="200" y="914" text-anchor="middle">revisions?</text><text x="30" y="887" text-anchor="end" class="fn">6</text><line x1="360" y1="882" x2="440" y2="882" class="fl"/><path d="M431 877L440 882L431 887" class="fa"/><text x="368" y="874" class="fyn">No</text><rect x="440" y="853" width="300" height="58" class="fb"/><text x="590" y="878" text-anchor="middle">Re-seat or correct the board set per</text><text x="590" y="896" text-anchor="middle">the manufacturer's documentation.</text><text x="210" y="965" class="fyn">Yes</text><line x1="200" y1="946" x2="200" y2="976" class="fl"/><path d="M195 967L200 976L205 967" class="fa"/><rect x="50" y="976" width="300" height="108" rx="54" class="fs"/><text x="200" y="999" text-anchor="middle" font-weight="700">If every check passes, recheck</text><text x="200" y="1017" text-anchor="middle" font-weight="700">presets and image settings,</text><text x="200" y="1035" text-anchor="middle" font-weight="700">record the swap table and</text><text x="200" y="1053" text-anchor="middle" font-weight="700">repeat on the phantom with the</text><text x="200" y="1071" text-anchor="middle" font-weight="700">baseline settings.</text></svg></figure>
+<div class="case"><div class="label">field case</div><h3>Three probes condemned, one board at fault</h3><p>A women's health clinic had replaced two convex probes in three months because of 'dead elements'. The third new probe showed a faint dark stripe within a week. The engineer who came next did not look at the probe first. He built the swap table: the stripe appeared with all three convex probes on every port, and also, in a different position, with the linear probe. A phased array looked clean but slightly noisy. That pattern pointed away from the probes and towards the shared channels. The built-in front-end test reported a failing group on one receiver sub-board. The board was re-seated and the stripe faded but did not disappear; a replacement board removed it. The two probes that had been returned as faulty had been tested by the repair facility and found to be within specification.</p><p class="note">When a 'probe fault' repeats on new probes, stop buying probes. The swap table across probes, types and ports is cheaper than any part and is the evidence the clinic needs.</p></div>
+<h2>On-site checklist</h2><ul class="check"><li>Reproduce the complaint; save an image or clip with the preset and mode noted.</li><li>Inspect the suspect probe's connector and housing before plugging it into any other port or system.</li><li>Build the swap table: probe serial, port, mode, result.</li><li>Export the error log before any restart; note the time of the complaint.</li><li>Run the built-in front-end tests you are entitled to use and record per-board results.</li><li>Photograph board positions and cable routing before removing anything.</li><li>Change one thing at a time and record what changed.</li></ul>
+<h2>Check yourself</h2><div class="quiz"><fieldset class="q" data-answer="1"><legend>1. A dark vertical stripe appears with a convex probe on ports A, B and C. A second convex probe of the same model is clean on all three ports. Where is the fault?</legend><label><input type="radio" name="q0" value="0"> In the shared receive channels</label><label><input type="radio" name="q0" value="1"> In the suspect probe</label><label><input type="radio" name="q0" value="2"> In port A</label><label><input type="radio" name="q0" value="3"> In the image processing software</label><p class="why" hidden>The stripe follows the probe across every port and an identical probe is clean everywhere, so the system and ports are cleared.</p></fieldset><fieldset class="q" data-answer="3"><legend>2. A stripe appears on every probe and every port. With the linear probe it sits right of centre; with the convex probe it sits near the left third. What does this suggest?</legend><label><input type="radio" name="q1" value="0"> Two probes with dead elements by coincidence</label><label><input type="radio" name="q1" value="1"> A monitor fault</label><label><input type="radio" name="q1" value="2"> A cracked lens on the linear probe</label><label><input type="radio" name="q1" value="3"> A shared system channel mapped to different elements by different probes</label><p class="why" hidden>A dead element stays at one place on one probe. A dead channel appears on every probe, at a position that depends on how each probe maps elements to channels.</p></fieldset><fieldset class="q" data-answer="0"><legend>3. Before any restart of a system that froze during a Doppler exam, what is the most useful first step?</legend><label><input type="radio" name="q2" value="0"> Export the error log and note the time of the freeze</label><label><input type="radio" name="q2" value="1"> Replace the hard disk</label><label><input type="radio" name="q2" value="2"> Re-seat every board in the card cage</label><label><input type="radio" name="q2" value="3"> Reload the factory presets</label><p class="why" hidden>Some systems lose or overwrite entries; the log with the time of the event is the evidence that points to power, temperature, disk or processing.</p></fieldset><fieldset class="q" data-answer="2"><legend>4. A probe with a cracked housing and dried fluid marks near the connector is suspected of causing an error on its own system. What do you do?</legend><label><input type="radio" name="q3" value="0"> Plug it into a second system to confirm the fault</label><label><input type="radio" name="q3" value="1"> Clean the connector and keep using it</label><label><input type="radio" name="q3" value="2"> Do not connect it to any system; tag it and send it for evaluation</label><label><input type="radio" name="q3" value="3"> Test it on a volunteer with gel</label><p class="why" hidden>A probe with liquid ingress or a short can damage a healthy port or trip its transmit supply, and a breached housing is a patient safety issue.</p></fieldset><fieldset class="q" data-answer="1"><legend>5. You re-seated three boards and replaced a cable in one go, and the fault disappeared. What is the main weakness of this repair?</legend><label><input type="radio" name="q4" value="0"> Nothing; the fault is gone</label><label><input type="radio" name="q4" value="1"> You do not know which action fixed it, so the root cause and the report are uncertain</label><label><input type="radio" name="q4" value="2"> Re-seating boards always voids the warranty</label><label><input type="radio" name="q4" value="3"> The cable should have been replaced first</label><p class="why" hidden>Changing one thing at a time is what tells you the cause. Without it, a returning fault starts again from zero.</p></fieldset><div class="btns"><button class="btn ghost small" type="button" data-check>Check answers</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>
+<div class="complete-bar"><button class="btn" type="button" data-mark="us-l2:1" data-done-text="Completed">Mark as completed</button><a class="btn ghost" href="/course/us-l2/artefact-atlas/">Next lesson →</a></div></article></div></main>
+<footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/about/">About</a> · <a href="/instructors/">Teach with us</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a><br><a href="/legal/terms/">Terms</a> · <a href="/legal/privacy/">Privacy</a> · <a href="/legal/refunds/">Refunds</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
+<script>
+(function(){
+ const get=(s)=>{try{return JSON.parse(localStorage.getItem("sea:"+s)||"[]")}catch(e){return[]}};
+ const set=(s,v)=>{try{localStorage.setItem("sea:"+s,JSON.stringify(v))}catch(e){}};
+ function paint(){
+  document.querySelectorAll("[data-ruler]").forEach((r)=>{const d=get(r.dataset.ruler);r.querySelectorAll("i").forEach((c)=>c.classList.toggle("done",d.includes(+c.dataset.n)));const cap=r.parentElement.querySelector("[data-ruler-caption]");if(cap){cap.textContent=d.length?cap.dataset.fmt.replace("{d}",d.length):cap.dataset.none}});
+  document.querySelectorAll("[data-done-of]").forEach((el)=>{const[s,n]=el.dataset.doneOf.split(":");el.classList.toggle("done",get(s).includes(+n))});
+ }
+ document.querySelectorAll("[data-mark]").forEach((b)=>{const[s,n]=b.dataset.mark.split(":");if(get(s).includes(+n)){b.textContent=b.dataset.doneText;b.disabled=true}b.addEventListener("click",()=>{const d=get(s);if(!d.includes(+n)){d.push(+n);set(s,d)}b.textContent=b.dataset.doneText;b.disabled=true;paint()})});
+ document.querySelectorAll("[data-my]").forEach((box)=>{let any=false;box.querySelectorAll("[data-my-course]").forEach((c)=>{const has=get(c.dataset.myCourse).length>0;c.hidden=!has;any=any||has});const e=box.querySelector("[data-my-empty]");if(e)e.hidden=any});
+ document.querySelectorAll("[data-check]").forEach((b)=>b.addEventListener("click",()=>{const box=b.closest(".quiz");let ok=0,all=0;box.querySelectorAll(".q").forEach((q)=>{all++;const pick=q.querySelector("input:checked");const right=+q.dataset.answer;q.querySelectorAll("label").forEach((l,i)=>{l.classList.toggle("right",i===right);l.classList.toggle("wrong",!!pick&&+pick.value===i&&i!==right)});if(pick&&+pick.value===right)ok++;q.querySelector(".why").hidden=false});box.querySelector("[data-score]").textContent=ok+" / "+all}));
+ document.querySelectorAll("[data-filter-group]").forEach((g)=>{const grid=document.querySelector(g.dataset.filterGroup);g.querySelectorAll("button").forEach((b)=>b.addEventListener("click",()=>{g.querySelectorAll("button").forEach((x)=>x.setAttribute("aria-pressed",x===b?"true":"false"));const v=b.dataset.v;grid.querySelectorAll("[data-mod]").forEach((c)=>c.hidden=v!=="all"&&c.dataset.mod!==v)}))});
+ paint();
+})();
+</script><script>window.SEA={"api":"https://api.serviceengineer.academy","lang":"en","t":{"signIn":"Sign in","signOut":"Sign out","loginH":"Sign in","loginLead":"Enter your e-mail. We will send a one-time sign-in link — no password needed.","emailPh":"your@email.com","send":"Send the link","sent":"Check your inbox: the link is valid for 30 minutes.","checking":"Signing you in…","badToken":"This link has expired or was already used. Request a new one.","loading":"Loading the lesson…","noAccess":"This lesson is part of the paid course.","examName":"Your full name as it should appear on the certificate","examStart":"Start the exam","examSubmit":"Submit answers","timeLeft":"Time left","passed":"Passed","failed":"Not passed","score":"Score","openCert":"Open the certificate","retake":"You can retake the exam tomorrow.","limit":"Attempt limit reached for today.","needLogin":"Sign in to take the exam.","verifyOk":"Valid certificate","verifyNo":"No certificate with this number."},"T":{"field":"field case","checklistH":"On-site checklist","quizH":"Check yourself","checkBtn":"Check answers","flowH":"Fault-finding flow","yes":"Yes","no":"No","flowEnd":"All checks pass","partsH":"Unit breakdown","partsHead":["Part","What it does","How it fails"]},"my":"/my/"};window.SEAX={flowHTML:(f, t) => {
+  if (!f || !f.checks || !f.checks.length) return "";
+  const e = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const wrap = (s, n) => {
+    const out = [];
+    let line = "";
+    for (const w of String(s ?? "").split(/\s+/)) {
+      if (line && (line + " " + w).length > n) { out.push(line); line = w; } else line = line ? line + " " + w : w;
+    }
+    if (line) out.push(line);
+    return out;
+  };
+  const W = 760, X = 200, AX = 440, AW = 300, LH = 18, FS = 14;
+  const text = (lines, cx, cy, opts = "") => lines.map((l, i) => `<text x="${cx}" y="${cy + (i - (lines.length - 1) / 2) * LH + 5}" text-anchor="middle"${opts}>${e(l)}</text>`).join("");
+  const arrow = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="fl"/><path d="${x2 === x1 ? `M${x2 - 5} ${y2 - 9}L${x2} ${y2}L${x2 + 5} ${y2 - 9}` : `M${x2 - 9} ${y2 - 5}L${x2} ${y2}L${x2 - 9} ${y2 + 5}`}" class="fa"/>`;
+  let y = 16, svg = "";
+  // start terminator
+  const st = wrap(f.start, 30), sh = Math.max(44, st.length * LH + 18);
+  svg += `<rect x="${X - 150}" y="${y}" width="300" height="${sh}" rx="${sh / 2}" class="fs"/>` + text(st, X, y + sh / 2, ' font-weight="700"');
+  y += sh;
+  f.checks.forEach((c, i) => {
+    const q = wrap(c.q, 22), dh = Math.max(110, q.length * LH + 56), dw = 320;
+    const a = wrap(c.fault, 36), ah = Math.max(56, a.length * LH + 22);
+    const top = y + 30, mid = top + dh / 2;
+    svg += arrow(X, y, X, top);
+    svg += `<path d="M${X} ${top}L${X + dw / 2} ${mid}L${X} ${top + dh}L${X - dw / 2} ${mid}Z" class="fd"/>` + text(q, X, mid);
+    svg += `<text x="${X - dw / 2 - 10}" y="${mid + 5}" text-anchor="end" class="fn">${i + 1}</text>`;
+    svg += arrow(X + dw / 2, mid, AX, mid) + `<text x="${X + dw / 2 + 8}" y="${mid - 8}" class="fyn">${e(t.no)}</text>`;
+    svg += `<rect x="${AX}" y="${mid - ah / 2}" width="${AW}" height="${ah}" class="fb"/>` + text(a, AX + AW / 2, mid);
+    y = top + dh;
+    svg += `<text x="${X + 10}" y="${y + 19}" class="fyn">${e(t.yes)}</text>`;
+  });
+  const en = wrap(f.end, 30), eh = Math.max(44, en.length * LH + 18), top = y + 30;
+  svg += arrow(X, y, X, top);
+  svg += `<rect x="${X - 150}" y="${top}" width="300" height="${eh}" rx="${eh / 2}" class="fs"/>` + text(en, X, top + eh / 2, ' font-weight="700"');
+  const H = top + eh + 16;
+  return `<figure class="flow"><figcaption><span class="label">${e(t.flowH)}</span><b>${e(f.title)}</b></figcaption><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${e(f.title)}" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-size="${FS}"><style>.fl{stroke:#111;stroke-width:1.5}.fa{fill:none;stroke:#111;stroke-width:1.5}.fs{fill:#fff;stroke:#111;stroke-width:2}.fd{fill:#fff;stroke:#002fa7;stroke-width:2}.fb{fill:#f7f7f8;stroke:#111;stroke-width:1.5}.fn{fill:#002fa7;font-weight:700;font-size:20px}.fyn{font-weight:700;font-size:12px;fill:#111;text-transform:uppercase}text{fill:#111}</style>${svg}</svg></figure>`;
+},partsHTML:(p, t) => {
+  if (!p || !p.items || !p.items.length) return "";
+  const e = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  return `<figure class="parts"><figcaption><span class="label">${e(t.partsH)}</span><b>${e(p.title)}</b></figcaption><table class="grid"><thead><tr><th></th>${t.partsHead.map((h) => `<th>${e(h)}</th>`).join("")}</tr></thead><tbody>${p.items.map((x, i) => `<tr><td class="pn">${String(i + 1).padStart(2, "0")}</td><td><b>${e(x.name)}</b></td><td>${e(x.role)}</td><td>${e(x.fails)}</td></tr>`).join("")}</tbody></table></figure>`;
+}};</script><script>// Student layer: sign-in, paid lessons, server progress, online exam. Talks to api.serviceengineer.academy.
+(function () {
+  const S = window.SEA, t = S.t;
+  const api = (path, body) =>
+    fetch(S.api + path, body ? { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : { credentials: "include" }).then(async (r) => ({ ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }));
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const list = (a) => (a && a.length ? "<ul>" + a.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "");
+  const lsGet = (s) => { try { return JSON.parse(localStorage.getItem("sea:" + s) || "[]"); } catch (e) { return []; } };
+  const lsSet = (s, v) => { try { localStorage.setItem("sea:" + s, JSON.stringify(v)); } catch (e) {} };
+
+  function repaint() {
+    document.querySelectorAll("[data-ruler]").forEach((r) => {
+      const d = lsGet(r.dataset.ruler);
+      r.querySelectorAll("i").forEach((c) => c.classList.toggle("done", d.includes(+c.dataset.n)));
+      const cap = r.parentElement.querySelector("[data-ruler-caption]");
+      if (cap) cap.textContent = d.length ? cap.dataset.fmt.replace("{d}", d.length) : cap.dataset.none;
+    });
+    document.querySelectorAll("[data-done-of]").forEach((el) => { const [s, n] = el.dataset.doneOf.split(":"); el.classList.toggle("done", lsGet(s).includes(+n)); });
+    document.querySelectorAll("[data-mark]").forEach((b) => { const [s, n] = b.dataset.mark.split(":"); if (lsGet(s).includes(+n)) { b.textContent = b.dataset.doneText; b.disabled = true; } });
+  }
+
+  // flowchart and unit breakdown: the same functions as extras.mjs, inlined by the build as window.SEAX
+  const flowHTML = (f) => window.SEAX.flowHTML(f, S.T);
+  const partsHTML = (p) => window.SEAX.partsHTML(p, S.T);
+
+  function renderLesson(l) {
+    let h = "";
+    for (const s of l.sections || []) h += "<h2>" + esc(s.h) + "</h2>" + (s.body || []).map((p) => "<p>" + esc(p) + "</p>").join("") + list(s.list);
+    h += partsHTML(l.parts) + flowHTML(l.flow);
+    if (l.case) h += '<div class="case"><div class="label">' + esc(S.T.field) + "</div><h3>" + esc(l.case.title) + "</h3><p>" + esc(l.case.story) + '</p><p class="note">' + esc(l.case.lesson) + "</p></div>";
+    if (l.checklist && l.checklist.length) h += "<h2>" + esc(S.T.checklistH) + '</h2><ul class="check">' + l.checklist.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ul>";
+    h += "<h2>" + esc(S.T.quizH) + '</h2><div class="quiz">' + (l.quiz || []).map((q, qi) => '<fieldset class="q" data-answer="' + q.answer + '"><legend>' + (qi + 1) + ". " + esc(q.q) + "</legend>" + q.options.map((o, oi) => '<label><input type="radio" name="q' + qi + '" value="' + oi + '"> ' + esc(o) + "</label>").join("") + '<p class="why" hidden>' + esc(q.why) + "</p></fieldset>").join("") + '<div class="btns"><button class="btn ghost small" type="button" data-check2>' + esc(S.T.checkBtn) + '</button> <span data-score style="align-self:center;font-weight:700"></span></div></div>';
+    return h;
+  }
+  function wireQuiz(root) {
+    root.querySelectorAll("[data-check2]").forEach((b) => b.addEventListener("click", () => {
+      const box = b.closest(".quiz"); let ok = 0, all = 0;
+      box.querySelectorAll(".q").forEach((q) => { all++; const pick = q.querySelector("input:checked"); const right = +q.dataset.answer; q.querySelectorAll("label").forEach((l, i) => { l.classList.toggle("right", i === right); l.classList.toggle("wrong", !!pick && +pick.value === i && i !== right); }); if (pick && +pick.value === right) ok++; q.querySelector(".why").hidden = false; });
+      box.querySelector("[data-score]").textContent = ok + " / " + all;
+    }));
+  }
+
+  // ---- login page
+  const form = document.querySelector("[data-login]");
+  const msg = document.querySelector("[data-login-msg]");
+  const token = new URLSearchParams(location.search).get("t");
+  if (form && token) {
+    form.hidden = true; msg.textContent = t.checking;
+    api("/api/auth", { token }).then((r) => { if (r.ok) location.replace(S.my); else { form.hidden = false; msg.textContent = t.badToken; } });
+  } else if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      form.querySelector("button").disabled = true;
+      api("/api/login", { email, lang: S.lang }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
+    });
+  }
+
+  const ap = document.querySelector("[data-apply]");
+  if (ap) ap.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = ap.querySelector("[data-apply-msg]"), b = ap.querySelector("button");
+    const d = Object.fromEntries(new FormData(ap).entries()); d.lang = S.lang; b.disabled = true;
+    api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
+  });
+
+  api("/api/me").then(({ data: me }) => {
+    const auth = document.querySelector("[data-auth]");
+    if (me && me.email) {
+      if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
+      if (auth) { auth.textContent = t.signOut; auth.title = me.email; auth.addEventListener("click", (e) => { e.preventDefault(); api("/api/logout", {}).then(() => location.reload()); }); }
+      // merge server progress into local storage
+      for (const [course, lessons] of Object.entries(me.progress || {})) lsSet(course, [...new Set([...lsGet(course), ...lessons])]);
+      repaint();
+      // my learning: show owned courses even without progress
+      (me.grants || []).forEach((g) => { const card = document.querySelector('[data-my-course="' + g.course + '"]'); if (card) card.hidden = false; });
+      const empty = document.querySelector("[data-my-empty]");
+      if (empty && (me.grants || []).length) empty.hidden = true;
+    }
+    const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
+
+    // send progress to the server
+    document.querySelectorAll("[data-mark]").forEach((b) => b.addEventListener("click", () => {
+      const [course, n] = b.dataset.mark.split(":");
+      if (me && me.email) api("/api/progress", { course, lesson: +n });
+    }));
+
+    // paid lesson
+    const locked = document.querySelector('[data-locked="lesson"]');
+    if (locked && me && me.email && owns(locked.dataset.course)) {
+      locked.innerHTML = "<p class='muted'>" + esc(t.loading) + "</p>";
+      api("/api/lesson?course=" + encodeURIComponent(locked.dataset.course) + "&lesson=" + encodeURIComponent(locked.dataset.lesson) + "&lang=" + S.lang).then((r) => {
+        if (!r.ok) { locked.innerHTML = "<p>" + esc(t.noAccess) + "</p>"; return; }
+        const wrap = document.createElement("div");
+        wrap.innerHTML = renderLesson(r.data) + '<div class="complete-bar"><button class="btn" type="button" data-mark2>' + (S.lang === "ru" ? "Отметить пройденным" : "Mark as completed") + "</button></div>";
+        locked.replaceWith(wrap);
+        wireQuiz(wrap);
+        const mb = wrap.querySelector("[data-mark2]"), course = locked.dataset.course, n = +locked.dataset.n;
+        if (lsGet(course).includes(n)) mb.disabled = true;
+        mb.addEventListener("click", () => { const d = lsGet(course); if (!d.includes(n)) { d.push(n); lsSet(course, d); } mb.disabled = true; api("/api/progress", { course, lesson: n }); repaint(); });
+      });
+    }
+
+    if (locked && !(me && me.email)) { const p = document.createElement("p"); p.innerHTML = '<a href="' + (S.lang === "ru" ? "/ru/" : "/") + 'login/">' + esc(t.signIn) + "</a>"; locked.appendChild(p); }
+
+    // exam
+    const ex = document.querySelector('[data-locked="exam"]');
+    if (ex && me && me.email && owns(ex.dataset.course)) {
+      ex.classList.remove("locked");
+      ex.innerHTML = '<form data-exam-start style="display:grid;gap:12px;max-width:560px"><label>' + esc(t.examName) + '<input name="name" required minlength="3" style="display:block;width:100%;font:16px var(--sans);padding:12px 14px;border:1px solid var(--ink);margin-top:6px"></label><button class="btn" style="cursor:pointer;justify-self:start">' + esc(t.examStart) + "</button></form><p data-exam-msg class='muted'></p>";
+      const f = ex.querySelector("[data-exam-start]"), em = ex.querySelector("[data-exam-msg]");
+      f.addEventListener("submit", (e) => {
+        e.preventDefault();
+        api("/api/exam/start", { course: ex.dataset.course, lang: S.lang, name: f.name.value }).then((r) => {
+          if (!r.ok) { em.textContent = r.data.error === "attempt_limit" ? t.limit : r.data.error; return; }
+          const a = r.data, end = Date.now() + a.minutes * 60000;
+          ex.innerHTML = '<p class="label" data-timer></p><form data-exam class="quiz">' + a.questions.map((q, i) => '<fieldset class="q"><legend>' + (i + 1) + ". " + esc(q.q) + "</legend>" + q.options.map((o, oi) => '<label><input type="radio" name="' + q.id + '" value="' + oi + '"> ' + esc(o) + "</label>").join("") + "</fieldset>").join("") + '<button class="btn" style="cursor:pointer;margin-top:16px">' + esc(t.examSubmit) + "</button></form>";
+          const timer = ex.querySelector("[data-timer]");
+          const tick = setInterval(() => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); timer.textContent = t.timeLeft + ": " + Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); if (!s) { clearInterval(tick); submit(); } }, 1000);
+          const form2 = ex.querySelector("[data-exam]");
+          const submit = () => {
+            clearInterval(tick);
+            const answers = {}; a.questions.forEach((q) => { const p = form2.querySelector('input[name="' + q.id + '"]:checked'); if (p) answers[q.id] = +p.value; });
+            api("/api/exam/submit", { attempt: a.attempt, answers }).then((res) => {
+              const d = res.data;
+              ex.innerHTML = '<h2 style="border:0;margin-top:0">' + (d.passed ? t.passed : t.failed) + " · " + t.score + " " + (d.score ?? 0) + " %</h2>" + (d.passed ? '<p><a class="btn" href="' + d.cert_url + '" target="_blank" rel="noopener">' + esc(t.openCert) + "</a></p>" : "<p>" + esc(t.retake) + "</p>");
+            });
+          };
+          form2.addEventListener("submit", (e2) => { e2.preventDefault(); submit(); });
+        });
+      });
+    } else if (ex && !(me && me.email)) {
+      const p = document.createElement("p"); p.innerHTML = '<a href="' + (S.lang === "ru" ? "/ru/" : "/") + 'login/">' + esc(t.needLogin) + "</a>"; ex.appendChild(p);
+    }
+  });
+})();
+</script></body></html>

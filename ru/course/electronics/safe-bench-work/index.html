@@ -220,6 +220,108 @@ footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .person .ph{width:88px;height:88px;background:var(--blue);color:#fff;font-weight:700;font-size:30px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .person.open .ph{background:var(--paper);color:var(--blue);border:2px dashed var(--blue)}
 .person ul{padding-left:18px;margin:10px 0}
+
+/* ================= Platform theme (A, 17.10.2026): light, rounded cards, Coursera-like ================= */
+:root{--paper:#fff;--wash:#f5f7fb;--ink:#0f172a;--text:#1e293b;--muted:#5b6475;--rule:#e3e8f0;--rule-strong:#e3e8f0;--blue:#1d4ed8;--blue-wash:#e8eefc;--ok:#16a34a;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;--r:16px;--shadow:0 6px 18px rgba(15,23,42,.06);--shadow-lg:0 24px 60px rgba(15,23,42,.16)}
+body{background:var(--wash)}
+main{background:var(--wash)}
+.preview{background:var(--blue-wash);color:var(--blue);border:0;font-weight:500}
+header.top{border-bottom:1px solid var(--rule);background:#fff}
+header.top .wrap{height:68px}
+.brand{border-right:0}
+nav.main a,.top-right a{border:0;font-weight:500}
+nav.main a:hover,.top-right a:hover{background:none;color:var(--blue)}
+nav.main a[aria-current]{box-shadow:none;color:var(--blue)}
+.top-right a[data-auth]{background:var(--blue);color:#fff;border-radius:10px;margin:14px 0 14px 8px;padding:0 16px}
+.top-right a[data-auth]:hover{color:#fff;background:#1e40af}
+h1{letter-spacing:-.025em}
+.btn{border-radius:12px;padding:13px 22px}
+.btn:hover{background:#1e40af}
+.btn.ghost{background:#fff;color:var(--blue);border-color:var(--blue)}
+.btn.ghost:hover{background:var(--blue-wash)}
+section.band{border-bottom:0;padding:44px 0}
+.sec-head{display:block;margin-bottom:20px}
+.sec-head .num{display:none}
+.sec-head h2{font-size:30px}
+.hero{grid-template-columns:1.05fr 1fr;align-items:center;border-bottom:0;padding:56px 0 30px}
+.hero .facts{border-left:0;padding-left:0;display:flex;gap:34px;margin-top:26px}
+.fact b{font-size:30px}
+.hero-img{border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg);background:#111}
+.hero-img img{display:block;width:100%}
+.steps{border-top:0;gap:20px}
+.step{background:#fff;border:1px solid var(--rule);border-radius:var(--r);padding:22px;margin:0;box-shadow:var(--shadow)}
+.step .n{font-size:40px}
+/* course cards */
+.courses{border:0;gap:22px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.course-card{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:0 0 16px;min-height:0;overflow:hidden;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.course-card:hover{background:#fff;transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,23,42,.12)}
+.course-card .cover{aspect-ratio:16/9;margin:0 0 14px;padding:14px 16px;align-items:flex-end;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);background-size:cover;background-position:center;position:relative}
+.course-card .cover .mod{color:#fff;font-size:44px;opacity:.95;text-shadow:0 2px 12px rgba(0,0,0,.25)}
+.course-card .cover .folio{position:absolute;top:12px;right:14px;color:#fff;opacity:.85}
+.course-card[data-mod=foundation] .cover{background:linear-gradient(135deg,#0f766e,#14b8a6)}
+.course-card[data-mod=repair] .cover{background:linear-gradient(135deg,#c2410c,#f59e0b)}
+.course-card[data-mod=ct] .cover{background:linear-gradient(135deg,#4338ca,#818cf8)}
+.course-card[data-mod=ultrasound] .cover{background:linear-gradient(135deg,#0369a1,#38bdf8)}
+.course-card[data-mod=ventilator] .cover{background:linear-gradient(135deg,#0e7490,#22d3ee)}
+.course-card[data-mod=anesthesia] .cover{background:linear-gradient(135deg,#6d28d9,#a78bfa)}
+.course-card[data-mod=patient-monitor] .cover{background:linear-gradient(135deg,#be123c,#fb7185)}
+.course-card .cover.img{background-color:#111}
+.course-card .cover.img .mod{font-size:28px}
+.course-card>div:not(.cover),.course-card h3,.course-card .sub,.course-card .meta{padding-left:16px;padding-right:16px}
+.course-card .meta{margin:14px 0 8px}
+.course-card>div:last-child{padding:0 16px}
+.tag{border-radius:999px;border:0;background:var(--blue-wash);color:var(--blue);padding:4px 10px}
+.tag.blue{background:var(--blue-wash);color:var(--blue)}
+.tag.free{background:#dcfce7;color:var(--ok)}
+.ruler{height:8px;gap:3px}
+.ruler i{border:0;background:#e2e8f0;border-radius:999px}
+.ruler i.done{background:var(--blue)}
+.ruler i.here{outline:2px solid var(--ink);outline-offset:1px}
+/* ladder + tiers */
+.ladder{border-top:0;gap:18px}
+.ladder>div{background:#fff;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
+.ladder>div:last-child{border-right:1px solid var(--rule)}
+.ladder .st-n{font-size:40px}
+.tier-head{border-top:0;padding-top:0;grid-template-columns:60px 1fr}
+.tier-head .st-n{font-size:44px}
+/* library + lists */
+.lib{border:0;gap:16px}
+.lib a{background:#fff;border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow)}
+.lib a:hover{background:#fff;border-color:var(--blue)}
+/* course page */
+.course-top{border-bottom:0}
+.enrol{border:1px solid var(--rule);border-radius:20px;box-shadow:var(--shadow-lg);background:#fff}
+.enrol .team{border-top:1px solid var(--rule)}
+.outcomes{border-top:0;gap:12px}
+.outcomes div{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:14px 16px}
+.curriculum{border-top:0;background:#fff;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.lesson-row{padding:16px 20px;border-bottom:1px solid var(--rule)}
+.lesson-row:hover{background:var(--wash)}
+.lesson-row .ln{font-size:22px;color:var(--blue)}
+.cert{border-radius:var(--r);border-color:var(--rule)}
+details.qa{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:0 16px;margin-bottom:10px}
+/* lesson player */
+.player{background:#fff}
+.outline{background:var(--wash)}
+.lesson h2{border-top:0;padding-top:6px}
+.case{border:0;border-radius:var(--r);background:var(--blue-wash)}
+.locked{border:1px dashed var(--blue);border-radius:var(--r);background:var(--blue-wash)}
+.quiz label{border-radius:10px}
+.complete-bar{border-top:1px solid var(--rule)}
+.flow svg{border-radius:12px}
+/* faculty */
+.faculty{border-top:0;gap:18px}
+.person{background:#fff;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
+.person .ph{border-radius:50%}
+table.grid,table.pm{border-top:1px solid var(--rule)}
+footer{border-top:1px solid var(--rule);background:#fff}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
+h1{font-size:clamp(32px,4.4vw,54px)}
+.lesson h1{font-size:clamp(26px,3vw,38px)}
+.lesson .ln-big{font-size:64px}
+.fig{border:0;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg)}
+.fig .cap{border-top:1px solid var(--rule)}
+.course-card .cover .mod{font-size:34px;letter-spacing:-.02em}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/" aria-current>Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/library/">Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/course/electronics/safe-bench-work/" hreflang="en">EN</a></div></div></header>
