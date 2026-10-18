@@ -365,12 +365,17 @@ document.addEventListener("DOMContentLoaded", function () {
       sec("04", "Экзамены", table(["E-mail", "Курс", "Имя", "Начат", "Сдан", "Балл"], d.attempts.map((a) => [esc(a.email), esc(a.course), esc(a.name), dt(a.started), a.finished ? dt(a.finished) : "не закончен", a.score == null ? "—" : a.score + " %"]))) +
       sec("05", "Сертификаты", table(["Номер", "Имя", "E-mail", "Курс", "Балл", "Дата"], d.certs.map((c) => [`<a href="${API}/cert/${esc(c.id)}" target="_blank" rel="noopener">${esc(c.id)}</a>`, esc(c.name), esc(c.email), esc(c.course), c.score + " %", esc(c.date)]))) +
       sec("06", "Анкеты тренеров", table(["Когда", "Роль", "Имя", "E-mail", "Страна", "Оборудование", "Опыт", "Ссылка", "Комментарий"], d.applications.map((a) => [dt(a.ts), esc(a.role), esc(a.name), `<a href="mailto:${esc(a.email)}">${esc(a.email)}</a>`, esc(a.country), esc(a.equipment), esc(a.years), a.linkedin ? `<a href="${/^https?:/.test(a.linkedin) ? esc(a.linkedin) : "https://" + esc(a.linkedin)}" target="_blank" rel="noopener nofollow">ссылка</a>` : "", esc(a.message)]))) +
+      sec("08", "КП и счета", table(["КП", "Когда", "Клиент", "E-mail", "Состав", "USD", "KZT", "Статус", ""], (d.quotes || []).map((q) => [`<a href="${API}/q/${esc(q.id)}" target="_blank" rel="noopener">${esc(q.id)}</a><br><a href="${API}/inv/${esc(q.id)}" target="_blank" rel="noopener">счёт</a>${q.status === "paid" ? ` · <a href="${API}/act/${esc(q.id)}" target="_blank" rel="noopener">акт</a>` : ""}`, dt(q.ts), esc(q.company || q.contact) + (q.bin ? "<br>" + esc(q.bin) : ""), esc(q.email), JSON.parse(q.lines).map((l) => esc(l.title) + " × " + l.seats).join("<br>"), "$" + Math.round(q.total_usd), Math.round(q.total_kzt).toLocaleString("ru-RU"), q.status === "paid" ? "оплачен " + dt(q.paid_ts) : "ждёт оплаты", q.status === "paid" ? "" : `<button class="btn ghost small" data-paid="${esc(q.id)}" data-email="${esc(q.email)}" style="cursor:pointer">Оплачено → открыть</button>`]))) +
       sec("07", "Ученики", table(["E-mail", "Зарегистрирован", "Сессия до"], d.users.map((u) => [esc(u.email), dt(u.created), dt(u.last_session)])));
     const f = root.querySelector("[data-grant]");
     f.addEventListener("submit", (e) => {
       e.preventDefault();
       call("/api/admin/grant", { email: f.email.value, course: f.course.value, seats: +f.seats.value }).then((r) => { if (r.ok) load(); else f.querySelector("[data-grant-msg]").textContent = "Ошибка: " + (r.data.error || r.status); });
     });
+    root.querySelectorAll("[data-paid]").forEach((b) => b.addEventListener("click", () => {
+      const em = prompt("На какую почту открыть курсы (почта инженера или ответственного)?", b.dataset.email);
+      if (em) call("/api/admin/quote-paid", { id: b.dataset.paid, email: em }).then((r) => { alert(r.ok ? "Открыто: " + r.data.granted.join(", ") : "Ошибка: " + (r.data.error || r.status)); load(); });
+    }));
     root.querySelectorAll("[data-revoke]").forEach((b) => b.addEventListener("click", () => {
       const [email, course] = b.dataset.revoke.split("|");
       if (confirm(`Закрыть курс ${course} для ${email}?`)) call("/api/admin/revoke", { email, course }).then(load);
