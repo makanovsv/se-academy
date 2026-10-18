@@ -418,6 +418,36 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   const lsGet = (s) => { try { return JSON.parse(localStorage.getItem("sea:" + s) || "[]"); } catch (e) { return []; } };
   const lsSet = (s, v) => { try { localStorage.setItem("sea:" + s, JSON.stringify(v)); } catch (e) {} };
 
+  // Team seats: the buyer of N seats hands them out to engineers' e-mails (shown on the "My learning" page).
+  function renderTeam(me) {
+    const box = document.querySelector("[data-my]");
+    if (!box || !(me.team || []).length) return;
+    const ru = S.lang === "ru";
+    const L = ru ? { h: "Моя команда", lead: "Вы купили места для инженеров. Впишите почту инженера — ему придёт письмо со входом; у каждого свои уроки, экзамен и сертификат. Одно место — ваше.", add: "Выдать место", ph: "почта инженера", free: "свободно мест", rm: "убрать", started: "начал", lessons: "уроков пройдено", cert: "сертификат", err: { full: "Все места заняты.", exists: "У этой почты уже есть доступ к курсу.", bad_email: "Проверьте почту.", started: "Инженер уже начал курс — место не освобождается." } }
+      : { h: "My team", lead: "You bought seats for engineers. Enter an engineer's e-mail — they get a sign-in e-mail; each has their own lessons, exam and certificate. One seat is yours.", add: "Give a seat", ph: "engineer's e-mail", free: "seats free", rm: "remove", started: "started", lessons: "lessons done", cert: "certificate", err: { full: "All seats are taken.", exists: "This e-mail already has access to the course.", bad_email: "Check the e-mail.", started: "The engineer has started — the seat cannot be freed." } };
+    const sec = document.createElement("section");
+    sec.className = "team"; sec.style.margin = "28px 0";
+    const title = (slug) => { const c = document.querySelector('[data-my-course="' + slug + '"] h3'); return c ? c.textContent : slug; };
+    sec.innerHTML = "<h2>" + L.h + "</h2><p class=muted>" + L.lead + "</p>" + me.team.map((g) => {
+      const free = g.seats - 1 - g.members.length;
+      const rows = g.members.map((m) => "<li>" + esc(m.email) + ' <span class="muted">· ' + (m.cert ? L.cert : m.lessons + " " + L.lessons) + "</span>" + (m.lessons ? "" : ' <a href="#" data-team-rm="' + esc(m.email) + '" data-course="' + esc(g.course) + '">' + L.rm + "</a>") + "</li>").join("");
+      return '<div class="card" style="padding:18px;margin-top:14px"><b>' + esc(title(g.course)) + '</b> <span class="muted">· ' + L.free + ": " + free + " / " + g.seats + "</span><ul>" + rows + "</ul>" +
+        (free > 0 ? '<form data-team-add="' + esc(g.course) + '" style="display:flex;gap:8px;flex-wrap:wrap"><input type="email" required placeholder="' + L.ph + '" style="flex:1;min-width:220px"><button class="btn small">' + L.add + '</button></form>' : "") + '<p class="muted" data-team-msg></p></div>';
+    }).join("");
+    box.insertBefore(sec, box.querySelector(".courses"));
+    const reload = () => api("/api/me").then((r) => { sec.remove(); renderTeam(r.data); });
+    sec.addEventListener("submit", (e) => {
+      const f = e.target.closest("[data-team-add]"); if (!f) return; e.preventDefault();
+      const msg = f.parentElement.querySelector("[data-team-msg]");
+      api("/api/team/add", { course: f.dataset.teamAdd, email: f.querySelector("input").value, lang: S.lang }).then((r) => { if (r.ok) reload(); else msg.textContent = L.err[r.data.error] || r.data.error; });
+    });
+    sec.addEventListener("click", (e) => {
+      const a = e.target.closest("[data-team-rm]"); if (!a) return; e.preventDefault();
+      const msg = a.closest(".card").querySelector("[data-team-msg]");
+      api("/api/team/remove", { course: a.dataset.course, email: a.dataset.teamRm }).then((r) => { if (r.ok) reload(); else msg.textContent = L.err[r.data.error] || r.data.error; });
+    });
+  }
+
   function repaint() {
     document.querySelectorAll("[data-ruler]").forEach((r) => {
       const d = lsGet(r.dataset.ruler);
@@ -487,6 +517,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       (me.grants || []).forEach((g) => { const card = document.querySelector('[data-my-course="' + g.course + '"]'); if (card) card.hidden = false; });
       const empty = document.querySelector("[data-my-empty]");
       if (empty && (me.grants || []).length) empty.hidden = true;
+      renderTeam(me);
     }
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
 
