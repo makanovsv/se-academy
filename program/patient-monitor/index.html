@@ -340,6 +340,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 @media (max-width:700px){.qrow{grid-template-columns:24px 1fr;}.qrow .qp,.qrow input[type=number],.qrow>.muted{grid-column:2}.qfields{grid-template-columns:1fr}}
 
 .lill{margin:22px 0 4px;border-radius:14px;overflow:hidden;background:#111}.lill img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.narrow{max-width:760px}.pfs{padding:22px;margin-top:18px}.pfs h2{margin:0 0 6px}.pf{display:block;margin:12px 0}.pf span{display:block;font-size:13px;color:#5b6475;margin-bottom:4px}.pf input,.pfs input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/program/patient-monitor/" hreflang="ru">RU</a></div></div></header>
@@ -444,6 +445,24 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     });
   }
 
+  // Profile page: name (goes onto certificates), contacts, e-mail change, sign out everywhere, deletion request.
+  function renderProfile(me) {
+    const box = document.querySelector("[data-profile]");
+    if (!box) return;
+    const P = JSON.parse(box.dataset.t), note = box.querySelector("[data-pf-note]");
+    const st = new URLSearchParams(location.search).get("email");
+    if (st) { note.hidden = false; note.textContent = st === "changed" ? P.changed : P.failed; }
+    if (!me || !me.email) { box.querySelectorAll(".pfs").forEach((s) => (s.hidden = true)); if (!st) { note.hidden = false; note.textContent = P.login; } return; }
+    box.querySelector("[data-pf-email]").textContent = me.email;
+    const form = box.querySelector("[data-pf-form]");
+    for (const [k, v] of Object.entries(me.profile || {})) if (form.elements[k]) form.elements[k].value = v;
+    form.addEventListener("submit", (e) => { e.preventDefault(); const body = {}; for (const el of form.elements) if (el.name) body[el.name] = el.value; api("/api/profile", body).then((r) => { form.querySelector("[data-pf-msg]").textContent = r.ok ? P.saved : r.data.error; }); });
+    const ef = box.querySelector("[data-pf-email-form]");
+    ef.addEventListener("submit", (e) => { e.preventDefault(); api("/api/profile/email", { email: ef.querySelector("input").value, lang: S.lang }).then((r) => { box.querySelector("[data-pf-email-msg]").textContent = r.ok ? P.emailSent : P.failed; }); });
+    box.querySelector("[data-pf-allout]").addEventListener("click", () => api("/api/logout-all", {}).then(() => (location.href = (S.lang === "ru" ? "/ru" : "") + "/")));
+    box.querySelector("[data-pf-del]").addEventListener("click", (e) => { e.target.disabled = true; api("/api/account/delete-request", {}).then(() => { box.querySelector("[data-pf-del-msg]").textContent = P.delSent; }); });
+  }
+
   function repaint() {
     document.querySelectorAll("[data-ruler]").forEach((r) => {
       const d = lsGet(r.dataset.ruler);
@@ -504,6 +523,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
     if (me && me.email) {
+      if (auth) { const pf = document.createElement("a"); pf.href = (S.lang === "ru" ? "/ru" : "") + "/my/profile/"; pf.textContent = S.lang === "ru" ? "Профиль" : "Profile"; auth.parentElement.insertBefore(pf, auth); }
       if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
       if (auth) { auth.textContent = t.signOut; auth.title = me.email; auth.addEventListener("click", (e) => { e.preventDefault(); api("/api/logout", {}).then(() => location.reload()); }); }
       // merge server progress into local storage
@@ -515,6 +535,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       if (empty && (me.grants || []).length) empty.hidden = true;
       renderTeam(me);
     }
+    renderProfile(me);
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
 
     // lesson video (served by the API: free lessons to everyone, paid lessons to owners)
@@ -556,6 +577,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     if (ex && me && me.email && owns(ex.dataset.course)) {
       ex.classList.remove("locked");
       ex.innerHTML = '<form data-exam-start style="display:grid;gap:12px;max-width:560px"><label>' + esc(t.examName) + '<input name="name" required minlength="3" style="display:block;width:100%;font:16px var(--sans);padding:12px 14px;border:1px solid var(--ink);margin-top:6px"></label><button class="btn" style="cursor:pointer;justify-self:start">' + esc(t.examStart) + "</button></form><p data-exam-msg class='muted'></p>";
+      { const nm = ex.querySelector('[data-exam-start] input[name="name"]'); if (nm && me && me.profile && me.profile.name) nm.value = me.profile.name; }
       const f = ex.querySelector("[data-exam-start]"), em = ex.querySelector("[data-exam-msg]");
       f.addEventListener("submit", (e) => {
         e.preventDefault();
