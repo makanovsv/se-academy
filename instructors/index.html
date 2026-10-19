@@ -448,6 +448,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   }
 
   // Profile page: name (goes onto certificates), contacts, e-mail change, sign out everywhere, deletion request.
+  try { localStorage.setItem("sea_lang", S.lang); } catch (e) {}
   function renderProfile(me) {
     const box = document.querySelector("[data-profile]");
     if (!box) return;
@@ -461,6 +462,9 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     form.addEventListener("submit", (e) => { e.preventDefault(); const body = {}; for (const el of form.elements) if (el.name) body[el.name] = el.value; api("/api/profile", body).then((r) => { form.querySelector("[data-pf-msg]").textContent = r.ok ? P.saved : r.data.error; }); });
     const ef = box.querySelector("[data-pf-email-form]");
     ef.addEventListener("submit", (e) => { e.preventDefault(); api("/api/profile/email", { email: ef.querySelector("input").value, lang: S.lang }).then((r) => { box.querySelector("[data-pf-email-msg]").textContent = r.ok ? P.emailSent : P.failed; }); });
+    const pwf = box.querySelector("[data-pf-pw]"), pwm = box.querySelector("[data-pf-pw-msg]");
+    if (me.profile && me.profile.has_password) pwf.querySelector("[data-pf-pw-btn]").textContent = P.pwChange;
+    pwf.addEventListener("submit", (e) => { e.preventDefault(); const v = pwf.querySelector("input").value; if (v.length < 8) { pwm.textContent = P.pwShort; return; } api("/api/password", { password: v }).then((r) => { pwm.textContent = r.ok ? P.pwSaved : P.pwShort; if (r.ok) { pwf.querySelector("input").value = ""; pwf.querySelector("[data-pf-pw-btn]").textContent = P.pwChange; } }); });
     box.querySelector("[data-pf-allout]").addEventListener("click", () => api("/api/logout-all", {}).then(() => (location.href = (S.lang === "ru" ? "/ru" : "") + "/")));
     box.querySelector("[data-pf-del]").addEventListener("click", (e) => { e.target.disabled = true; api("/api/account/delete-request", {}).then(() => { box.querySelector("[data-pf-del-msg]").textContent = P.delSent; }); });
   }
@@ -499,6 +503,15 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   }
 
   // ---- login page
+  const pwForm = document.querySelector("[data-login-pw]");
+  if (pwForm) pwForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const m = document.querySelector("[data-login-pw-msg]");
+    api("/api/login-password", { email: pwForm.email.value, password: pwForm.password.value }).then((r) => {
+      if (r.ok) location.replace(S.my);
+      else m.textContent = r.status === 429 ? (S.lang === "ru" ? "Слишком много попыток. Подождите 15 минут или войдите по ссылке." : "Too many attempts. Wait 15 minutes or sign in with the link.") : (S.lang === "ru" ? "Неверная почта или пароль. Если пароль не задан — войдите по ссылке." : "Wrong e-mail or password. No password yet? Sign in with the link.");
+    });
+  });
   const form = document.querySelector("[data-login]");
   const msg = document.querySelector("[data-login-msg]");
   const token = new URLSearchParams(location.search).get("t");
