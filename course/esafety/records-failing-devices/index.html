@@ -341,6 +341,10 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 
 .lill{margin:22px 0 4px;border-radius:14px;overflow:hidden;background:#111}.lill img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 .narrow{max-width:760px}.pfs{padding:22px;margin-top:18px}.pfs h2{margin:0 0 6px}.pf{display:block;margin:12px 0}.pf span{display:block;font-size:13px;color:#5b6475;margin-bottom:4px}.pf input,.pfs input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}
+
+/* phones: no sideways scroll; lesson first, course outline after it */
+.player>*{min-width:0}.outline a,.outline li{overflow-wrap:anywhere}
+@media (max-width:900px){.player .outline{order:2;border-top:1px solid var(--rule);border-bottom:0}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/esafety/records-failing-devices/" hreflang="ru">RU</a></div></div></header>
