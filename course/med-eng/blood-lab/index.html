@@ -345,6 +345,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 /* phones: no sideways scroll; lesson first, course outline after it */
 .player>*{min-width:0}.outline a,.outline li{overflow-wrap:anywhere}
 @media (max-width:900px){.player .outline{order:2;border-top:1px solid var(--rule);border-bottom:0}}
+.ai-answer{line-height:1.6}.ai-answer a{color:var(--blue)}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/med-eng/blood-lab/" hreflang="ru">RU</a></div></div></header>
@@ -471,6 +472,34 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     box.querySelector("[data-pf-del]").addEventListener("click", (e) => { e.target.disabled = true; api("/api/account/delete-request", {}).then(() => { box.querySelector("[data-pf-del-msg]").textContent = P.delSent; }); });
   }
 
+  // Service Engineer AI page: asks the field-repair base through the API; answers keep only b, i, a, br.
+  function safeHTML(html) {
+    const doc = new DOMParser().parseFromString("<div>" + String(html || "").replace(/\n/g, "<br>") + "</div>", "text/html");
+    const walk = (n) => { [...n.childNodes].forEach((c) => { if (c.nodeType === 1) { const tag = c.tagName.toLowerCase(); if (!["b", "strong", "i", "em", "a", "br"].includes(tag)) { c.replaceWith(...c.childNodes); walk(n); return; } [...c.attributes].forEach((a) => { if (!(tag === "a" && a.name === "href" && /^https?:/.test(a.value))) c.removeAttribute(a.name); }); if (tag === "a") { c.target = "_blank"; c.rel = "noopener"; } walk(c); } }); };
+    const root = doc.body.firstChild; walk(root); return root.innerHTML;
+  }
+  function renderAI(me) {
+    const box = document.querySelector("[data-ai]");
+    if (!box) return;
+    const A = JSON.parse(box.dataset.t), note = box.querySelector("[data-ai-note]"), form = box.querySelector("[data-ai-form]"), out = box.querySelector("[data-ai-out]");
+    if (!me || !me.email) { note.hidden = false; note.textContent = A.login; return; }
+    if (!me.ai) { note.hidden = false; note.textContent = A.no_access; return; }
+    form.hidden = false;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = form.querySelector("textarea").value.trim(); if (!q) return;
+      const card = document.createElement("div"); card.className = "card pfs";
+      card.innerHTML = "<p><b>" + esc(q) + "</b></p><p class='muted'>" + esc(A.wait) + "</p>";
+      out.prepend(card); form.querySelector("button").disabled = true;
+      api("/api/ai/ask", { q }).then((r) => {
+        form.querySelector("button").disabled = false;
+        const body = r.ok ? safeHTML(r.data.html) : esc(r.status === 429 ? A.limit : r.status === 403 ? A.no_access : A.err);
+        card.innerHTML = "<p><b>" + esc(q) + "</b>" + (r.data.equipment ? " <span class='muted'>· " + esc(r.data.equipment) + "</span>" : "") + "</p><div class='ai-answer'>" + body + "</div>";
+      });
+      form.querySelector("textarea").value = "";
+    });
+  }
+
   function repaint() {
     document.querySelectorAll("[data-ruler]").forEach((r) => {
       const d = lsGet(r.dataset.ruler);
@@ -540,6 +569,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
     if (me && me.email) {
+      if (auth && me.ai) { const ai = document.createElement("a"); ai.href = (S.lang === "ru" ? "/ru" : "") + "/my/ai/"; ai.textContent = "AI"; ai.title = "Service Engineer AI"; auth.parentElement.insertBefore(ai, auth); }
       if (auth) { const pf = document.createElement("a"); pf.href = (S.lang === "ru" ? "/ru" : "") + "/my/profile/"; pf.textContent = S.lang === "ru" ? "Профиль" : "Profile"; auth.parentElement.insertBefore(pf, auth); }
       if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
       if (auth) { auth.textContent = t.signOut; auth.title = me.email; auth.addEventListener("click", (e) => { e.preventDefault(); api("/api/logout", {}).then(() => location.reload()); }); }
@@ -553,6 +583,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       renderTeam(me);
     }
     renderProfile(me);
+    renderAI(me);
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
 
     // lesson video (served by the API: free lessons to everyone, paid lessons to owners)
