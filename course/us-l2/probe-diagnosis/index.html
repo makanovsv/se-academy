@@ -346,9 +346,27 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .player>*{min-width:0}.outline a,.outline li{overflow-wrap:anywhere}
 @media (max-width:900px){.player .outline{order:2;border-top:1px solid var(--rule);border-bottom:0}}
 .ai-answer{line-height:1.6}.ai-answer a{color:var(--blue)}
+
+/* Service Engineer AI landing */
+.ai-hero{background:#15181d;color:#e8edf5;padding:64px 0 56px;background-image:radial-gradient(circle at 80% 20%,rgba(37,99,235,.28),transparent 45%),radial-gradient(circle at 10% 90%,rgba(184,115,51,.18),transparent 40%)}
+.ai-hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.ai-hero h1{color:#fff;font-size:52px;margin:6px 0 14px;letter-spacing:-.02em}.ai-hero p{font-size:18px;line-height:1.6;color:#c4ccd8}
+.ai-kick{color:#7aa2ff;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.btn.ghost.light{color:#fff;border-color:rgba(255,255,255,.4);background:transparent}
+.ai-demo{grid-column:2;grid-row:1/span 4;background:#1d2128;border:1px solid #2c323c;border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.4);font-size:15px}
+.ai-q{background:#2563eb;color:#fff;border-radius:12px 12px 4px 12px;padding:10px 14px;margin-left:auto;width:fit-content;max-width:85%}
+.ai-a{margin-top:14px;background:#262b33;border-radius:12px 12px 12px 4px;padding:14px;color:#dfe5ee;line-height:1.55}.ai-a b{color:#fff}
+.ai-src{margin-top:12px;display:flex;gap:8px;opacity:.85}
+.ai-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 10px}.ai-stats div{border-left:3px solid var(--blue);padding:4px 14px}.ai-stats b{display:block;font-size:30px}.ai-stats span{color:#5b6475;font-size:14px}
+.ai-h{margin:44px 0 16px}.ai-steps,.ai-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-steps .card,.ai-plans .card{padding:20px}
+.ai-n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700}
+.ai-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-trust .card{display:flex;gap:12px;align-items:flex-start;padding:18px}.ai-ic{font-size:26px}
+[data-ai] textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}
+@media (max-width:900px){.ai-hero .wrap{grid-template-columns:1fr}.ai-demo{grid-column:1;grid-row:auto}.ai-hero h1{font-size:38px}.ai-stats,.ai-steps,.ai-plans,.ai-trust{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.ai-stats,.ai-steps,.ai-plans,.ai-trust{grid-template-columns:1fr}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/us-l2/probe-diagnosis/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/us-l2/probe-diagnosis/" hreflang="ru">RU</a></div></div></header>
 <main><div class="player"><aside class="outline"><a class="label" href="/course/us-l2/">← Course</a><div class="ctitle">Ultrasound Service — Level 2: Fault-Finding</div><div><div class="ruler" data-ruler="us-l2"><i data-n="1"></i><i data-n="2"></i><i data-n="3" class="here"></i><i data-n="4"></i><i data-n="5"></i><i data-n="6"></i><i data-n="7"></i><i data-n="8"></i><i data-n="9"></i><i data-n="10"></i></div><div class="ruler-caption" data-ruler-caption data-fmt="{d} of 10 lessons completed" data-none="Not started">Not started</div></div><ol><li class="" data-done-of="us-l2:1"><a href="/course/us-l2/probe-or-system/"><span class="n">01</span><span>Probe or system: the swap method and the symptom map</span></a></li><li class="" data-done-of="us-l2:2"><a href="/course/us-l2/artefact-atlas/"><span class="n">02</span><span>Atlas of image artefacts: what is physics and what is a fault<span class="lock">locked</span></span></a></li><li class="here" data-done-of="us-l2:3"><a href="/course/us-l2/probe-diagnosis/"><span class="n">03</span><span>Probe fault diagnosis: elements, lens, cable, connector and testers<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:4"><a href="/course/us-l2/volume-and-tee-probes/"><span class="n">04</span><span>Mechanical 4D and TEE probes: motors, oil, encoders and insulation<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:5"><a href="/course/us-l2/transmit-receive/"><span class="n">05</span><span>Transmit, receive and probe switching<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:6"><a href="/course/us-l2/beamformer-processing/"><span class="n">06</span><span>Beamformer and signal processing: start-up errors, channel loss and Doppler faults<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:7"><a href="/course/us-l2/power-cooling/"><span class="n">07</span><span>Power supplies and cooling: won't start, shuts down, reboots<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:8"><a href="/course/us-l2/pc-os-software/"><span class="n">08</span><span>PC, operating system, disk and software<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:9"><a href="/course/us-l2/peripherals-integration/"><span class="n">09</span><span>Peripherals and integration: monitor, touch panel, printers, DICOM and network<span class="lock">locked</span></span></a></li><li class="" data-done-of="us-l2:10"><a href="/course/us-l2/post-repair-verification/"><span class="n">10</span><span>Verification after repair: proving the system is fit to return<span class="lock">locked</span></span></a></li><li class="exam"><a href="/course/us-l2/exam/"><span class="n">—</span><span>Final exam</span></a></li></ol></aside><article class="lesson"><div class="top-meta"><span class="ln-big">03</span><span class="muted" style="font-size:14px">Lesson 3 / 10 · 23 min</span></div><h1>Probe fault diagnosis: elements, lens, cable, connector and testers</h1><p class="lead">Locate a probe fault to the array, lens, cable or connector, read a probe tester report with its limits in mind, and decide between repair, replacement and removal from service.</p><div class="lvideo" data-video data-course="us-l2" data-lesson="probe-diagnosis" data-free="0"></div><div class="locked" data-locked="lesson" data-course="us-l2" data-lesson="probe-diagnosis" data-n="3"><h3>This lesson is part of the paid course</h3><p style="margin-top:8px">Enrol to open all lessons, the exam and the certificate.</p><div class="btns"><a class="btn" href="/course/us-l2/">Enrol</a></div></div></article></div></main>
 <footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan) · <a href="/about/">About</a> · <a href="/instructors/">Teach with us</a> · <a href="mailto:ceo@serviceengineer.app">ceo@serviceengineer.app</a><br><a href="/legal/terms/">Terms</a> · <a href="/legal/privacy/">Privacy</a> · <a href="/legal/refunds/">Refunds</a> · <a href="/legal/offer/">Public offer</a> · <a href="/quote/">Offer for companies</a></div><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan). Independent training material written by field engineers. Not affiliated with or endorsed by any manufacturer; brand and model names are used only to identify equipment. Always follow the manufacturer's service documentation and local regulations.</div></div></footer>
 <script>
@@ -481,10 +499,15 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   function renderAI(me) {
     const box = document.querySelector("[data-ai]");
     if (!box) return;
-    const A = JSON.parse(box.dataset.t), note = box.querySelector("[data-ai-note]"), form = box.querySelector("[data-ai-form]"), out = box.querySelector("[data-ai-out]");
-    if (!me || !me.email) { note.hidden = false; note.textContent = A.login; return; }
-    if (!me.ai) { note.hidden = false; note.textContent = A.no_access; return; }
-    form.hidden = false;
+    const A = JSON.parse(box.dataset.t), note = box.querySelector("[data-ai-note]"), form = box.querySelector("[data-ai-form]"), out = box.querySelector("[data-ai-out]"), left = box.querySelector("[data-ai-left]");
+    const show = (st) => {
+      if (!st) return;
+      if (st.mode === "admin") { left.textContent = ""; return; }
+      left.textContent = (st.mode === "trial" ? A.trialLeft : A.courseLeft) + st.left;
+      if (st.left <= 0) { form.hidden = true; note.hidden = false; note.textContent = st.mode === "trial" ? A.trial_over : A.limit; }
+    };
+    if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
+    form.hidden = false; show(me.ai);
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const q = form.querySelector("textarea").value.trim(); if (!q) return;
@@ -493,8 +516,9 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       out.prepend(card); form.querySelector("button").disabled = true;
       api("/api/ai/ask", { q }).then((r) => {
         form.querySelector("button").disabled = false;
-        const body = r.ok ? safeHTML(r.data.html) : esc(r.status === 429 ? A.limit : r.status === 403 ? A.no_access : A.err);
+        const body = r.ok ? safeHTML(r.data.html) : esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err);
         card.innerHTML = "<p><b>" + esc(q) + "</b>" + (r.data.equipment ? " <span class='muted'>· " + esc(r.data.equipment) + "</span>" : "") + "</p><div class='ai-answer'>" + body + "</div>";
+        show(r.data.ai);
       });
       form.querySelector("textarea").value = "";
     });
@@ -569,7 +593,6 @@ h1{font-size:clamp(32px,4.4vw,54px)}
   api("/api/me").then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
     if (me && me.email) {
-      if (auth && me.ai) { const ai = document.createElement("a"); ai.href = (S.lang === "ru" ? "/ru" : "") + "/my/ai/"; ai.textContent = "AI"; ai.title = "Service Engineer AI"; auth.parentElement.insertBefore(ai, auth); }
       if (auth) { const pf = document.createElement("a"); pf.href = (S.lang === "ru" ? "/ru" : "") + "/my/profile/"; pf.textContent = S.lang === "ru" ? "Профиль" : "Profile"; auth.parentElement.insertBefore(pf, auth); }
       if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
       if (auth) { auth.textContent = t.signOut; auth.title = me.email; auth.addEventListener("click", (e) => { e.preventDefault(); api("/api/logout", {}).then(() => location.reload()); }); }
