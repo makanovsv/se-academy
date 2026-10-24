@@ -1,2 +1,12 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /my/
+Disallow: /ru/my/
+Disallow: /login/
+Disallow: /ru/login/
+Disallow: /pay/
+Disallow: /ru/pay/
+Disallow: /admin/
+Disallow: /ru/admin/
+
+Sitemap: https://serviceengineer.academy/sitemap.xml
