@@ -359,6 +359,8 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .ai-a{margin-top:14px;background:#262b33;border-radius:12px 12px 12px 4px;padding:14px;color:#dfe5ee;line-height:1.55}.ai-a b{color:#fff}
 .ai-src{margin-top:12px;display:flex;gap:8px;opacity:.85}
 .ai-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 10px}.ai-stats div{border-left:3px solid var(--blue);padding:4px 14px}.ai-stats b{display:block;font-size:30px}.ai-stats span{color:#5b6475;font-size:14px}
+.ai-reply{white-space:pre-wrap;overflow-wrap:anywhere}.ai-ref{color:var(--blue);font-weight:600}.ai-srcs{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule);font-size:13px;color:var(--muted)}.ai-srcs div{margin-top:4px;overflow-wrap:anywhere}
+.ai-case{margin-top:12px}.ai-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.ai-st{flex:none;font-size:12px;padding:1px 8px;background:var(--wash);color:var(--muted)}.ai-st.ok{color:var(--ok)}.ai-sub{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule)}.ai-pmh{margin-top:24px}
 .ai-h{margin:44px 0 16px}.ai-steps,.ai-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-steps .card,.ai-plans .card{padding:20px}
 .ai-n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700}
 .ai-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-trust .card{display:flex;gap:12px;align-items:flex-start;padding:18px}.ai-ic{font-size:26px}
@@ -516,18 +518,45 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     };
     if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
     form.hidden = false; show(me.ai);
+    const cases = box.querySelector("[data-ai-cases]"), fresh = box.querySelector("[data-ai-new]");
+    let history = [];
+    const stat = (draft) => '<span class="ai-st' + (draft ? "" : " ok") + '">' + esc(draft ? A.draft : A.approved) + "</span>";
+    const approveBtn = (kind, id, label) => '<button class="btn small" data-approve="' + kind + ":" + id + '">' + esc(label) + "</button>";
+    const request = (j, o) => A.reqText.replace("{equipment}", j.equipment || "").replace("{serial}", j.serial || "—").replace("{part}", o.part || "").replace("{number}", o.part_number || "—").replace("{qty}", o.qty);
+    const loadCases = () => api("/api/ai/cases").then((r) => {
+      if (!r.ok) return;
+      const js = r.data.cases || [], pm = r.data.pm || [];
+      if (!js.length && !pm.length) { cases.innerHTML = ""; return; }
+      cases.innerHTML = '<h2 class="ai-h">' + esc(A.casesH) + "</h2>" + js.map((j) => '<div class="card pfs ai-case"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + '</p><div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>").join("") + (pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + pm.map((p) => '<div class="card pfs ai-case"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>").join("") : "");
+    });
+    cases.addEventListener("click", (e) => {
+      const a = e.target.closest("[data-approve]"), c = e.target.closest("[data-copy]");
+      if (a) { a.disabled = true; const [kind, id] = a.dataset.approve.split(":"); api("/api/ai/approve", { kind, id: +id }).then(loadCases); }
+      if (c && navigator.clipboard) navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = A.copied; }, () => {});
+    });
+    fresh.addEventListener("click", () => { history = []; out.innerHTML = ""; fresh.hidden = true; form.querySelector("textarea").focus(); });
+    loadCases();
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const q = form.querySelector("textarea").value.trim(); if (!q) return;
       const card = document.createElement("div"); card.className = "card pfs";
       card.innerHTML = "<p><b>" + esc(q) + "</b></p><p class='muted'>" + esc(A.wait) + "</p>";
       out.prepend(card); form.querySelector("button").disabled = true;
-      api("/api/ai/ask", { q }).then((r) => {
+      history.push({ role: "user", content: q });
+      api("/api/ai/agent", { messages: history }).then((r) => {
         form.querySelector("button").disabled = false;
-        const body = r.ok ? safeHTML(r.data.html) : esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err);
-        card.innerHTML = "<p><b>" + esc(q) + "</b>" + (r.data.equipment ? " <span class='muted'>· " + esc(r.data.equipment) + "</span>" : "") + "</p><div class='ai-answer'>" + body + "</div>";
-        show(r.data.ai);
-      });
+        let body;
+        if (r.ok && r.data.reply) {
+          history.push({ role: "assistant", content: r.data.reply }); fresh.hidden = false;
+          body = '<div class="ai-reply">' + esc(r.data.reply).replace(/\[(K\d+)\]/g, '<span class="ai-ref">[$1]</span>') + "</div>" + ((r.data.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + r.data.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc(s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
+        } else {
+          history.pop();
+          if (r.ok && r.data.html) body = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
+          else body = esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err);
+        }
+        card.innerHTML = "<p><b>" + esc(q) + "</b></p><div class='ai-answer'>" + body + "</div>";
+        show(r.data.ai); loadCases();
+      }).catch(() => { form.querySelector("button").disabled = false; history.pop(); card.innerHTML = "<p><b>" + esc(q) + "</b></p><p>" + esc(A.err) + "</p>"; });
       form.querySelector("textarea").value = "";
     });
   }
