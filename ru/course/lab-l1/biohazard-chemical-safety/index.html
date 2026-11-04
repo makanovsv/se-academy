@@ -367,6 +367,15 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 [data-ai] textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}
 @media (max-width:900px){.ai-hero .wrap{grid-template-columns:1fr}.ai-demo{grid-column:1;grid-row:auto}.ai-hero h1{font-size:38px}.ai-stats,.ai-steps,.ai-plans,.ai-trust{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.ai-stats,.ai-steps,.ai-plans,.ai-trust{grid-template-columns:1fr}}
+/* AI workspace: chats filed under clinics and machines */
+.ai-tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin-bottom:14px}.ai-tabs button{font:inherit;font-weight:600;background:none;border:0;padding:10px 16px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent}.ai-tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--blue)}
+.ai-crumb{margin:0 0 10px;font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ai-crumb a{font-weight:600}
+.ai-thread{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}.ai-msg{border-radius:12px;padding:12px 14px;max-width:92%}.ai-msg.me{align-self:flex-end;background:var(--blue-wash)}.ai-msg.ai{align-self:flex-start;background:var(--paper);border:1px solid var(--rule)}.ai-msg.ai-file{border-color:var(--blue);background:var(--blue-wash)}.ai-msg p{margin:6px 0 0}
+.ai-mini{display:flex;flex-direction:column;gap:8px;margin-top:10px}.ai-mini input,.ai-mini select,.ai-mhead+.btns+.card textarea,[data-ai-machine] textarea{font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;width:100%;box-sizing:border-box;background:var(--paper)}.ai-mini [data-newm]{display:flex;flex-direction:column;gap:8px}.ai-mini [hidden]{display:none}
+.ai-site{padding:0;margin-top:12px;overflow:hidden}.ai-sitehead{padding:12px 14px;border-bottom:1px solid var(--rule);align-items:center}.ai-site .ai-mini{padding:0 14px 12px}
+.ai-mrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;color:var(--text);border-bottom:1px solid var(--rule)}.ai-mrow:last-child{border-bottom:0}.ai-mrow:hover{text-decoration:none;background:var(--wash)}a.card.ai-mrow{margin-top:8px;border:1px solid var(--rule)}
+.ai-mhead{margin:14px 0}.ai-mhead h3{font-size:22px;margin:4px 0}[data-ai-machine] .card{margin-top:12px}[data-ai-machine] textarea{margin-top:8px}
+[data-ai] [hidden]{display:none!important}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/" aria-current>Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/trainings/">Тренинги</a><a href="/ru/library/">Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/ru/ai/">AI</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/course/lab-l1/biohazard-chemical-safety/" hreflang="en">EN</a></div></div></header>
@@ -523,48 +532,135 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       if (st.left <= 0) { form.hidden = true; note.hidden = false; note.textContent = st.mode === "trial" ? A.trial_over : A.limit; }
     };
     if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
+    box.querySelector("[data-ai-tabs]").hidden = false;
     form.hidden = false; show(me.ai);
-    const cases = box.querySelector("[data-ai-cases]"), fresh = box.querySelector("[data-ai-new]");
-    let history = [];
+    const cases = box.querySelector("[data-ai-cases]"), fresh = box.querySelector("[data-ai-new]"), sitesBox = box.querySelector("[data-ai-sites]"), crumb = box.querySelector("[data-ai-crumb]");
+    // the open chat: id from the server, machine it is filed under (null = not filed yet)
+    let chat = { id: null, machine_id: null, label: "" }, newFor = null, treeData = { sites: [], unfiled: [] };
     const stat = (draft) => '<span class="ai-st' + (draft ? "" : " ok") + '">' + esc(draft ? A.draft : A.approved) + "</span>";
     const approveBtn = (kind, id, label) => '<button class="btn small" data-approve="' + kind + ":" + id + '">' + esc(label) + "</button>";
     const request = (j, o) => A.reqText.replace("{equipment}", j.equipment || "").replace("{serial}", j.serial || "—").replace("{part}", o.part || "").replace("{number}", o.part_number || "—").replace("{qty}", o.qty);
+    const caseCard = (j) => '<div class="card pfs ai-case"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + '</p><div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>";
+    const pmCard = (p) => '<div class="card pfs ai-case"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>";
     const loadCases = () => api("/api/ai/cases").then((r) => {
       if (!r.ok) return;
       const js = r.data.cases || [], pm = r.data.pm || [];
-      if (!js.length && !pm.length) { cases.innerHTML = ""; return; }
-      cases.innerHTML = '<h2 class="ai-h">' + esc(A.casesH) + "</h2>" + js.map((j) => '<div class="card pfs ai-case"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + '</p><div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>").join("") + (pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + pm.map((p) => '<div class="card pfs ai-case"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>").join("") : "");
+      cases.innerHTML = !js.length && !pm.length ? '<p class="muted">' + esc(A.noCases) + "</p>" : js.map(caseCard).join("") + (pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + pm.map(pmCard).join("") : "");
     });
-    cases.addEventListener("click", (e) => {
+    const tab = (name) => {
+      box.querySelectorAll("[data-ai-tab]").forEach((b) => b.setAttribute("aria-selected", b.dataset.aiTab === name));
+      box.querySelectorAll("[data-ai-pane]").forEach((p) => { p.hidden = p.dataset.aiPane !== name; });
+      if (name === "sites") loadTree();
+      if (name === "cases") loadCases();
+    };
+    box.querySelector("[data-ai-tabs]").addEventListener("click", (e) => { const b = e.target.closest("[data-ai-tab]"); if (b) tab(b.dataset.aiTab); });
+
+    // ---- chat
+    const bubble = (role, html) => { const d = document.createElement("div"); d.className = "ai-msg " + role; d.innerHTML = html; out.append(d); return d; };
+    const replyHTML = (d) => '<div class="ai-reply">' + esc(d.reply).replace(/\[(K\d+)\]/g, '<span class="ai-ref">[$1]</span>') + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc(s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
+    const paintCrumb = () => {
+      crumb.innerHTML = chat.machine_id ? '<a href="#" data-open-machine="' + chat.machine_id + '">' + esc(chat.label) + "</a>"
+        : newFor ? esc(A.newChatFor) + " " + esc(newFor.label)
+        : chat.id ? '<span class="muted">' + esc(A.notFiled) + '</span> <button type="button" class="btn small ghost" data-file-manual>' + esc(A.fileBtn) + "</button>" : '<span class="muted">' + esc(A.chatHint) + "</span>";
+    };
+    const startChat = (machine) => { chat = { id: null, machine_id: null, label: "" }; newFor = machine || null; out.innerHTML = ""; fresh.hidden = true; paintCrumb(); tab("chat"); form.querySelector("textarea").focus(); };
+    const openChat = (id) => api("/api/ai/chats/" + id).then((r) => {
+      if (!r.ok) return;
+      chat = { id: r.data.id, machine_id: r.data.machine_id, label: r.data.label }; newFor = null; out.innerHTML = "";
+      (r.data.messages || []).forEach((m) => bubble(m.role === "user" ? "me" : "ai", m.role === "user" ? "<b>" + esc(m.content) + "</b>" : replyHTML({ reply: m.content })));
+      fresh.hidden = false; paintCrumb(); tab("chat");
+    });
+    const machineOptions = () => treeData.sites.map((s) => '<optgroup label="' + esc(s.name) + '">' + s.machines.map((m) => '<option value="' + m.id + '">' + esc(m.equipment + (m.serial ? " · " + m.serial : "")) + "</option>").join("") + "</optgroup>").join("");
+    const fileCard = (sug) => {
+      // the AI recognised the machine: one tap files the chat; "other" lets the engineer pick or type it
+      const n = sug.new, what = sug.machine_id ? sug.label : [n.site || "—", n.equipment, n.serial && "SN " + n.serial].filter(Boolean).join(" · ");
+      const d = bubble("ai ai-file", "<b>" + esc(sug.machine_id ? A.fileQ : A.fileNewQ) + "</b><p>" + esc(what) + '</p><div class="btns"><button type="button" class="btn small" data-file-yes>' + esc(sug.machine_id ? A.yes : A.createFile) + '</button><button type="button" class="btn small ghost" data-file-manual>' + esc(A.other) + "</button></div>");
+      d.querySelector("[data-file-yes]").addEventListener("click", () => fileTo(sug.machine_id ? { machine_id: sug.machine_id } : n, d));
+    };
+    const fileTo = (body, card) => api("/api/ai/chats/" + chat.id + "/file", body).then((r) => {
+      if (!r.ok) return;
+      chat.machine_id = r.data.machine_id; chat.label = r.data.label; paintCrumb();
+      if (card) card.innerHTML = '<p class="muted">✓ ' + esc(A.filed) + " " + esc(r.data.label) + "</p>";
+    });
+    const manualFile = () => api("/api/ai/tree").then((r) => {
+      treeData = r.ok ? r.data : treeData;
+      const d = bubble("ai ai-file", "<b>" + esc(A.pickMachine) + '</b><form class="ai-mini"><select><option value="">' + esc(A.newMachineOpt) + "</option>" + machineOptions() + '</select><div data-newm><input name="site" placeholder="' + esc(A.siteName) + '"><input name="equipment" placeholder="' + esc(A.equipment) + '"><input name="serial" placeholder="' + esc(A.serial) + '"></div><button class="btn small">' + esc(A.save) + "</button></form>");
+      const f = d.querySelector("form"), sel = f.querySelector("select"), nm = f.querySelector("[data-newm]");
+      sel.addEventListener("change", () => { nm.hidden = !!sel.value; });
+      f.addEventListener("submit", (e) => { e.preventDefault(); const v = (k) => f.querySelector('[name="' + k + '"]').value.trim(); if (!sel.value && !v("equipment")) return; fileTo(sel.value ? { machine_id: +sel.value } : { site: v("site"), equipment: v("equipment"), serial: v("serial") }, d); });
+      d.scrollIntoView({ block: "nearest" });
+    });
+    box.addEventListener("click", (e) => {
+      const om = e.target.closest("[data-open-machine]"), oc = e.target.closest("[data-open-chat]"), mf = e.target.closest("[data-file-manual]");
+      if (om) { e.preventDefault(); openMachine(+om.dataset.openMachine); }
+      if (oc) { e.preventDefault(); openChat(+oc.dataset.openChat); }
+      if (mf && chat.id) manualFile();
       const a = e.target.closest("[data-approve]"), c = e.target.closest("[data-copy]");
-      if (a) { a.disabled = true; const [kind, id] = a.dataset.approve.split(":"); api("/api/ai/approve", { kind, id: +id }).then(loadCases); }
+      if (a) { a.disabled = true; const [kind, id] = a.dataset.approve.split(":"); api("/api/ai/approve", { kind, id: +id }).then(() => { a.replaceWith(document.createRange().createContextualFragment(stat(false))); }); }
       if (c && navigator.clipboard) navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = A.copied; }, () => {});
     });
-    fresh.addEventListener("click", () => { history = []; out.innerHTML = ""; fresh.hidden = true; form.querySelector("textarea").focus(); });
-    loadCases();
+    fresh.addEventListener("click", () => startChat(null));
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const q = form.querySelector("textarea").value.trim(); if (!q) return;
-      const card = document.createElement("div"); card.className = "card pfs";
-      card.innerHTML = "<p><b>" + esc(q) + "</b></p><p class='muted'>" + esc(A.wait) + "</p>";
-      out.prepend(card); form.querySelector("button").disabled = true;
-      history.push({ role: "user", content: q });
-      api("/api/ai/agent", { messages: history }).then((r) => {
+      bubble("me", "<b>" + esc(q) + "</b>");
+      const card = bubble("ai", "<p class='muted'>" + esc(A.wait) + "</p>");
+      card.scrollIntoView({ block: "nearest" });
+      form.querySelector("button").disabled = true;
+      const body = { text: q };
+      if (chat.id) body.chat_id = chat.id; else if (newFor) body.machine_id = newFor.id;
+      api("/api/ai/agent", body).then((r) => {
         form.querySelector("button").disabled = false;
-        let body;
         if (r.ok && r.data.reply) {
-          history.push({ role: "assistant", content: r.data.reply }); fresh.hidden = false;
-          body = '<div class="ai-reply">' + esc(r.data.reply).replace(/\[(K\d+)\]/g, '<span class="ai-ref">[$1]</span>') + "</div>" + ((r.data.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + r.data.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc(s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
-        } else {
-          history.pop();
-          if (r.ok && r.data.html) body = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
-          else body = esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err);
-        }
-        card.innerHTML = "<p><b>" + esc(q) + "</b></p><div class='ai-answer'>" + body + "</div>";
-        show(r.data.ai); loadCases();
-      }).catch(() => { form.querySelector("button").disabled = false; history.pop(); card.innerHTML = "<p><b>" + esc(q) + "</b></p><p>" + esc(A.err) + "</p>"; });
+          card.innerHTML = replyHTML(r.data); fresh.hidden = false;
+          if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
+          if (r.data.suggest && !chat.machine_id) fileCard(r.data.suggest);
+        } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
+        else card.innerHTML = "<p>" + esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err) + "</p>";
+        show(r.data.ai);
+      }).catch(() => { form.querySelector("button").disabled = false; card.innerHTML = "<p>" + esc(A.err) + "</p>"; });
       form.querySelector("textarea").value = "";
     });
+
+    // ---- sites and machines
+    const loadTree = () => api("/api/ai/tree").then((r) => {
+      if (!r.ok) return;
+      treeData = r.data;
+      sitesBox.innerHTML = '<div class="btns"><button type="button" class="btn small" data-add-site>' + esc(A.addSite) + "</button></div>" +
+        '<form class="card pfs ai-mini" data-site-form hidden><input name="name" required placeholder="' + esc(A.siteName) + '"><input name="city" placeholder="' + esc(A.city) + '"><button class="btn small">' + esc(A.save) + "</button></form>" +
+        (treeData.sites.length ? "" : '<p class="muted">' + esc(A.noSites) + "</p>") +
+        treeData.sites.map((s) => '<div class="card ai-site"><div class="ai-row ai-sitehead"><div><b>' + esc(s.name) + "</b>" + (s.city ? ' <span class="muted">· ' + esc(s.city) + "</span>" : "") + '</div><button type="button" class="btn small ghost" data-add-machine="' + s.id + '">' + esc(A.addMachine) + "</button></div>" +
+          '<form class="ai-mini" data-machine-form="' + s.id + '" hidden><input name="equipment" required placeholder="' + esc(A.equipment) + '"><input name="serial" placeholder="' + esc(A.serial) + '"><button class="btn small">' + esc(A.save) + "</button></form>" +
+          s.machines.map((m) => '<a href="#" class="ai-mrow" data-open-machine="' + m.id + '"><span><b>' + esc(m.equipment) + "</b><br><span class=\"muted\">" + (m.serial ? "SN " + esc(m.serial) + " · " : "") + esc(A.chatsN) + ": " + m.chats + "</span></span>" + (m.open ? '<span class="ai-st">' + esc(A.openN) + ": " + m.open + "</span>" : "") + "</a>").join("") + "</div>").join("") +
+        (treeData.unfiled.length ? '<h3 class="ai-pmh">' + esc(A.unfiled) + "</h3>" + treeData.unfiled.map((c) => '<a href="#" class="card ai-mrow" data-open-chat="' + c.id + '"><span>' + esc(c.title) + '<br><span class="muted">' + esc(c.updated) + "</span></span></a>").join("") : "");
+    });
+    sitesBox.addEventListener("click", (e) => {
+      const as = e.target.closest("[data-add-site]"), am = e.target.closest("[data-add-machine]");
+      if (as) { const f = sitesBox.querySelector("[data-site-form]"); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("input").focus(); }
+      if (am) { const f = sitesBox.querySelector('[data-machine-form="' + am.dataset.addMachine + '"]'); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("input").focus(); }
+    });
+    sitesBox.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = e.target, v = (k) => f.querySelector('[name="' + k + '"]').value.trim();
+      if (f.matches("[data-site-form]")) api("/api/ai/sites", { name: v("name"), city: v("city") }).then(loadTree);
+      else api("/api/ai/machines", { site_id: +f.dataset.machineForm, equipment: v("equipment"), serial: v("serial") }).then(loadTree);
+    });
+    const mBox = box.querySelector("[data-ai-machine]");
+    const openMachine = (id) => api("/api/ai/machines/" + id).then((r) => {
+      if (!r.ok) return;
+      const m = r.data;
+      box.querySelectorAll("[data-ai-pane]").forEach((p) => { p.hidden = p.dataset.aiPane !== "machine"; });
+      box.querySelectorAll("[data-ai-tab]").forEach((b) => b.setAttribute("aria-selected", b.dataset.aiTab === "sites"));
+      mBox.innerHTML = '<a href="#" data-back>← ' + esc(A.back) + '</a><div class="ai-mhead"><span class="muted">' + esc(m.site || "") + (m.city ? " · " + esc(m.city) : "") + "</span><h3>" + esc(m.equipment) + "</h3>" + (m.serial ? '<span class="muted">SN ' + esc(m.serial) + "</span>" : "") + "</div>" +
+        '<div class="btns"><button type="button" class="btn" data-new-here>' + esc(A.newChatHere) + "</button></div>" +
+        '<div class="card pfs"><b>' + esc(A.notesH) + '</b><textarea rows="3" maxlength="3000" placeholder="' + esc(A.notesPh) + '">' + esc(m.notes || "") + '</textarea><div class="btns"><button type="button" class="btn small ghost" data-save-notes>' + esc(A.save) + '</button><span class="muted" data-notes-msg></span></div></div>' +
+        '<h3 class="ai-pmh">' + esc(A.chatsH) + "</h3>" + (m.chats.length ? m.chats.map((c) => '<a href="#" class="card ai-mrow" data-open-chat="' + c.id + '"><span><b>' + esc(c.title) + '</b><br><span class="muted">' + esc(c.updated) + " · " + esc(c.summary.slice(0, 140)) + "</span></span></a>").join("") : '<p class="muted">' + esc(A.noChats) + "</p>") +
+        (m.jobs.length ? '<h3 class="ai-pmh">' + esc(A.casesH) + "</h3>" + m.jobs.map(caseCard).join("") : "") + (m.pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + m.pm.map(pmCard).join("") : "");
+      mBox.querySelector("[data-back]").addEventListener("click", (e) => { e.preventDefault(); tab("sites"); });
+      mBox.querySelector("[data-new-here]").addEventListener("click", () => startChat({ id: m.id, label: m.label }));
+      mBox.querySelector("[data-save-notes]").addEventListener("click", () => api("/api/ai/machines/" + m.id, { notes: mBox.querySelector("textarea").value }).then((x) => { mBox.querySelector("[data-notes-msg]").textContent = x.ok ? A.saved : A.err; }));
+    });
+    paintCrumb();
   }
 
   function repaint() {
