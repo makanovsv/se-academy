@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.serviceengineer.ai",
+      "sha256_cert_fingerprints": [
+        "89:D5:D4:00:A0:98:61:41:6B:A7:8D:C9:93:11:BE:0C:55:49:E4:B5:B8:DF:99:6C:7F:3F:F3:2F:95:9E:26:26"
+      ]
+    }
+  }
+]
