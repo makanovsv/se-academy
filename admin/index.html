@@ -500,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const title = (slug) => { const c = document.querySelector('[data-my-course="' + slug + '"] h3'); return c ? c.textContent : slug; };
     sec.innerHTML = "<h2>" + L.h + "</h2><p class=muted>" + L.lead + "</p>" + me.team.map((g) => {
       const free = g.seats - 1 - g.members.length;
-      const rows = g.members.map((m) => "<li>" + esc(m.email) + ' <span class="muted">· ' + (m.cert ? L.cert : m.lessons + " " + L.lessons) + "</span>" + (m.lessons ? "" : ' <a href="#" data-team-rm="' + esc(m.email) + '" data-course="' + esc(g.course) + '">' + L.rm + "</a>") + "</li>").join("");
+      const rows = g.members.map((m) => "<li>" + esc(m.email) + ' <span class="muted">· ' + (m.cert ? L.cert : m.lessons + " " + L.lessons) + "</span>" + (m.lessons || m.cert ? "" : ' <a href="#" data-team-rm="' + esc(m.email) + '" data-course="' + esc(g.course) + '">' + L.rm + "</a>") + "</li>").join("");
       return '<div class="card" style="padding:18px;margin-top:14px"><b>' + esc(title(g.course)) + '</b> <span class="muted">· ' + L.free + ": " + free + " / " + g.seats + "</span><ul>" + rows + "</ul>" +
         (free > 0 ? '<form data-team-add="' + esc(g.course) + '" style="display:flex;gap:8px;flex-wrap:wrap"><input type="email" required placeholder="' + L.ph + '" style="flex:1;min-width:220px"><button class="btn small">' + L.add + '</button></form>' : "") + '<p class="muted" data-team-msg></p></div>';
     }).join("");
@@ -516,6 +516,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const msg = a.closest(".card").querySelector("[data-team-msg]");
       api("/api/team/remove", { course: a.dataset.course, email: a.dataset.teamRm }).then((r) => { if (r.ok) reload(); else msg.textContent = L.err[r.data.error] || r.data.error; });
     });
+  }
+
+  // Earned certificates on the "My learning" page: the exam result page is the only other place with the link.
+  function renderCerts(me) {
+    const box = document.querySelector("[data-my]");
+    if (!box || !(me.certs || []).length) return;
+    const ru = S.lang === "ru";
+    const title = (slug) => { const c = document.querySelector('[data-my-course="' + slug + '"] h3'); return c ? c.textContent : slug; };
+    const sec = document.createElement("section");
+    sec.style.margin = "28px 0";
+    sec.innerHTML = "<h2>" + (ru ? "Мои сертификаты" : "My certificates") + "</h2>" + me.certs.map((c) =>
+      '<div class="card" style="padding:18px;margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:220px"><b>' + esc(title(c.course)) + '</b><div class="muted">' + esc(c.date) + " · " + (ru ? "экзамен" : "exam") + " " + esc(String(c.score)) + " % · " + esc(c.id) + '</div></div><a class="btn small" href="' + S.api + "/cert/" + encodeURIComponent(c.id) + '" target="_blank" rel="noopener">' + (ru ? "Открыть сертификат" : "Open certificate") + "</a></div>").join("");
+    box.insertBefore(sec, box.querySelector(".courses"));
   }
 
   // Profile page: name (goes onto certificates), contacts, e-mail change, sign out everywhere, deletion request.
@@ -681,11 +694,14 @@ document.addEventListener("DOMContentLoaded", function () {
       (me.grants || []).forEach((g) => { const card = document.querySelector('[data-my-course="' + g.course + '"]'); if (card) card.hidden = false; });
       const empty = document.querySelector("[data-my-empty]");
       if (empty && (me.grants || []).length) empty.hidden = true;
+      renderCerts(me);
       renderTeam(me);
     }
     renderProfile(me);
     renderAI(me);
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
+    // the sidebar is built for guests: drop the "locked" marks on lessons the student owns
+    document.querySelectorAll(".lock").forEach((s) => { const m = (s.closest("a")?.getAttribute("href") || "").match(/course\/([^/]+)\//); if (m && owns(m[1])) s.remove(); });
 
     // lesson video (served by the API: free lessons to everyone, paid lessons to owners)
     document.querySelectorAll("[data-video]").forEach((box) => {
