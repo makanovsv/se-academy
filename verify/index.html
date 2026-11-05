@@ -359,7 +359,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .ai-a{margin-top:14px;background:#262b33;border-radius:12px 12px 12px 4px;padding:14px;color:#dfe5ee;line-height:1.55}.ai-a b{color:#fff}
 .ai-src{margin-top:12px;display:flex;gap:8px;opacity:.85}
 .ai-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0 10px}.ai-stats div{border-left:3px solid var(--blue);padding:4px 14px}.ai-stats b{display:block;font-size:30px}.ai-stats span{color:#5b6475;font-size:14px}
-.ai-reply{white-space:pre-wrap;overflow-wrap:anywhere}.ai-ref{color:var(--blue);font-weight:600}.ai-srcs{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule);font-size:13px;color:var(--muted)}.ai-srcs div{margin-top:4px;overflow-wrap:anywhere}
+.ai-reply{overflow-wrap:anywhere}.ai-reply p{margin:0 0 10px}.ai-reply p:last-child{margin:0}.ai-reply ol,.ai-reply ul{margin:0 0 10px;padding-left:22px}.ai-reply li{margin:0 0 6px;padding-left:2px}.ai-reply li::marker{color:var(--muted);font-weight:600}.ai-ref{color:var(--blue);font-weight:600}.ai-srcs{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule);font-size:13px;color:var(--muted)}.ai-srcs div{margin-top:4px;overflow-wrap:anywhere}
 .ai-case{margin-top:12px}.ai-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.ai-st{flex:none;font-size:12px;padding:1px 8px;background:var(--wash);color:var(--muted)}.ai-st.ok{color:var(--ok)}.ai-sub{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule)}.ai-pmh{margin-top:24px}
 .ai-h{margin:44px 0 16px}.ai-steps,.ai-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.ai-steps .card,.ai-plans .card{padding:20px}
 .ai-n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700}
@@ -380,4 +380,75 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 /* phones: the menu becomes a scrolling row under the header instead of disappearing */
 @media (max-width:640px){header.top .wrap{height:auto;flex-wrap:wrap}.brand{flex:1 1 0;min-width:0;min-height:56px}.top-right{flex:0 0 auto;min-height:56px;margin-left:auto}nav.main{display:flex;order:3;width:100%;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--rule)}nav.main::-webkit-scrollbar{display:none}nav.main a{padding:10px 12px;font-size:14px;white-space:nowrap}}
 .ai-fb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.ai-real{margin:8px 0;padding:8px 10px;background:var(--wash);border-left:3px solid var(--ok)}
+/* logged in on a phone: four buttons on the right leave no room, keep only the logo */
+@media (max-width:640px){header.top .wrap:has(.top-right .my) .brand span{display:none}.top-right a{font-size:13px}.ai-tabhint{margin:10px 0 0;font-size:14px}}
+.ai-tabhint{margin:12px 0 0}
+/* chat composer: photo of the machine's screen, the question, send */
+.ai-compose{display:flex;gap:8px;align-items:flex-end}.ai-compose textarea{flex:1}
+.ai-cam{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:600;background:none;border:1px solid var(--rule-strong);border-radius:10px;padding:10px 12px;color:var(--ink);cursor:pointer}.ai-cam svg{width:20px;height:20px}
+.ai-send svg{display:none}
+.ai-att{position:relative;display:inline-block;margin-bottom:8px}.ai-att img{display:block;max-height:96px;max-width:160px;border-radius:10px;border:1px solid var(--rule)}.ai-att button{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--ink);color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}.ai-att svg{width:14px;height:14px}
+.ai-shot{display:block;max-width:220px;max-height:220px;border-radius:10px;margin-bottom:8px}
+.ai-disc-short{display:none}
+.ai-empty{padding:8px 0 16px}.ai-empty h3{margin:0 0 6px}.ai-ex{display:flex;flex-direction:column;gap:8px;margin-top:14px}.ai-ex button{font:inherit;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer}.ai-ex button:hover{border-color:var(--blue)}
+.app-bar,.app-drawer,.app-veil{display:none}
+
+/* the SE AI app: a chat app, not a website */
+.in-app body{background:#fff}
+.in-app header.top{display:none}
+.in-app .app-bar{display:flex;align-items:center;gap:4px;position:sticky;top:0;z-index:30;height:56px;padding:0 6px;background:#fff;border-bottom:1px solid var(--rule)}
+.in-app .app-bar b{flex:1;min-width:0;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:4px}
+.in-app .app-bar button,.in-app .app-bar a,.in-app .app-gap{flex:none;width:44px;height:44px;display:grid;place-items:center;border:0;background:none;color:var(--ink);border-radius:12px;padding:0;cursor:pointer}
+.in-app .app-bar button:active,.in-app .app-bar a:active{background:var(--wash)}
+.in-app .app-bar svg{width:24px;height:24px}
+.in-app .app-veil{display:block;position:fixed;inset:0;background:rgba(15,23,42,.32);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.in-app.app-open .app-veil{opacity:1;pointer-events:auto}
+.in-app .app-drawer{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:min(300px,84vw);overflow-y:auto;background:#fff;z-index:50;transform:translateX(-102%);transition:transform .22s ease;padding:8px 0 calc(16px + env(safe-area-inset-bottom));border-right:1px solid var(--rule)}
+.in-app.app-open .app-drawer{transform:none}
+.in-app .app-brand{font-size:17px;font-weight:700;padding:14px 20px 10px}
+.in-app .app-drawer>a,.in-app .app-drawer>button{display:block;width:100%;box-sizing:border-box;text-align:left;font:inherit;font-size:16px;color:var(--ink);background:none;border:0;padding:12px 20px;cursor:pointer}
+.in-app .app-drawer>a:hover{text-decoration:none}
+.in-app .app-drawer [aria-current]{color:var(--blue);background:var(--blue-wash);font-weight:600}
+.in-app .app-drawer hr{border:0;border-top:1px solid var(--rule);margin:8px 0}
+.in-app .app-who{margin:2px 20px 0;font-size:13px;color:var(--muted);word-break:break-all}
+.in-app .app-legal{margin:auto 20px 0;padding-top:20px;font-size:13px;line-height:1.7;color:var(--muted)}
+.in-app .app-legal a{color:var(--muted)}
+.in-app.app-ai footer,.in-app.app-ai h2#ask,.in-app.app-ai .ai-tabs,.in-app.app-ai .ai-disc,.in-app.app-ai [data-ai-new]{display:none!important}
+.in-app.app-ai main .wrap{padding:0 16px}
+.in-app.app-ai .ai-tabhint{margin:14px 0 4px}
+.in-app [data-ai-pane="chat"]{padding:12px 0 170px}
+.in-app .ai-msg{max-width:100%;border-radius:18px}
+.in-app .ai-msg.me{max-width:85%;padding:10px 14px}
+.in-app .ai-msg.ai{border:0;background:none;padding:4px 0}
+.in-app .ai-empty{padding:28px 0 0}.in-app .ai-empty h3{font-size:24px;letter-spacing:-.02em}
+.in-app [data-ai-form]{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;border:0;border-top:1px solid var(--rule);border-radius:0;box-shadow:none;background:#fff;padding:10px 12px calc(8px + env(safe-area-inset-bottom))}
+.in-app .ai-compose{gap:2px;border:1px solid var(--rule-strong);border-radius:26px;padding:4px;background:#fff}
+.in-app .ai-compose:focus-within{border-color:var(--blue)}
+.in-app .ai-compose textarea{border:0;outline:0;box-shadow:none;resize:none;min-height:40px;max-height:160px;padding:9px 4px;margin:0;font-size:16px;line-height:22px;background:none}
+.in-app .ai-cam{width:40px;height:40px;padding:0;justify-content:center;border:0;border-radius:50%;color:var(--muted)}.in-app .ai-cam span{display:none}.in-app .ai-cam svg{width:24px;height:24px}
+.in-app .ai-send{width:40px;height:40px;padding:0;border-radius:50%;display:grid;place-items:center;flex:none}.in-app .ai-send span{display:none}.in-app .ai-send svg{display:block;width:20px;height:20px}
+.in-app .ai-send:disabled{background:var(--rule-strong)}
+.in-app [data-ai-form] .btns{margin:4px 0 0;justify-content:center;min-height:0}
+.in-app [data-ai-left]{font-size:12px}
+.in-app .ai-disc-short{display:block;margin:2px 0 0;font-size:11px;line-height:1.4;color:var(--muted);text-align:center}
+.in-app main,.in-app main>section,.in-app main .wrap{background:#fff}
+.in-app .ai-crumb:empty{display:none}
+.in-app .ai-msg.me{background:var(--wash)}.in-app .ai-msg.me b{font-weight:400}
+.in-app .ai-compose{align-items:flex-end}
+.in-app main .crumbs,.in-app main nav[aria-label="breadcrumb"],.in-app main .bc{display:none}
+.in-app .ai-reply{font-size:16px;line-height:1.55}
+.in-app .ai-crumb{margin:4px 0 8px}.in-app .ai-crumb a{font-size:14px}
+.in-app .ai-chip{font:inherit;font-size:14px;color:var(--blue);background:var(--blue-wash);border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
+.in-app .ai-tabhint{font-size:14px;line-height:1.45}
+.in-app [data-ai-pane="sites"],.in-app [data-ai-pane="cases"]{padding-bottom:32px}
+.in-app [data-ai-pane="sites"] .btn.small,.in-app [data-ai-pane="cases"] .btn.small{font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;min-height:0}
+.in-app [data-ai-pane="sites"] .btn.small.ghost,.in-app [data-ai-pane="cases"] .btn.small.ghost{border:0;background:var(--wash);color:var(--ink)}
+.in-app .ai-site,.in-app .ai-case,.in-app a.card.ai-mrow{border:1px solid var(--rule);border-radius:16px;box-shadow:none;background:#fff}
+.in-app .ai-case{padding:14px 16px}.in-app .ai-case .muted{font-size:14px;line-height:1.5}
+.in-app .ai-case .btns{gap:8px;margin-top:10px}
+.in-app .ai-sitehead{padding:12px 16px;border-bottom:0;background:var(--wash)}
+.in-app .ai-mrow{padding:12px 16px}
+.in-app .ai-st{border-radius:999px;padding:2px 10px}
+.in-app .ai-pmh{font-size:16px;margin:22px 0 4px}
+.in-app .ai-real{font-size:14px;line-height:1.5}
 </style></head><body><header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a></div></header><main class="wrap" style="max-width:820px;padding-bottom:70px"><h1 style="margin:40px 0 8px">Verify a certificate</h1><p class="lead muted">Проверка сертификата</p><p style="margin-top:24px">Enter the certificate number, e.g. SEA-MRI1-000123. · Введите номер сертификата.</p><form onsubmit="event.preventDefault();var v=this.n.value.trim().toUpperCase();if(v)location.href='/verify/?n='+encodeURIComponent(v)" style="display:flex;margin-top:12px"><input name="n" aria-label="Certificate number" placeholder="SEA-MRI1-000000" style="font:16px var(--mono);padding:12px 14px;border:1px solid var(--ink);border-right:0;width:280px"><button class="btn" style="cursor:pointer">Verify · Проверить</button></form><p class="muted" style="margin-top:24px">If the page for a number does not exist, the certificate was not issued by Service Engineer Academy. · Если страницы с таким номером нет, сертификат не выдавался Академией.</p><div data-verify style="margin-top:28px"></div><script>(function(){var n=new URLSearchParams(location.search).get("n");if(!n)return;var box=document.querySelector("[data-verify]");fetch("https://api.serviceengineer.academy/api/verify?n="+encodeURIComponent(n)).then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d}})}).then(function(x){var e=function(s){return String(s).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})};if(!x.ok){box.innerHTML="<div style=\"border:1px solid var(--bad);padding:20px\"><b>"+e(n)+"</b> — No certificate with this number · Сертификата с таким номером нет</div>";return}var d=x.d;box.innerHTML="<div style=\"border:1px solid var(--ok);padding:26px\"><div class=\"label\" style=\"color:var(--ok)\">Valid certificate · Сертификат действителен</div><h1 style=\"font-size:40px;margin:12px 0 6px\">"+e(d.name)+"</h1><p class=\"lead\">"+e(d.title)+"</p><table class=\"pm\"><tr><td>No. · Номер</td><td>"+e(d.id)+"</td></tr><tr><td>Score · Балл</td><td>"+d.score+" %</td></tr><tr><td>Hours · Часы</td><td>"+d.hours+"</td></tr><tr><td>Date · Дата</td><td>"+e(d.date)+"</td></tr></table></div>"})})();</script></main><script>try{if(localStorage.getItem("sea_lang")==="ru")document.querySelector(".brand").href="/ru/"}catch(e){}</script><footer><div class="wrap"><div>Service Engineer Academy · Service Engineer Ltd (AIFC, Kazakhstan)</div></div></footer></body></html>
