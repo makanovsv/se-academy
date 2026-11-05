@@ -376,6 +376,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .ai-mrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;color:var(--text);border-bottom:1px solid var(--rule)}.ai-mrow:last-child{border-bottom:0}.ai-mrow:hover{text-decoration:none;background:var(--wash)}a.card.ai-mrow{margin-top:8px;border:1px solid var(--rule)}
 .ai-mhead{margin:14px 0}.ai-mhead h3{font-size:22px;margin:4px 0}[data-ai-machine] .card{margin-top:12px}[data-ai-machine] textarea{margin-top:8px}
 [data-ai] [hidden]{display:none!important}
+.ai-sitehead .btn{white-space:nowrap;flex:none}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/trainings/">Тренинги</a><a href="/ru/library/" aria-current>Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/ru/ai/">AI</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/model/siemens-magnetom-symphony/" hreflang="en">EN</a></div></div></header>
@@ -563,7 +564,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 
     // ---- chat
     const bubble = (role, html) => { const d = document.createElement("div"); d.className = "ai-msg " + role; d.innerHTML = html; out.append(d); return d; };
-    const replyHTML = (d) => '<div class="ai-reply">' + esc(d.reply).replace(/\[(K\d+)\]/g, '<span class="ai-ref">[$1]</span>') + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc(s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
+    const replyHTML = (d) => '<div class="ai-reply">' + esc(d.reply).replace(/\[(K\d+)\]/g, '<span class="ai-ref">[$1]</span>') + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc((A.trustL || {})[s.trust] || s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
     const paintCrumb = () => {
       crumb.innerHTML = chat.machine_id ? '<a href="#" data-open-machine="' + chat.machine_id + '">' + esc(chat.label) + "</a>"
         : newFor ? esc(A.newChatFor) + " " + esc(newFor.label)
