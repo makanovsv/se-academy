@@ -451,6 +451,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .in-app .ai-st{border-radius:999px;padding:2px 10px}
 .in-app .ai-pmh{font-size:16px;margin:22px 0 4px}
 .in-app .ai-real{font-size:14px;line-height:1.5}
+.ai-mic[hidden]{display:none}.ai-msg.me.queued{opacity:.7}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/">Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/trainings/">Тренинги</a><a href="/ru/library/">Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/ru/ai/">AI</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/my/" hreflang="en">EN</a></div></div></header>
@@ -699,6 +700,13 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     box.querySelector("[data-ai-att-x]").addEventListener("click", () => setImg(null));
     file.addEventListener("change", () => { const f = file.files[0]; file.value = ""; if (f) shrink(f).then(setImg).catch(() => alert(A.photoErr)); });
     const grow = () => { if (!inApp) return; ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 160) + "px"; };
+    // voice: the Android app runs the phone's speech recognition and hands the text back through window.seaiVoice
+    const mic = box.querySelector("[data-ai-mic]");
+    if (mic && window.SEAI && SEAI.voice) {
+      mic.hidden = false;
+      mic.addEventListener("click", () => SEAI.voice(S.lang === "ru" ? "ru-RU" : "en-US"));
+      window.seaiVoice = (t) => { if (!t) return; ta.value = ta.value ? ta.value.replace(/\s+$/, "") + " " + t : t; grow(); ta.focus(); };
+    }
     ta.addEventListener("input", grow);
     const paintEmpty = () => { empty.hidden = out.children.length > 0; };
     new MutationObserver(paintEmpty).observe(out, { childList: true });
@@ -714,12 +722,14 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       : '<button type="button" class="btn small ghost" data-close-open="' + j.id + '">' + esc(A.closeBtn) + '</button><form class="ai-mini" data-close-form="' + j.id + '" hidden><textarea name="cause" rows="2" maxlength="500" required placeholder="' + esc(A.causePh) + '"></textarea><textarea name="fix" rows="2" maxlength="500" placeholder="' + esc(A.fixPh) + '"></textarea><p class="muted">' + esc(A.closeNote) + '</p><button class="btn small">' + esc(A.closeSave) + "</button></form>";
     const approveBtn = (kind, id, label) => '<button class="btn small" data-approve="' + kind + ":" + id + '">' + esc(label) + "</button>";
     const request = (j, o) => A.reqText.replace("{equipment}", j.equipment || "").replace("{serial}", j.serial || "—").replace("{part}", o.part || "").replace("{number}", o.part_number || "—").replace("{qty}", o.qty);
-    const caseCard = (j) => '<div class="card pfs ai-case"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + "</p>" + (j.status === "draft" ? "" : closeBox(j)) + '<div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>";
-    const pmCard = (p) => '<div class="card pfs ai-case"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>";
+    const caseCard = (j) => '<div class="card pfs ai-case" id="case-' + j.id + '"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + "</p>" + (j.status === "draft" ? "" : closeBox(j)) + '<div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>";
+    const pmCard = (p) => '<div class="card pfs ai-case" id="pm-' + p.id + '"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>";
     const loadCases = () => api("/api/ai/cases").then((r) => {
       if (!r.ok) return;
       const js = r.data.cases || [], pm = r.data.pm || [];
       cases.innerHTML = !js.length && !pm.length ? '<p class="muted">' + esc(A.noCases) + "</p>" : js.map(caseCard).join("") + (pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + pm.map(pmCard).join("") : "");
+      const h = location.hash.match(/^#((case|pm)-\d+)$/), c = h && cases.querySelector("#" + h[1]);
+      if (c) c.scrollIntoView({ block: "center" });
     });
     const tab = (name) => {
       box.querySelectorAll("[data-ai-tab]").forEach((b) => b.setAttribute("aria-selected", b.dataset.aiTab === name));
@@ -803,18 +813,22 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       });
     });
     fresh.addEventListener("click", () => startChat(null));
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const q = ta.value.trim() || (img ? A.photoQ : ""); if (!q) return;
-      bubble("me", (img ? '<img class="ai-shot" alt="" src="' + img + '">' : "") + "<b>" + esc(q) + "</b>");
+    // a question that could not leave the phone waits in local storage and goes out when the network is back
+    const qGet = () => { try { return JSON.parse(localStorage.getItem("sea:aiq") || "[]"); } catch (e) { return []; } };
+    const qSet = (a) => { try { localStorage.setItem("sea:aiq", JSON.stringify(a)); } catch (e) {} };
+    const sendBtn = form.querySelector(".ai-send");
+    const ask = (body) => {
+      bubble("me", (body.image ? '<img class="ai-shot" alt="" src="' + body.image + '">' : "") + "<b>" + esc(body.text) + "</b>");
       const card = bubble("ai", "<p class='muted'>" + esc(A.wait) + "</p>");
       card.scrollIntoView({ block: "nearest" });
-      form.querySelector("button").disabled = true;
-      const body = { text: q };
-      if (chat.id) body.chat_id = chat.id; else if (newFor) body.machine_id = newFor.id;
-      if (img) { body.image = img; setImg(null); }
-      api("/api/ai/agent", body).then((r) => {
-        form.querySelector("button").disabled = false;
+      return card;
+    };
+    const wait = (card) => { card.classList.add("queued"); card.previousElementSibling.classList.add("queued"); card.innerHTML = "<p class='muted'>" + esc(A.queued) + "</p>"; };
+    const send = (body) => {
+      const card = ask(body);
+      sendBtn.disabled = true;
+      return api("/api/ai/agent", body).then((r) => {
+        sendBtn.disabled = false;
         if (r.ok && r.data.reply) {
           card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : ""); fresh.hidden = false;
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
@@ -822,7 +836,25 @@ h1{font-size:clamp(32px,4.4vw,54px)}
         } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
         else card.innerHTML = "<p>" + esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err) + "</p>";
         show(r.data.ai);
-      }).catch(() => { form.querySelector("button").disabled = false; card.innerHTML = "<p>" + esc(A.err) + "</p>"; });
+      }).catch(() => { sendBtn.disabled = false; qSet([...qGet(), body]); wait(card); });
+    };
+    let flushing = false;
+    const flush = () => {
+      const a = qGet();
+      if (!a.length || flushing || navigator.onLine === false) return;
+      flushing = true; qSet([]);
+      out.querySelectorAll(".queued").forEach((n) => n.remove());
+      a.reduce((p, b) => p.then(() => { if (!b.chat_id && !b.machine_id && chat.id) b.chat_id = chat.id; return send(b); }), Promise.resolve()).then(() => { flushing = false; });
+    };
+    addEventListener("online", flush);
+    if (navigator.onLine === false) qGet().forEach((b) => wait(ask(b))); else flush();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = ta.value.trim() || (img ? A.photoQ : ""); if (!q) return;
+      const body = { text: q };
+      if (chat.id) body.chat_id = chat.id; else if (newFor) body.machine_id = newFor.id;
+      if (img) { body.image = img; setImg(null); }
+      if (navigator.onLine === false) { qSet([...qGet(), body]); wait(ask(body)); } else send(body);
       ta.value = ""; grow();
     });
 
@@ -865,6 +897,9 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       mBox.querySelector("[data-save-notes]").addEventListener("click", () => api("/api/ai/machines/" + m.id, { notes: mBox.querySelector("textarea").value }).then((x) => { mBox.querySelector("[data-notes-msg]").textContent = x.ok ? A.saved : A.err; }));
     });
     paintCrumb();
+    const toCase = () => { if (!/^#(case|pm)-\d+$/.test(location.hash)) return; const d = document.querySelector('.app-drawer [data-go="cases"]'); if (d) d.click(); else tab("cases"); };
+    addEventListener("hashchange", toCase);
+    toCase();
   }
 
   function repaint() {
@@ -933,8 +968,10 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     api("/api/apply", d).then((r) => { m.textContent = r.ok ? m.dataset.ok : m.dataset.err; if (r.ok) ap.reset(); b.disabled = false; });
   });
 
-  api("/api/me").then(({ data: me }) => {
+  const meOff = () => { const m = lsGet("me"); return m && m.email ? { email: m.email, ai: m.ai, offline: true } : {}; };
+  api("/api/me").catch(() => ({ data: meOff() })).then(({ data: me }) => {
     const auth = document.querySelector("[data-auth]");
+    if (me && !me.offline) lsSet("me", me && me.email ? { email: me.email, ai: me.ai } : {});
     if (me && me.email) {
       if (auth) { const pf = document.createElement("a"); pf.href = (S.lang === "ru" ? "/ru" : "") + "/my/profile/"; pf.textContent = S.lang === "ru" ? "Профиль" : "Profile"; auth.parentElement.insertBefore(pf, auth); }
       if (me.admin && auth) { const ad = document.createElement("a"); ad.href = "/admin/"; ad.textContent = S.lang === "ru" ? "Админка" : "Admin"; auth.parentElement.insertBefore(ad, auth); }
