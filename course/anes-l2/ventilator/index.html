@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The anaesthesia ventilator: drive gas, bellows and piston drives, PEEP, sensors and typical faults · Anaesthesia Machine Service — Level 2: Fault-Finding</title><meta name="description" content="Separate ventilator faults from breathing system and measurement faults, diagnose drive gas, bellows, piston, PEEP and pressure-relief problems on a test lung, and recognise the pattern of water in the ventilator pneumatics."><link rel="canonical" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><link rel="alternate" hreflang="en" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><link rel="alternate" hreflang="ru" href="https://serviceengineer.academy/ru/course/anes-l2/ventilator/"><link rel="alternate" hreflang="x-default" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><meta property="og:type" content="website"><meta property="og:site_name" content="Service Engineer Academy"><meta property="og:title" content="The anaesthesia ventilator: drive gas, bellows and piston drives, PEEP, sensors and typical faults · Anaesthesia Machine Service — Level 2: Fault-Finding"><meta property="og:description" content="Separate ventilator faults from breathing system and measurement faults, diagnose drive gas, bellows, piston, PEEP and pressure-relief problems on a test lung, and recognise the pattern of water in the ventilator pneumatics."><meta property="og:url" content="https://serviceengineer.academy/course/anes-l2/ventilator/"><meta property="og:image" content="https://serviceengineer.academy/img/og.jpg"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><script>var seai=navigator.userAgent.indexOf("SEAIApp/")>=0;try{if(/[?&]seai=1/.test(location.search))sessionStorage.setItem("seai","1");if(sessionStorage.getItem("seai")&&matchMedia("(display-mode: standalone)").matches)seai=true}catch(e){}if(seai){document.documentElement.classList.add("in-app");if(!/^\/(ru\/)?(ai|login|my\/profile|legal)(\/|$)/.test(location.pathname))location.replace((/^\/ru(\/|$)/.test(location.pathname)?"/ru":"")+"/ai/")}</script><style>.app-only{display:none}.in-app .app-only{display:block}.in-app footer .wrap>div:not(.app-only){display:none}.in-app nav.main,.in-app .preview,.in-app .top-right .my,.in-app [data-pay],.in-app a[href*="/quote/"],.in-app .ai-plans,.in-app #plans,.in-app .ai-hero,.in-app .ai-stats,.in-app .ai-steps,.in-app .ai-trust,.in-app .ai-trust+p,.in-app h2.ai-h:not(#ask){display:none!important}.in-app #ask{margin-top:18px}</style><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23002fa7%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2234%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Crect%20x%3D%2250%22%20y%3D%2250%22%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M88.5%2050A38.5%2038.5%200%200%201%2050%2088.5L50%2079.5A29.5%2029.5%200%200%200%2079.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3Cpath%20d%3D%22M69.5%2050A19.5%2019.5%200%200%201%2050%2069.5L50%2060.5A10.5%2010.5%200%200%200%2060.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#1d4ed8"><link rel="apple-touch-icon" href="/img/icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="SE Academy"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The anaesthesia ventilator: drive gas, bellows and piston drives, PEEP, sensors and typical faults · Anaesthesia Machine Service — Level 2: Fault-Finding</title><meta name="description" content="Separate ventilator faults from breathing system and measurement faults, diagnose drive gas, bellows, piston, PEEP and pressure-relief problems on a test lung, and recognise the pattern of water in the ventilator pneumatics."><link rel="canonical" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><link rel="alternate" hreflang="en" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><link rel="alternate" hreflang="ru" href="https://serviceengineer.academy/ru/course/anes-l2/ventilator/"><link rel="alternate" hreflang="x-default" href="https://serviceengineer.academy/course/anes-l2/ventilator/"><meta property="og:type" content="website"><meta property="og:site_name" content="Service Engineer Academy"><meta property="og:title" content="The anaesthesia ventilator: drive gas, bellows and piston drives, PEEP, sensors and typical faults · Anaesthesia Machine Service — Level 2: Fault-Finding"><meta property="og:description" content="Separate ventilator faults from breathing system and measurement faults, diagnose drive gas, bellows, piston, PEEP and pressure-relief problems on a test lung, and recognise the pattern of water in the ventilator pneumatics."><meta property="og:url" content="https://serviceengineer.academy/course/anes-l2/ventilator/"><meta property="og:image" content="https://serviceengineer.academy/img/og.jpg"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><script>var seai=navigator.userAgent.indexOf("SEAIApp/")>=0;try{if(/[?&]seai=1/.test(location.search))sessionStorage.setItem("seai","1");if(sessionStorage.getItem("seai")&&(matchMedia("(display-mode: standalone)").matches||location.hostname==="localhost"))seai=true}catch(e){}if(seai){document.documentElement.classList.add("in-app");if(!/^\/(ru\/)?(ai|login|my\/profile|legal)(\/|$)/.test(location.pathname))location.replace((/^\/ru(\/|$)/.test(location.pathname)?"/ru":"")+"/ai/")}</script><style>.app-only{display:none}.in-app .app-only{display:block}.in-app footer .wrap>div:not(.app-only){display:none}.in-app nav.main,.in-app .preview,.in-app .top-right .my,.in-app [data-pay],.in-app a[href*="/quote/"],.in-app .ai-plans,.in-app #plans,.in-app .ai-hero,.in-app .ai-stats,.in-app .ai-steps,.in-app .ai-trust,.in-app .ai-trust+p,.in-app h2.ai-h:not(#ask){display:none!important}.in-app #ask{margin-top:18px}</style><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23002fa7%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2234%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%2F%3E%3Crect%20x%3D%2250%22%20y%3D%2250%22%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M88.5%2050A38.5%2038.5%200%200%201%2050%2088.5L50%2079.5A29.5%2029.5%200%200%200%2079.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3Cpath%20d%3D%22M69.5%2050A19.5%2019.5%200%200%201%2050%2069.5L50%2060.5A10.5%2010.5%200%200%200%2060.5%2050Z%22%20fill%3D%22%23002fa7%22%2F%3E%3C%2Fsvg%3E"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#1d4ed8"><link rel="apple-touch-icon" href="/img/icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="SE Academy"><style>:root{--paper:#fff;--wash:#f7f7f8;--ink:#111;--text:#2b2b2e;--muted:#6e6e73;--rule:#dcdce0;--rule-strong:#111;--blue:#002fa7;--blue-wash:#e8ecf7;--warn:#9a5b00;--ok:#1d6b3f;--bad:#b3261e;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--text);font:16px/1.55 var(--sans)}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
@@ -452,6 +452,35 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .in-app .ai-pmh{font-size:16px;margin:22px 0 4px}
 .in-app .ai-real{font-size:14px;line-height:1.5}
 .ai-mic[hidden]{display:none}.ai-msg.me.queued{opacity:.7}
+/* the SE AI app window (Android, Mac) is dark: engineers asked for it */
+html.in-app{color-scheme:dark;--paper:#1e1f22;--wash:#2a2b2f;--ink:#ececf1;--text:#dcdce2;--muted:#9b9ba6;--rule:#36373c;--rule-strong:#4a4b52;--blue:#4c7dff;--blue-wash:#23304f;--ok:#4ade80;--warn:#f0b35a;--bad:#f87171;--shadow:none;--shadow-lg:0 24px 60px rgba(0,0,0,.5)}
+.in-app body,.in-app .app-bar,.in-app .app-drawer,.in-app [data-ai-form],.in-app .ai-compose,.in-app main,.in-app main>section,.in-app main .wrap,.in-app .ai-site,.in-app .ai-case,.in-app a.card.ai-mrow{background:var(--paper)}
+.in-app body{color:var(--text)}
+.in-app .card,.in-app .ai-msg.ai,.in-app .ai-file,.in-app .ai-sub,.in-app .ai-srcs,.in-app .ai-chip{background:var(--wash);color:var(--text);border-color:var(--rule)}
+.in-app input,.in-app textarea,.in-app select{background:var(--wash);color:var(--ink);border-color:var(--rule-strong)}
+.in-app .ai-compose textarea{background:transparent}
+.in-app a{color:#8fb0ff}
+.in-app .btn,.in-app .btn:visited{color:#fff}
+.in-app .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+.in-app h1,.in-app h2,.in-app h3,.in-app b,.in-app strong{color:var(--ink)}
+.in-app .app-veil{background:rgba(0,0,0,.55)}
+/* team: shared cases of a company's engineers */
+.tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}
+.tm-filters{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
+.ai-chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+a.tm-case{display:block;color:inherit;text-decoration:none;margin-bottom:10px}
+a.tm-case.unread{border-color:var(--blue)}
+.tm-new{color:var(--blue)}
+.tm-who{font-size:12px;color:var(--muted);margin-bottom:4px}
+.tm-status{font-size:13px;text-align:center;margin:10px 0}
+.tm-history{margin:10px 0}.tm-history summary{cursor:pointer;color:var(--muted)}
+.tm-compose{margin-top:12px}.tm-compose textarea{width:100%;box-sizing:border-box}
+.tm-compose .btns{align-items:center;flex-wrap:wrap}.tm-compose select{max-width:180px}
+.tm-acts{margin:10px 0}
+.tm-people{margin-top:16px}.tm-people summary{cursor:pointer}.tm-people .ai-row{padding:6px 0;border-bottom:1px solid var(--rule)}
+.tm-people .ai-mini{margin-top:12px}
+.tm-share{margin:6px 0}
+.ai-st.tm-help{background:var(--warn);color:#fff}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/anes-l2/ventilator/" hreflang="ru">RU</a></div></div></header>
@@ -622,7 +651,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
     drawer.className = "app-drawer";
     drawer.innerHTML = '<div class="app-brand">SE AI</div>' +
       (me && me.email
-        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + "</button><hr>" +
+        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + "</button><hr>" +
           '<a href="' + (S.lang === "ru" ? "/ru" : "") + '/my/profile/">' + esc(A.profile) + "</a>"
         : '<a href="' + A.loginUrl + '">' + esc(A.signIn) + "</a>") +
       (lang ? '<a href="' + lang.getAttribute("href") + '" hreflang="' + lang.getAttribute("hreflang") + '">' + esc(lang.textContent === "EN" ? "English" : "Русский") + "</a>" : "") +
@@ -690,6 +719,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       if (st.left <= 0) { form.hidden = true; note.hidden = false; note.textContent = st.mode === "trial" ? A.trial_over : A.limit; }
     };
     if (inApp) appShell(box, A, me);
+    if ((!me || !me.email) && new URLSearchParams(location.search).get("join")) { try { localStorage.setItem("sea:join", new URLSearchParams(location.search).get("join")); } catch (e) {} }
     if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
     box.querySelector("[data-ai-tabs]").hidden = false;
     form.hidden = false; show(me.ai);
@@ -737,6 +767,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       const hint = box.querySelector("[data-ai-tabhint]"); hint.textContent = name === "sites" ? A.sitesHint : name === "cases" ? A.casesHint : ""; hint.hidden = !hint.textContent;
       if (name === "sites") loadTree();
       if (name === "cases") loadCases();
+      if (name === "team") loadTeam();
     };
     box.querySelector("[data-ai-tabs]").addEventListener("click", (e) => { const b = e.target.closest("[data-ai-tab]"); if (b) tab(b.dataset.aiTab); });
 
@@ -897,7 +928,150 @@ h1{font-size:clamp(32px,4.4vw,54px)}
       mBox.querySelector("[data-save-notes]").addEventListener("click", () => api("/api/ai/machines/" + m.id, { notes: mBox.querySelector("textarea").value }).then((x) => { mBox.querySelector("[data-notes-msg]").textContent = x.ok ? A.saved : A.err; }));
     });
     paintCrumb();
-    const toCase = () => { if (!/^#(case|pm)-\d+$/.test(location.hash)) return; const d = document.querySelector('.app-drawer [data-go="cases"]'); if (d) d.click(); else tab("cases"); };
+    // ---- team (06.11.2026): the company's engineers share cases, call each other with @, the AI answers inside the case
+    const TM = A.team, teamBox = box.querySelector("[data-ai-team]");
+    let team = null, teamFilter = "all", pendingShare = false, teamNote = "", calls = new Map();
+    const loc = S.lang === "ru" ? "ru-RU" : "en-GB";
+    const when = (ts) => { const d = new Date(ts * 1000); return d.toLocaleDateString(loc, { day: "numeric", month: "short" }) + " " + d.toLocaleTimeString(loc, { hour: "2-digit", minute: "2-digit" }); };
+    const stPill = (s) => '<span class="ai-st tm-' + s + (s === "solved" ? " ok" : "") + '">' + esc(TM["st_" + s]) + "</span>";
+    const paintTeam = () => {
+      const top = teamNote ? '<p class="note">' + esc(teamNote) + "</p>" : "";
+      teamNote = "";
+      if (!team) {
+        teamBox.innerHTML = top + '<div class="card pfs"><h3>' + esc(TM.createH) + '</h3><p class="muted">' + esc(TM.createP) + '</p><form class="ai-mini" data-tm-create><input name="name" maxlength="80" required placeholder="' + esc(TM.namePh) + '"><button class="btn small">' + esc(TM.createBtn) + '</button></form><p class="muted">' + esc(TM.joinNote) + "</p></div>";
+        return;
+      }
+      const admin = team.role === "admin";
+      const list = team.cases.filter((k) => teamFilter === "all" || (teamFilter === "open" ? k.status !== "solved" : k.status === teamFilter));
+      teamBox.innerHTML = top + '<div class="ai-row tm-head"><h3>' + esc(team.team.name) + '</h3><button type="button" class="btn small" data-tm-new>' + esc(TM.newCase) + "</button></div>" +
+        '<div class="tm-filters">' + ["all", "open", "help", "solved"].map((f) => '<button type="button" class="ai-chip' + (f === teamFilter ? " on" : "") + '" data-tm-filter="' + f + '">' + esc(TM["f_" + f]) + "</button>").join("") + "</div>" +
+        (list.length ? list.map((k) => '<a href="#team-' + k.id + '" class="card pfs ai-case tm-case' + (k.unread ? " unread" : "") + '" data-tm-open="' + k.id + '"><div class="ai-row"><b>' + esc(k.title) + "</b>" + stPill(k.status) + '</div><p class="muted">' + esc(k.author_name) + " · " + when(k.updated) + (k.n ? " · " + esc(TM.msgs) + ": " + k.n : "") + (k.unread ? ' · <b class="tm-new">' + esc(TM.unread) + "</b>" : "") + "</p></a>").join("") : '<p class="muted">' + esc(team.cases.length ? TM.noneHere : TM.noCases) + "</p>") +
+        '<details class="card pfs tm-people"' + (team.members.length < 2 && admin ? " open" : "") + '><summary><b>' + esc(TM.members) + "</b> · " + team.members.length + "</summary>" +
+        team.members.map((m) => '<div class="ai-row"><span>' + esc(m.name) + ' <span class="muted">' + esc(m.email) + (m.role === "admin" ? " · " + esc(TM.admin) : "") + "</span></span>" + (admin && m.email !== team.me ? '<button type="button" class="btn small ghost" data-tm-remove="' + esc(m.email) + '">' + esc(TM.remove) + "</button>" : "") + "</div>").join("") +
+        (admin ? '<form class="ai-mini" data-tm-invite><b>' + esc(TM.invite) + '</b><input name="emails" required placeholder="' + esc(TM.invitePh) + '"><button class="btn small">' + esc(TM.inviteBtn) + '</button><p class="muted" data-tm-invited hidden></p></form><div class="ai-mini"><b>' + esc(TM.link) + '</b><p class="muted">' + esc(TM.linkNote) + '</p><button type="button" class="btn small ghost" data-tm-link>' + esc(TM.linkBtn) + '</button><input data-tm-linkout readonly hidden></div>' : "") +
+        '<div class="btns"><button type="button" class="btn small ghost" data-tm-leave>' + esc(TM.leave) + "</button></div></details>";
+    };
+    const openCase = (id) => api("/api/team/case/" + id).then((r) => {
+      if (!r.ok) { if (location.hash === "#team-" + id) history.replaceState(null, "", location.pathname + location.search); return loadTeam(); }
+      const d = r.data, k = d.case;
+      calls = new Map();
+      const msg = (m) => m.kind === "status" ? '<p class="tm-status muted">' + esc(m.name) + ": " + esc(m.text) + " · " + when(m.ts) + "</p>"
+        : m.kind === "ai" ? '<div class="ai-msg ai"><div class="tm-who">SE AI · ' + when(m.ts) + "</div>" + replyHTML({ reply: m.text }) + "</div>"
+        : '<div class="ai-msg ' + (m.author === d.me ? "me" : "ai tm-note") + '"><div class="tm-who">' + esc(m.name) + (m.kind === "q" ? " → SE AI" : "") + " · " + when(m.ts) + "</div>" + (m.author === d.me ? "<b>" + esc(m.text) + "</b>" : "<p>" + esc(m.text) + "</p>") + "</div>";
+      teamBox.innerHTML = '<button type="button" class="btn small ghost" data-tm-back>← ' + esc(TM.back) + '</button><div class="ai-row tm-head"><h3>' + esc(k.title) + "</h3>" + stPill(k.status) + '</div><p class="muted">' + esc(k.author_name) + " · " + when(k.created) + "</p>" +
+        (k.status === "solved" && k.solution ? '<p class="ai-real"><b>' + esc(TM.solution) + ":</b> " + esc(k.solution) + "</p>" : "") +
+        (d.chat && d.chat.messages.length ? '<details class="tm-history"' + (d.msgs.length ? "" : " open") + "><summary>" + esc(TM.history) + "</summary>" + d.chat.messages.map((m) => '<div class="ai-msg ' + (m.role === "user" ? "me" : "ai") + '">' + (m.role === "user" ? "<b>" + esc(m.content) + "</b>" : replyHTML({ reply: m.content })) + "</div>").join("") + "</details>" : "") +
+        '<div class="ai-thread tm-thread">' + d.msgs.map(msg).join("") + "</div>" +
+        '<form class="card pfs tm-compose" data-tm-msg="' + k.id + '"><textarea name="text" rows="2" maxlength="2000" placeholder="' + esc(TM.notePh) + '"></textarea><div class="btns">' + (d.members.length > 1 ? '<select data-tm-call><option value="">' + esc(TM.call) + "</option>" + d.members.filter((m) => m.email !== d.me).map((m) => '<option value="' + esc(m.email) + '">' + esc(m.name) + "</option>").join("") + "</select>" : "") + '<button class="btn small" data-tm-kind="note">' + esc(TM.noteBtn) + '</button><button class="btn small ghost" data-tm-kind="ask">' + esc(TM.askBtn) + '</button></div><p class="muted" data-tm-err hidden></p></form>' +
+        '<div class="btns tm-acts">' + (k.status === "solved" ? '<button type="button" class="btn small ghost" data-tm-st="open">' + esc(TM.reopen) + "</button>"
+          : (k.status !== "help" ? '<button type="button" class="btn small ghost" data-tm-st="help">' + esc(TM.helpBtn) + "</button>" : "") + '<button type="button" class="btn small ghost" data-tm-solve>' + esc(TM.solveBtn) + "</button>") + "</div>" +
+        '<form class="card pfs ai-mini" data-tm-solved="' + k.id + '" hidden><textarea name="solution" rows="3" maxlength="1000" required placeholder="' + esc(TM.solPh) + '"></textarea><button class="btn small">' + esc(TM.solSave) + "</button></form>";
+      if (location.hash !== "#team-" + id) history.replaceState(null, "", "#team-" + id);
+      const last = teamBox.querySelector(".tm-thread").lastElementChild;
+      if (last) last.scrollIntoView({ block: "nearest" });
+    });
+    const shareBtn = document.createElement("button");
+    shareBtn.type = "button"; shareBtn.className = "ai-chip tm-share"; shareBtn.hidden = true; shareBtn.textContent = TM.share;
+    crumb.after(shareBtn);
+    const share = () => api("/api/team/share", { chat_id: chat.id, lang: S.lang }).then((r) => { if (r.ok) { tab("team"); openCase(r.data.id); } });
+    const updateShare = () => {
+      shareBtn.hidden = !(team && chat.id);
+      if (pendingShare && team && chat.id) { pendingShare = false; share(); }
+    };
+    new MutationObserver(updateShare).observe(crumb, { childList: true, subtree: true });
+    shareBtn.addEventListener("click", share);
+    const loadTeam = () => api("/api/team").then((r) => {
+      if (!r.ok) return;
+      team = r.data.team ? r.data : null; updateShare();
+      const h = location.hash.match(/^#team-(\d+)$/);
+      if (h && team) openCase(+h[1]); else paintTeam();
+    });
+    teamBox.addEventListener("click", (e) => {
+      const g = (s) => e.target.closest(s);
+      if (g("[data-tm-filter]")) { teamFilter = g("[data-tm-filter]").dataset.tmFilter; paintTeam(); }
+      if (g("[data-tm-open]")) { e.preventDefault(); openCase(+g("[data-tm-open]").dataset.tmOpen); }
+      if (g("[data-tm-back]")) { history.replaceState(null, "", location.pathname + location.search); loadTeam(); }
+      if (g("[data-tm-new]")) { pendingShare = true; startChat(null); }
+      if (g("[data-tm-remove]") && confirm(TM.removeQ)) api("/api/team/remove", { email: g("[data-tm-remove]").dataset.tmRemove }).then(loadTeam);
+      if (g("[data-tm-leave]") && confirm(TM.leaveQ)) api("/api/team/leave", {}).then((r) => { if (!r.ok && r.data.error === "last_admin") alert(TM.lastAdmin); loadTeam(); });
+      if (g("[data-tm-link]")) api("/api/team/link", { lang: S.lang }).then((r) => {
+        if (!r.ok) return;
+        const o = teamBox.querySelector("[data-tm-linkout]"); o.hidden = false; o.value = r.data.url; o.select();
+        if (navigator.clipboard) navigator.clipboard.writeText(r.data.url).then(() => { g("[data-tm-link]").textContent = TM.linkCopied; }, () => {});
+      });
+      if (g("[data-tm-st]")) api("/api/team/case/" + teamBox.querySelector("[data-tm-msg]").dataset.tmMsg + "/status", { status: g("[data-tm-st]").dataset.tmSt, lang: S.lang }).then(() => openCase(+teamBox.querySelector("[data-tm-msg]").dataset.tmMsg));
+      if (g("[data-tm-solve]")) { const f = teamBox.querySelector("[data-tm-solved]"); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("textarea").focus(); }
+    });
+    teamBox.addEventListener("change", (e) => {
+      const s = e.target.closest("[data-tm-call]"); if (!s || !s.value) return;
+      const name = s.options[s.selectedIndex].text, t2 = s.form.querySelector("textarea");
+      calls.set(s.value, name); t2.value = (t2.value ? t2.value.replace(/\s*$/, " ") : "") + "@" + name + " "; s.value = ""; t2.focus();
+    });
+    teamBox.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = e.target, v = (k) => (f.querySelector('[name="' + k + '"]') || {}).value?.trim() || "";
+      if (f.matches("[data-tm-create]")) return api("/api/team/create", { name: v("name"), lang: S.lang }).then((r) => { if (r.ok) { team = r.data; updateShare(); paintTeam(); } });
+      if (f.matches("[data-tm-invite]")) {
+        const emails = v("emails").split(/[\s,;]+/).filter(Boolean);
+        return api("/api/team/invite", { emails, lang: S.lang }).then((r) => { const p = f.querySelector("[data-tm-invited]"); p.hidden = false; p.textContent = r.ok ? TM.invited + " " + r.data.sent : TM.badEmails; if (r.ok) f.querySelector("input").value = ""; });
+      }
+      if (f.matches("[data-tm-solved]")) {
+        if (v("solution").length < 5) return;
+        return api("/api/team/case/" + f.dataset.tmSolved + "/status", { status: "solved", solution: v("solution"), lang: S.lang }).then(() => openCase(+f.dataset.tmSolved));
+      }
+      if (f.matches("[data-tm-msg]")) {
+        const text = v("text"), kind = e.submitter && e.submitter.dataset.tmKind === "ask" ? "ask" : "note", id = +f.dataset.tmMsg, err = f.querySelector("[data-tm-err]");
+        if (!text) return;
+        const mentions = [...calls].filter(([, n]) => text.includes("@" + n)).map(([em]) => em);
+        f.querySelectorAll("button").forEach((b) => { b.disabled = true; });
+        if (kind === "ask") { err.hidden = false; err.textContent = A.wait; }
+        api("/api/team/case/" + id + "/" + (kind === "ask" ? "ask" : "msg"), kind === "ask" ? { text, lang: S.lang } : { text, mentions, lang: S.lang }).then((r) => {
+          if (r.ok) return openCase(id);
+          f.querySelectorAll("button").forEach((b) => { b.disabled = false; });
+          err.hidden = false; err.textContent = r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err;
+          if (r.data.ai) show(r.data.ai);
+        });
+      }
+    });
+    // an invitation link: join now, or after signing in
+    const jt = new URLSearchParams(location.search).get("join") || (() => { try { return localStorage.getItem("sea:join"); } catch (e) { return null; } })();
+    if (jt) {
+      try { localStorage.removeItem("sea:join"); } catch (e) {}
+      history.replaceState(null, "", location.pathname + location.hash);
+      api("/api/team/join", { token: jt, lang: S.lang }).then((r) => {
+        teamNote = r.ok ? TM.joined.replace("{name}", r.data.team.name) : r.data.error === "in_team" ? TM.inTeam.replace("{team}", r.data.team || "") : TM.badInvite;
+        const d = document.querySelector('.app-drawer [data-go="team"]'); if (d) d.click(); else tab("team");
+      });
+    } else api("/api/team").then((r) => { if (r.ok && r.data.team) { team = r.data; updateShare(); } });
+    // Mac and desktop app window: the phone has its own reminders; the open window asks the server every few minutes
+    if (inApp && !window.SEAI && "Notification" in window) {
+      const nBtn = document.createElement("button"), dr = document.querySelector(".app-drawer");
+      nBtn.type = "button"; nBtn.textContent = TM.notifyOn;
+      const paintN = () => { nBtn.hidden = Notification.permission !== "default"; };
+      let seen = new Set(lsGet("nseen"));
+      const poll = () => {
+        if (Notification.permission !== "granted") return;
+        api("/api/ai/notify?lang=" + S.lang).then((r) => {
+          if (!r.ok) return;
+          const items = r.data.items || [];
+          items.forEach((it) => {
+            if (seen.has(it.id)) return;
+            const n = new Notification(it.title, { body: it.text || "", tag: it.id });
+            n.onclick = () => { window.focus(); location.hash = it.link; n.close(); };
+          });
+          seen = new Set(items.map((i) => i.id)); lsSet("nseen", [...seen]);   // forget what is no longer due
+        });
+      };
+      if (dr && dr.querySelector("hr")) { dr.querySelector("hr").after(nBtn); paintN(); }
+      nBtn.addEventListener("click", () => Notification.requestPermission().then(() => { paintN(); poll(); }));
+      poll(); setInterval(poll, 5 * 60 * 1000);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) poll(); });
+    }
+    const toCase = () => {
+      const name = /^#(case|pm)-\d+$/.test(location.hash) ? "cases" : /^#team-\d+$/.test(location.hash) ? "team" : "";
+      if (!name) return;
+      const d = document.querySelector('.app-drawer [data-go="' + name + '"]'); if (d) d.click(); else tab(name);
+    };
     addEventListener("hashchange", toCase);
     toCase();
   }
