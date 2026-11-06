@@ -497,6 +497,8 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
 .in-app.app-ai main .wrap{max-width:760px;padding:0 24px}
 .in-app.app-ai [data-ai-form]{left:272px;padding-left:max(24px,calc((100vw - 272px - 760px) / 2 + 24px));padding-right:max(24px,calc((100vw - 272px - 760px) / 2 + 24px))}
 }
+/* personal key for Claude / ChatGPT / API */
+[data-ai-api] .card{margin-top:12px}[data-ai-api] h3{margin:0 0 6px}.api-code{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.api-code code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px;background:var(--wash);border:1px solid var(--rule);border-radius:8px;padding:8px 10px}.api-once{color:var(--warn);font-weight:600}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/sonoscape-s-series/exam/" hreflang="ru">RU</a></div></div></header>
@@ -667,7 +669,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     drawer.className = "app-drawer";
     drawer.innerHTML = '<div class="app-brand">SE AI</div>' +
       (me && me.email
-        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + "</button><hr>" +
+        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + '</button><button type="button" data-go="api">' + esc(A.tabApi) + "</button><hr>" +
           '<a href="' + (S.lang === "ru" ? "/ru" : "") + '/my/profile/">' + esc(A.profile) + "</a>"
         : '<a href="' + A.loginUrl + '">' + esc(A.signIn) + "</a>") +
       (lang ? '<a href="' + lang.getAttribute("href") + '" hreflang="' + lang.getAttribute("hreflang") + '">' + esc(lang.textContent === "EN" ? "English" : "Русский") + "</a>" : "") +
@@ -786,6 +788,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
       if (name === "sites") loadTree();
       if (name === "cases") loadCases();
       if (name === "team") loadTeam();
+      if (name === "api") loadApi();
     };
     box.querySelector("[data-ai-tabs]").addEventListener("click", (e) => { const b = e.target.closest("[data-ai-tab]"); if (b) tab(b.dataset.aiTab); });
 
@@ -1002,6 +1005,30 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     };
     new MutationObserver(updateShare).observe(crumb, { childList: true, subtree: true });
     shareBtn.addEventListener("click", share);
+    // ---- personal key: SE AI inside Claude, ChatGPT and the company's own systems (API and MCP)
+    const AP = S.lang === "ru"
+      ? { h: "SE AI в Claude, ChatGPT и ваших системах", lead: "Личный ключ открывает ваш SE AI из других программ. Вопросы списываются с вашего лимита, черновики заявок и актов появляются здесь — утверждаете их вы.", none: "Ключа ещё нет.", has: "Ключ создан {c}. Последний раз использован: {u}.", never: "ещё не использовался", make: "Создать ключ", remake: "Создать новый ключ (старый перестанет работать)", off: "Отключить ключ", once: "Скопируйте сейчас: ключ показывается один раз. Он даёт доступ к вашему SE AI — не публикуйте его. Утёк — создайте новый.", mcpH: "Claude и ChatGPT (MCP)", mcpT: "Claude: Настройки → Коннекторы → Добавить свой коннектор → вставьте адрес. ChatGPT: в настройках приложений включите режим разработчика, создайте коннектор с этим адресом, без авторизации. Потом просто спросите: «Спроси SE AI: Mindray SV300 ошибка датчика потока».", mcpHid: "Адрес MCP с ключом покажется сразу после создания ключа.", apiH: "API для своих систем", copy: "Копировать", copied: "Скопировано", sure: "Отключить ключ? Claude, ChatGPT и программы с этим ключом перестанут работать." }
+      : { h: "SE AI in Claude, ChatGPT and your systems", lead: "A personal key opens your SE AI from other programs. Questions count toward your limit; draft work orders and reports appear here, and you approve them.", none: "No key yet.", has: "Key made {c}. Last used: {u}.", never: "not used yet", make: "Make a key", remake: "Make a new key (the old one stops working)", off: "Switch the key off", once: "Copy it now: the key is shown once. It opens your SE AI — do not publish it. If it leaks, make a new one.", mcpH: "Claude and ChatGPT (MCP)", mcpT: "Claude: Settings → Connectors → Add custom connector → paste the address. ChatGPT: turn on developer mode in the apps settings and create a connector with this address, no authentication. Then just ask: “Ask SE AI: Mindray SV300 flow sensor error”.", mcpHid: "The MCP address with the key is shown right after you make the key.", apiH: "API for your own systems", copy: "Copy", copied: "Copied", sure: "Switch the key off? Claude, ChatGPT and programs using it will stop working." };
+    const apiBox = box.querySelector("[data-ai-api]");
+    const day = (t) => (t ? new Date(t * 1000).toLocaleDateString(S.lang === "ru" ? "ru-RU" : "en-GB") : "");
+    const codeRow = (v) => '<div class="api-code"><code>' + esc(v) + '</code><button type="button" class="btn small ghost" data-api-copy="' + esc(v) + '">' + esc(AP.copy) + "</button></div>";
+    const curl = (url, key) => "curl " + url + ' -H "Authorization: Bearer ' + key + '" -H "Content-Type: application/json" -d \'{"text": "Mindray SV300: flow sensor error"}\'';
+    const paintApi = (st, fresh) => {
+      apiBox.innerHTML = '<div class="card pfs"><h3>' + esc(AP.h) + '</h3><p class="muted">' + esc(AP.lead) + "</p><p>" +
+        (st.key ? esc(AP.has.replace("{c}", day(st.created)).replace("{u}", st.last_used ? day(st.last_used) : AP.never)) : esc(AP.none)) + "</p>" +
+        (fresh ? '<p class="api-once">' + esc(AP.once) + "</p>" + codeRow(fresh.key) : "") +
+        '<div class="btns"><button type="button" class="btn small" data-api-new>' + esc(st.key ? AP.remake : AP.make) + "</button>" + (st.key ? '<button type="button" class="btn small ghost" data-api-off>' + esc(AP.off) + "</button>" : "") + "</div></div>" +
+        '<div class="card pfs"><h3>' + esc(AP.mcpH) + '</h3><p class="muted">' + esc(AP.mcpT) + "</p>" + (fresh ? codeRow(fresh.mcp) : '<p class="muted">' + esc(AP.mcpHid) + "</p>") + "</div>" +
+        '<div class="card pfs"><h3>' + esc(AP.apiH) + "</h3>" + codeRow(curl(st.api, fresh ? fresh.key : "sea_…")) + "</div>";
+    };
+    let apiSt = null;
+    const loadApi = () => api("/api/ai/key").then((r) => { if (r.ok) { apiSt = r.data; paintApi(apiSt); } });
+    apiBox.addEventListener("click", (e) => {
+      const n = e.target.closest("[data-api-new]"), o = e.target.closest("[data-api-off]"), c = e.target.closest("[data-api-copy]");
+      if (n) { n.disabled = true; api("/api/ai/key", { action: "new" }).then((r) => { if (r.ok) { apiSt = { ...apiSt, key: true, created: Math.floor(Date.now() / 1000), last_used: null }; paintApi(apiSt, r.data); } else n.disabled = false; }); }
+      if (o && confirm(AP.sure)) api("/api/ai/key", { action: "off" }).then(() => loadApi());
+      if (c && navigator.clipboard) navigator.clipboard.writeText(c.dataset.apiCopy).then(() => { c.textContent = AP.copied; }, () => {});
+    });
     const loadTeam = () => api("/api/team").then((r) => {
       if (!r.ok) return;
       team = r.data.team ? r.data : null; updateShare();
