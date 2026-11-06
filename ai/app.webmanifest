@@ -1,0 +1,24 @@
+{
+  "id": "/ai/?seai=1",
+  "name": "SE AI",
+  "short_name": "SE AI",
+  "description": "Service Engineer AI",
+  "lang": "en",
+  "start_url": "/ai/?seai=1",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#15191E",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/img/se-ai-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/se-ai-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
