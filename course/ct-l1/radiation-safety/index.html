@@ -481,6 +481,13 @@ a.tm-case.unread{border-color:var(--blue)}
 .tm-people .ai-mini{margin-top:12px}
 .tm-share{margin:6px 0}
 .ai-st.tm-help{background:var(--warn);color:#fff}
+/* chat: sources open to show what the record says, waiting shows it is alive */
+button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;border:0;padding:0;cursor:pointer}
+.ai-src{display:block!important;margin-top:6px;border-radius:8px;transition:background .3s}.ai-src summary{cursor:pointer;overflow-wrap:anywhere;list-style-position:outside}.ai-src p{margin:6px 0 4px;color:var(--text);font-size:13px;line-height:1.5;white-space:pre-line}.ai-src .muted{color:var(--muted)}.ai-src.hl{background:var(--blue-wash)}.ai-src-t{color:var(--text)}
+.ai-acts{display:flex;gap:8px;margin-top:8px}
+.ai-wait{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ai-dots{display:inline-flex;gap:4px}.ai-dots i{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:aidot 1.2s infinite ease-in-out}.ai-dots i:nth-child(2){animation-delay:.15s}.ai-dots i:nth-child(3){animation-delay:.3s}
+@keyframes aidot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.ai-dots i{animation:none;opacity:.6}}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/ct-l1/radiation-safety/" hreflang="ru">RU</a></div></div></header>
@@ -738,6 +745,8 @@ a.tm-case.unread{border-color:var(--blue)}
       window.seaiVoice = (t) => { if (!t) return; ta.value = ta.value ? ta.value.replace(/\s+$/, "") + " " + t : t; grow(); ta.focus(); };
     }
     ta.addEventListener("input", grow);
+    // a computer: Enter sends, Shift+Enter is a new line; on a phone Enter stays a new line
+    ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing && matchMedia("(hover: hover) and (pointer: fine)").matches) { e.preventDefault(); form.requestSubmit(); } });
     const paintEmpty = () => { empty.hidden = out.children.length > 0; };
     new MutationObserver(paintEmpty).observe(out, { childList: true });
     paintEmpty();
@@ -780,14 +789,14 @@ a.tm-case.unread{border-color:var(--blue)}
       String(t || "").split("\n").forEach((line) => {
         const x = line.trim(), n = x.match(/^\d+[.)]\s+(.*)/), b = x.match(/^[-•*]\s+(.*)/);
         const it = (n || b) ? (n || b)[1] : x;
-        let e = esc(it).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/^([^:<]{2,40}):(\s|$)/, "<b>$1:</b>$2").replace(/\[([KC]\d+)\]/g, '<span class="ai-ref">[$1]</span>');
+        let e = esc(it).replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/^([^:<]{2,40}):(\s|$)/, "<b>$1:</b>$2").replace(/\[([KC]\d+)\]/g, '<button type="button" class="ai-ref" data-ref="$1">[$1]</button>');
         if (n || b) { const k = n ? "ol" : "ul"; if (list !== k) { close(); h += "<" + k + ">"; list = k; } h += "<li>" + e + "</li>"; }
         else { close(); if (x) h += "<p>" + e + "</p>"; }
       });
       close();
       return h;
     };
-    const replyHTML = (d) => '<div class="ai-reply">' + fmt(d.reply) + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<div><span class="ai-ref">[' + esc(s.ref) + "]</span> " + esc((A.trustL || {})[s.trust] || s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + (s.source ? " · " + esc(s.source) : "") + "</div>").join("") + "</div>" : "");
+    const replyHTML = (d) => '<div class="ai-reply">' + fmt(d.reply) + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<details class="ai-src" data-src="' + esc(s.ref) + '"><summary><span class="ai-ref">[' + esc(s.ref) + "]</span> " + (s.title ? '<span class="ai-src-t">' + esc(s.title) + "</span> · " : "") + esc((A.trustL || {})[s.trust] || s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + "</summary>" + (s.text ? "<p>" + esc(s.text) + "</p>" : "") + (s.source ? '<p class="muted">' + esc(s.source) + "</p>" : "") + "</details>").join("") + "</div>" : "");
     const paintCrumb = () => {
       crumb.innerHTML = chat.machine_id ? '<a href="#" data-open-machine="' + chat.machine_id + '">' + esc(chat.label) + "</a>"
         : newFor ? esc(A.newChatFor) + " " + esc(newFor.label)
@@ -828,6 +837,9 @@ a.tm-case.unread{border-color:var(--blue)}
       const a = e.target.closest("[data-approve]"), c = e.target.closest("[data-copy]");
       if (a) { a.disabled = true; const [kind, id] = a.dataset.approve.split(":"); api("/api/ai/approve", { kind, id: +id }).then(() => { a.replaceWith(document.createRange().createContextualFragment(stat(false))); }); }
       if (c && navigator.clipboard) navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = A.copied; }, () => {});
+      const rf = e.target.closest("button[data-ref]"), ca = e.target.closest("[data-copy-ans]");
+      if (rf) { const d = rf.closest(".ai-msg")?.querySelector('[data-src="' + rf.dataset.ref + '"]'); if (d) { d.open = true; d.scrollIntoView({ block: "nearest", behavior: "smooth" }); d.classList.add("hl"); setTimeout(() => d.classList.remove("hl"), 1200); } }
+      if (ca && navigator.clipboard) { const r = ca.closest(".ai-msg")?.querySelector(".ai-reply"); navigator.clipboard.writeText(r ? r.innerText : "").then(() => { ca.textContent = A.copied; }, () => {}); }
       const fb = e.target.closest("[data-fb]"), co = e.target.closest("[data-close-open]");
       if (fb) { const w = fb.closest("[data-fb-chat]"), ok = fb.dataset.fb === "1"; api("/api/ai/chats/" + w.dataset.fbChat + "/feedback", { turn: +w.dataset.fbTurn, helped: ok }).then((x) => { if (x.ok) w.innerHTML = '<span class="muted">' + esc(ok ? A.fbThanks : A.fbNo) + "</span>"; }); }
       if (co) { const f = box.querySelector('[data-close-form="' + co.dataset.closeOpen + '"]'); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("textarea").focus(); }
@@ -850,7 +862,8 @@ a.tm-case.unread{border-color:var(--blue)}
     const sendBtn = form.querySelector(".ai-send");
     const ask = (body) => {
       bubble("me", (body.image ? '<img class="ai-shot" alt="" src="' + body.image + '">' : "") + "<b>" + esc(body.text) + "</b>");
-      const card = bubble("ai", "<p class='muted'>" + esc(A.wait) + "</p>");
+      const card = bubble("ai", '<p class="muted ai-wait"><span class="ai-dots"><i></i><i></i><i></i></span> ' + esc(A.wait) + ' <span data-secs></span></p>');
+      const t0 = Date.now(), tick = setInterval(() => { const s = card.querySelector("[data-secs]"); if (!s) return clearInterval(tick); s.textContent = "· " + Math.round((Date.now() - t0) / 1000) + " " + A.sec; }, 1000);
       card.scrollIntoView({ block: "nearest" });
       return card;
     };
@@ -861,7 +874,7 @@ a.tm-case.unread{border-color:var(--blue)}
       return api("/api/ai/agent", body).then((r) => {
         sendBtn.disabled = false;
         if (r.ok && r.data.reply) {
-          card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : ""); fresh.hidden = false;
+          card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button></div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
           if (r.data.suggest && !chat.machine_id) fileCard(r.data.suggest);
         } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
