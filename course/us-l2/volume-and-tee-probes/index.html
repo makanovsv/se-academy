@@ -504,6 +504,26 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
 .ai-live{list-style:none;margin:6px 0 0;padding:0;font-size:.9em;color:var(--muted)}.ai-live li{padding:2px 0 2px 16px;position:relative}.ai-live li::before{content:"";position:absolute;left:2px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--rule-strong)}.ai-live li:last-child::before{background:var(--blue)}
 .app-recent{display:flex;flex-direction:column;margin-top:6px}.app-recent-h{margin:10px 20px 4px;font-size:.8em;color:var(--muted)}
 .in-app .app-drawer .app-recent button{display:flex;flex-direction:column;align-items:flex-start;width:100%;box-sizing:border-box;text-align:left;font:inherit;font-size:14px;color:var(--ink);background:none;border:0;border-radius:8px;padding:7px 20px;cursor:pointer}.in-app .app-drawer .app-recent button:hover,.in-app .app-drawer .app-recent button[aria-current]{background:var(--rule)}.app-recent button span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.app-recent button small{font-size:.78em;color:var(--muted)}
+
+/* 07.11.2026: first screen in the app for a signed-out user */
+.app-welcome{display:none}
+.in-app .app-welcome{display:flex;flex-direction:column;padding:28px 4px calc(150px + env(safe-area-inset-bottom))}
+.in-app .app-welcome img{width:64px;height:64px;border-radius:16px}
+.in-app .app-welcome h1{font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:16px 0 6px;color:var(--ink)}
+.in-app .app-wel-lead{font-size:17px;line-height:1.45;color:var(--text);margin:0 0 20px}
+.in-app .app-welcome ul{list-style:none;margin:0 0 22px;padding:0}
+.in-app .app-welcome li{position:relative;padding:0 0 10px 26px;font-size:16px;line-height:1.45;color:var(--text)}
+.in-app .app-welcome li::before{content:"";position:absolute;left:4px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.in-app .app-wel-exh{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.in-app .app-wel-ex{display:block;min-height:44px;box-sizing:border-box;font-size:15px;line-height:1.4;color:var(--text);background:var(--wash);border:1px solid var(--rule);border-radius:14px;padding:11px 14px;margin:0 0 8px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.in-app .app-wel-ex:hover{text-decoration:none}.in-app .app-wel-ex:active{background:var(--blue-wash);border-color:var(--blue)}
+.in-app .app-wel-cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--rule);padding:12px 16px calc(10px + env(safe-area-inset-bottom))}
+.in-app .app-wel-btn{display:block;text-align:center;padding:15px 18px;font-size:17px;font-weight:600;border-radius:14px;background:#2f5fe0;border-color:#2f5fe0;color:#fff;-webkit-tap-highlight-color:transparent}
+.in-app .app-wel-btn:active{background:#244bb8;border-color:#244bb8}
+.in-app .app-wel-btn:focus-visible,.in-app .app-wel-ex:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.in-app .app-wel-free{text-align:center;font-size:14px;color:var(--muted);margin:8px 0 0}
+html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
+.in-app .app-legal a{display:inline-block;padding:6px 0}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/" aria-current>Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/course/us-l2/volume-and-tee-probes/" hreflang="ru">RU</a></div></div></header>
@@ -767,6 +787,20 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     const buyLabel = () => A.subBuy + (storePrice ? " · " + storePrice + A.perMonth : "");
     if (inApp) appShell(box, A, me);
     if ((!me || !me.email) && new URLSearchParams(location.search).get("join")) { try { localStorage.setItem("sea:join", new URLSearchParams(location.search).get("join")); } catch (e) {} }
+    if ((!me || !me.email) && inApp && A.welBtn) {
+      // inside the app a signed-out user gets a real first screen, not a one-line note
+      const w = document.createElement("div");
+      w.className = "app-welcome";
+      w.innerHTML = '<img src="/img/se-ai-192.png" alt="" width="64" height="64"><h1>SE AI</h1><p class="app-wel-lead">' + esc(A.welLead) + "</p><ul>" +
+        A.welPts.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+        (A.ex && A.ex.length ? '<p class="app-wel-exh">' + esc(A.welEx) + "</p>" + A.ex.map((t) => '<a class="app-wel-ex" href="' + A.loginUrl + '">' + esc(t) + "</a>").join("") : "") +
+        '<div class="app-wel-cta"><a class="btn app-wel-btn" href="' + A.loginUrl + '">' + esc(A.welBtn) + '</a><p class="app-wel-free">' + esc(A.welFree) + "</p></div>";
+      // tapping an example remembers it, so after sign-in the question is already typed in
+      w.addEventListener("click", (e) => { const x = e.target.closest(".app-wel-ex"); if (x) { try { localStorage.setItem("sea:pendq", x.textContent); } catch (er) {} } });
+      box.prepend(w);
+      note.hidden = true;
+      return;
+    }
     if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
     box.querySelector("[data-ai-tabs]").hidden = false;
     form.hidden = false; show(me.ai);
@@ -814,6 +848,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     new MutationObserver(paintEmpty).observe(out, { childList: true });
     paintEmpty();
     empty.addEventListener("click", (e) => { const b = e.target.closest("[data-ai-ex]"); if (b) { ta.value = b.textContent; grow(); ta.focus(); } });
+    try { const pq = localStorage.getItem("sea:pendq"); if (pq) { localStorage.removeItem("sea:pendq"); ta.value = pq; grow(); } } catch (e) {}
     const cases = box.querySelector("[data-ai-cases]"), fresh = box.querySelector("[data-ai-new]"), sitesBox = box.querySelector("[data-ai-sites]"), crumb = box.querySelector("[data-ai-crumb]");
     // the open chat: id from the server, machine it is filed under (null = not filed yet)
     let chat = { id: null, machine_id: null, label: "" }, newFor = null, treeData = { sites: [], unfiled: [] };
