@@ -391,79 +391,8 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 .ai-shot{display:block;max-width:220px;max-height:220px;border-radius:10px;margin-bottom:8px}
 .ai-disc-short{display:none}
 .ai-empty{padding:8px 0 16px}.ai-empty h3{margin:0 0 6px}.ai-ex{display:flex;flex-direction:column;gap:8px;margin-top:14px}.ai-ex button{font:inherit;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer}.ai-ex button:hover{border-color:var(--blue)}
-.app-bar,.app-drawer,.app-veil{display:none}
 
-/* the SE AI app: a chat app, not a website */
-.in-app body{background:#fff}
-.in-app header.top{display:none}
-.in-app .app-bar{display:flex;align-items:center;gap:4px;position:sticky;top:0;z-index:30;height:56px;padding:0 6px;background:#fff;border-bottom:1px solid var(--rule)}
-.in-app .app-bar b{flex:1;min-width:0;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:4px}
-.in-app .app-bar button,.in-app .app-bar a,.in-app .app-gap{flex:none;width:44px;height:44px;display:grid;place-items:center;border:0;background:none;color:var(--ink);border-radius:12px;padding:0;cursor:pointer}
-.in-app .app-bar button:active,.in-app .app-bar a:active{background:var(--wash)}
-.in-app .app-bar svg{width:24px;height:24px}
-.in-app .app-veil{display:block;position:fixed;inset:0;background:rgba(15,23,42,.32);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
-.in-app.app-open .app-veil{opacity:1;pointer-events:auto}
-.in-app .app-drawer{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:min(300px,84vw);overflow-y:auto;background:#fff;z-index:50;transform:translateX(-102%);transition:transform .22s ease;padding:8px 0 calc(16px + env(safe-area-inset-bottom));border-right:1px solid var(--rule)}
-.in-app.app-open .app-drawer{transform:none}
-.in-app .app-brand{font-size:17px;font-weight:700;padding:14px 20px 10px}
-.in-app .app-drawer>a,.in-app .app-drawer>button{display:block;width:100%;box-sizing:border-box;text-align:left;font:inherit;font-size:16px;color:var(--ink);background:none;border:0;padding:12px 20px;cursor:pointer}
-.in-app .app-drawer>a:hover{text-decoration:none}
-.in-app .app-drawer [aria-current]{color:var(--blue);background:var(--blue-wash);font-weight:600}
-.in-app .app-drawer hr{border:0;border-top:1px solid var(--rule);margin:8px 0}
-.in-app .app-who{margin:2px 20px 0;font-size:13px;color:var(--muted);word-break:break-all}
-.in-app .app-legal{margin:auto 20px 0;padding-top:20px;font-size:13px;line-height:1.7;color:var(--muted)}
-.in-app .app-legal a{color:var(--muted)}
-.in-app.app-ai footer,.in-app.app-ai h2#ask,.in-app.app-ai .ai-tabs,.in-app.app-ai .ai-disc,.in-app.app-ai [data-ai-new]{display:none!important}
-.in-app.app-ai main .wrap{padding:0 16px}
-.in-app.app-ai .ai-tabhint{margin:14px 0 4px}
-.in-app [data-ai-pane="chat"]{padding:12px 0 170px}
-.in-app .ai-msg{max-width:100%;border-radius:18px}
-.in-app .ai-msg.me{max-width:85%;padding:10px 14px}
-.in-app .ai-msg.ai{border:0;background:none;padding:4px 0}
-.in-app .ai-empty{padding:28px 0 0}.in-app .ai-empty h3{font-size:24px;letter-spacing:-.02em}
-.in-app [data-ai-form]{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;border:0;border-top:1px solid var(--rule);border-radius:0;box-shadow:none;background:#fff;padding:10px 12px calc(8px + env(safe-area-inset-bottom))}
-.in-app .ai-compose{gap:2px;border:1px solid var(--rule-strong);border-radius:26px;padding:4px;background:#fff}
-.in-app .ai-compose:focus-within{border-color:var(--blue)}
-.in-app .ai-compose textarea{border:0;outline:0;box-shadow:none;resize:none;min-height:40px;max-height:160px;padding:9px 4px;margin:0;font-size:16px;line-height:22px;background:none}
-.in-app .ai-cam{width:40px;height:40px;padding:0;justify-content:center;border:0;border-radius:50%;color:var(--muted)}.in-app .ai-cam span{display:none}.in-app .ai-cam svg{width:24px;height:24px}
-.in-app .ai-send{width:40px;height:40px;padding:0;border-radius:50%;display:grid;place-items:center;flex:none}.in-app .ai-send span{display:none}.in-app .ai-send svg{display:block;width:20px;height:20px}
-.in-app .ai-send:disabled{background:var(--rule-strong)}
-.in-app [data-ai-form] .btns{margin:4px 0 0;justify-content:center;min-height:0}
-.in-app [data-ai-left]{font-size:12px}
-.in-app .ai-disc-short{display:block;margin:2px 0 0;font-size:11px;line-height:1.4;color:var(--muted);text-align:center}
-.in-app main,.in-app main>section,.in-app main .wrap{background:#fff}
-.in-app .ai-crumb:empty{display:none}
-.in-app .ai-msg.me{background:var(--wash)}.in-app .ai-msg.me b{font-weight:400}
-.in-app .ai-compose{align-items:flex-end}
-.in-app main .crumbs,.in-app main nav[aria-label="breadcrumb"],.in-app main .bc{display:none}
-.in-app .ai-reply{font-size:16px;line-height:1.55}
-.in-app .ai-crumb{margin:4px 0 8px}.in-app .ai-crumb a{font-size:14px}
-.in-app .ai-chip{font:inherit;font-size:14px;color:var(--blue);background:var(--blue-wash);border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
-.in-app .ai-tabhint{font-size:14px;line-height:1.45}
-.in-app [data-ai-pane="sites"],.in-app [data-ai-pane="cases"]{padding-bottom:32px}
-.in-app [data-ai-pane="sites"] .btn.small,.in-app [data-ai-pane="cases"] .btn.small{font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;min-height:0}
-.in-app [data-ai-pane="sites"] .btn.small.ghost,.in-app [data-ai-pane="cases"] .btn.small.ghost{border:0;background:var(--wash);color:var(--ink)}
-.in-app .ai-site,.in-app .ai-case,.in-app a.card.ai-mrow{border:1px solid var(--rule);border-radius:16px;box-shadow:none;background:#fff}
-.in-app .ai-case{padding:14px 16px}.in-app .ai-case .muted{font-size:14px;line-height:1.5}
-.in-app .ai-case .btns{gap:8px;margin-top:10px}
-.in-app .ai-sitehead{padding:12px 16px;border-bottom:0;background:var(--wash)}
-.in-app .ai-mrow{padding:12px 16px}
-.in-app .ai-st{border-radius:999px;padding:2px 10px}
-.in-app .ai-pmh{font-size:16px;margin:22px 0 4px}
-.in-app .ai-real{font-size:14px;line-height:1.5}
 .ai-mic[hidden]{display:none}.ai-msg.me.queued{opacity:.7}
-/* the SE AI app window (Android, Mac) is dark: engineers asked for it */
-html.in-app{color-scheme:dark;--paper:#1e1f22;--wash:#2a2b2f;--ink:#ececf1;--text:#dcdce2;--muted:#9b9ba6;--rule:#36373c;--rule-strong:#4a4b52;--blue:#4c7dff;--blue-wash:#23304f;--ok:#4ade80;--warn:#f0b35a;--bad:#f87171;--shadow:none;--shadow-lg:0 24px 60px rgba(0,0,0,.5)}
-.in-app body,.in-app .app-bar,.in-app .app-drawer,.in-app [data-ai-form],.in-app .ai-compose,.in-app main,.in-app main>section,.in-app main .wrap,.in-app .ai-site,.in-app .ai-case,.in-app a.card.ai-mrow{background:var(--paper)}
-.in-app body{color:var(--text)}
-.in-app .card,.in-app .ai-msg.ai,.in-app .ai-file,.in-app .ai-sub,.in-app .ai-srcs,.in-app .ai-chip{background:var(--wash);color:var(--text);border-color:var(--rule)}
-.in-app input,.in-app textarea,.in-app select{background:var(--wash);color:var(--ink);border-color:var(--rule-strong)}
-.in-app .ai-compose textarea{background:transparent}
-.in-app a{color:#8fb0ff}
-.in-app .btn,.in-app .btn:visited{color:#fff}
-.in-app .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
-.in-app h1,.in-app h2,.in-app h3,.in-app b,.in-app strong{color:var(--ink)}
-.in-app .app-veil{background:rgba(0,0,0,.55)}
 /* team: shared cases of a company's engineers */
 .tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}
 .tm-filters{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
@@ -488,52 +417,235 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
 .ai-wait{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ai-dots{display:inline-flex;gap:4px}.ai-dots i{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:aidot 1.2s infinite ease-in-out}.ai-dots i:nth-child(2){animation-delay:.15s}.ai-dots i:nth-child(3){animation-delay:.3s}
 @keyframes aidot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.ai-dots i{animation:none;opacity:.6}}
-/* app on a computer: the menu stays open on the left, the chat is one centred column like ChatGPT and Claude */
-@media (min-width:1024px){
-.in-app.app-ai body{padding-left:272px}
-.in-app.app-ai .app-drawer{transform:none;width:272px}
-.in-app.app-ai .app-veil{display:none}
-.in-app.app-ai .app-bar [data-app-menu]{display:none}
-.in-app.app-ai main .wrap{max-width:760px;padding:0 24px}
-.in-app.app-ai [data-ai-form]{left:272px;padding-left:max(24px,calc((100vw - 272px - 760px) / 2 + 24px));padding-right:max(24px,calc((100vw - 272px - 760px) / 2 + 24px))}
-}
 /* personal key for Claude / ChatGPT / API */
 [data-ai-api] .card{margin-top:12px}[data-ai-api] h3{margin:0 0 6px}.api-code{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.api-code code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px;background:var(--wash);border:1px solid var(--rule);border-radius:8px;padding:8px 10px}.api-once{color:var(--warn);font-weight:600}
 
 /* 06.11 evening: live agent steps, stop button, recent chats in the menu */
 .ai-live{list-style:none;margin:6px 0 0;padding:0;font-size:.9em;color:var(--muted)}.ai-live li{padding:2px 0 2px 16px;position:relative}.ai-live li::before{content:"";position:absolute;left:2px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--rule-strong)}.ai-live li:last-child::before{background:var(--blue)}
-.app-recent{display:flex;flex-direction:column;margin-top:6px}.app-recent-h{margin:10px 20px 4px;font-size:.8em;color:var(--muted)}
-.in-app .app-drawer .app-recent button{display:flex;flex-direction:column;align-items:flex-start;width:100%;box-sizing:border-box;text-align:left;font:inherit;font-size:14px;color:var(--ink);background:none;border:0;border-radius:8px;padding:7px 20px;cursor:pointer}.in-app .app-drawer .app-recent button:hover,.in-app .app-drawer .app-recent button[aria-current]{background:var(--rule)}.app-recent button span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.app-recent button small{font-size:.78em;color:var(--muted)}
 
-/* 07.11.2026: first screen in the app for a signed-out user */
-.app-welcome{display:none}
-.in-app .app-welcome{display:flex;flex-direction:column;padding:28px 4px calc(150px + env(safe-area-inset-bottom))}
-.in-app .app-welcome img{width:64px;height:64px;border-radius:16px}
-.in-app .app-welcome h1{font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:16px 0 6px;color:var(--ink)}
-.in-app .app-wel-lead{font-size:17px;line-height:1.45;color:var(--text);margin:0 0 20px}
-.in-app .app-welcome ul{list-style:none;margin:0 0 22px;padding:0}
-.in-app .app-welcome li{position:relative;padding:0 0 10px 26px;font-size:16px;line-height:1.45;color:var(--text)}
-.in-app .app-welcome li::before{content:"";position:absolute;left:4px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
-.in-app .app-wel-exh{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-.in-app .app-wel-ex{display:block;min-height:44px;box-sizing:border-box;font-size:15px;line-height:1.4;color:var(--text);background:var(--wash);border:1px solid var(--rule);border-radius:14px;padding:11px 14px;margin:0 0 8px;text-decoration:none;-webkit-tap-highlight-color:transparent}
-.in-app .app-wel-ex:hover{text-decoration:none}.in-app .app-wel-ex:active{background:var(--blue-wash);border-color:var(--blue)}
-.in-app .app-wel-cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--rule);padding:12px 16px calc(10px + env(safe-area-inset-bottom))}
-.in-app .app-wel-btn{display:block;text-align:center;padding:15px 18px;font-size:17px;font-weight:600;border-radius:14px;background:#2f5fe0;border-color:#2f5fe0;color:#fff;-webkit-tap-highlight-color:transparent}
-.in-app .app-wel-btn:active{background:#244bb8;border-color:#244bb8}
-.in-app .app-wel-btn:focus-visible,.in-app .app-wel-ex:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.in-app .app-wel-free{text-align:center;font-size:14px;color:var(--muted);margin:8px 0 0}
-html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
-.in-app .app-legal a{display:inline-block;padding:6px 0}
 
 .ai-empty-logo{display:none}
-.in-app .ai-empty:not([hidden]){display:flex;flex-direction:column;min-height:calc(100vh - 206px);min-height:calc(100dvh - 206px);padding:0}
-html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:122px}
-.in-app .ai-empty-logo{display:block;width:48px;height:48px;border-radius:12px;margin:auto auto 14px}
-.in-app .ai-empty h3{font-size:26px;line-height:1.15;text-align:center;margin:0 0 8px;color:var(--ink)}
+
+/* ===== 07.11.2026 SE AI app: one design for every screen =====
+   System light and dark, the phone's own font, one blue for actions, flat surfaces without frames inside frames.
+   Everything here is under html.in-app: the website itself does not change. */
+.app-bar,.app-drawer,.app-veil,.app-sheet,.app-welcome{display:none}
+html.in-app{color-scheme:light;--paper:#ffffff;--wash:#f2f2f4;--wash2:#e6e6ea;--ink:#121214;--text:#2b2b30;--muted:#6b6b74;--rule:#e4e4e8;--rule-strong:#cfcfd6;--blue:#2453d6;--blue-wash:#e9effc;--btn:#2453d6;--ok:#1d7a46;--warn:#9a5b00;--bad:#c4321f;--veil:rgba(0,0,0,.32);--shadow:none;--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Roboto,"Segoe UI","Helvetica Neue",Arial,sans-serif}
+/* the apps paint the phone's top and bottom bars dark (iPhone asset "Background", Android theme), so the page is dark too.
+   The light set above is ready: switch to prefers-color-scheme together with app builds that follow the system. */
+html.in-app{color-scheme:dark;--paper:#1e1f22;--wash:#292a2e;--wash2:#34353a;--ink:#f3f3f5;--text:#e3e3e8;--muted:#9e9ea8;--rule:#323235;--rule-strong:#4a4a50;--blue:#86a5ff;--blue-wash:#253051;--btn:#3a63e6;--ok:#5bd38a;--warn:#f0b35a;--bad:#ff7b6b;--veil:rgba(0,0,0,.55)}
+
+/* page */
+.in-app body{background:var(--paper);color:var(--text);font-family:var(--sans);-webkit-tap-highlight-color:transparent}
+.in-app header.top{display:none}
+.in-app main,.in-app main>section,.in-app main .wrap,.in-app main>div{background:var(--paper)}
+.in-app main .wrap{padding:0 16px}
+.in-app main .crumbs,.in-app main nav[aria-label="breadcrumb"],.in-app main .bc{display:none}
+.in-app footer{background:var(--paper);border:0;color:var(--muted);font-size:13px;line-height:1.7;margin:0;padding:20px 0 calc(24px + env(safe-area-inset-bottom))}
+.in-app footer a{color:var(--muted)}
+.in-app.app-ai footer{display:none}
+.in-app a{color:var(--blue)}
+.in-app h1,.in-app h2,.in-app h3,.in-app h4,.in-app b,.in-app strong{color:var(--ink);font-family:var(--sans)}
+.in-app main h1{font-size:30px;line-height:1.12;letter-spacing:-.02em;margin:20px 0 10px!important}
+.in-app main h2{font-size:20px;line-height:1.25;letter-spacing:-.01em}
+.in-app .lead{font-size:16px;line-height:1.5;color:var(--muted)}
+.in-app .muted{color:var(--muted)}
+
+/* controls: one button, one field, one card */
+.in-app .btn,.in-app .btn:visited{font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.2;color:#fff;background:var(--btn);border:0;border-radius:14px;padding:13px 18px;box-shadow:none;text-transform:none;letter-spacing:0;cursor:pointer}
+.in-app .btn:hover{text-decoration:none;filter:none}.in-app .btn:active{filter:brightness(.9)}
+.in-app .btn.small{font-size:14px;padding:8px 14px;border-radius:999px;min-height:0}
+.in-app .btn.ghost,.in-app .btn.ghost:visited{background:var(--wash);color:var(--ink);border:0}
+.in-app input:not([type=checkbox]):not([type=radio]),.in-app textarea,.in-app select{font:16px/1.4 var(--sans)!important;color:var(--ink)!important;background:var(--wash)!important;border:1px solid transparent!important;border-radius:12px!important;padding:12px 14px!important;box-shadow:none!important;outline:0;-webkit-appearance:none;appearance:none}
+.in-app input:focus,.in-app textarea:focus,.in-app select:focus{border-color:var(--blue)!important}
+.in-app ::placeholder{color:var(--muted);opacity:1}
+.in-app label{color:var(--muted);font-size:14px}
+.in-app .card{background:var(--wash);color:var(--text);border:0;border-radius:18px;box-shadow:none}
+.in-app .card .card{background:var(--paper)}
+.in-app .card input:not([type=checkbox]):not([type=radio]),.in-app .card textarea,.in-app .card select{background:var(--paper)!important}
+.in-app hr{border:0;border-top:1px solid var(--rule)}
+
+/* top bar: menu left, title in the middle, actions right */
+.in-app .app-bar{display:flex;align-items:center;position:sticky;top:0;z-index:30;height:52px;padding:0 4px;background:var(--paper);border:0}
+.in-app .app-bar .app-l,.in-app .app-bar .app-r{flex:0 0 92px;display:flex;align-items:center}
+.in-app .app-bar .app-r{justify-content:flex-end}
+.in-app .app-bar b{flex:1;min-width:0;text-align:center;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.in-app .app-bar button,.in-app .app-bar a{flex:none;width:44px;height:44px;display:grid;place-items:center;border:0;background:none;color:var(--ink);border-radius:12px;padding:0;cursor:pointer}
+.in-app .app-bar button[hidden]{display:none}
+.in-app .app-bar button:active,.in-app .app-bar a:active{background:var(--wash)}
+.in-app .app-bar svg{width:24px;height:24px}
+
+/* side menu */
+.in-app .app-veil{display:block;position:fixed;inset:0;background:var(--veil);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.in-app.app-open .app-veil{opacity:1;pointer-events:auto}
+.in-app .app-drawer{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:min(316px,86vw);overflow-y:auto;background:var(--paper);z-index:50;transform:translateX(-102%);transition:transform .22s ease;padding:calc(6px + env(safe-area-inset-top)) 10px calc(12px + env(safe-area-inset-bottom))}
+.in-app.app-open .app-drawer{transform:none}
+.in-app .app-brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:var(--ink);padding:10px 10px 14px}
+.in-app .app-brand img{border-radius:8px}
+.in-app .app-nav{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;box-sizing:border-box;text-align:left;font:16px/1.25 var(--sans);color:var(--ink);background:none;border:0;border-radius:12px;padding:8px 10px;cursor:pointer;text-decoration:none}
+.in-app .app-nav:hover{text-decoration:none}
+.in-app .app-nav svg{flex:none;width:22px;height:22px;color:var(--muted)}
+.in-app .app-nav:active,.in-app .app-nav[aria-current]{background:var(--wash)}
+.in-app .app-nav[aria-current]{font-weight:600}
+.in-app .app-newchat{background:var(--wash);font-weight:600;margin-bottom:6px}
+.in-app .app-newchat svg{color:var(--ink)}
+.in-app .app-sec-h{margin:16px 10px 4px;font-size:13px;font-weight:600;color:var(--muted);list-style:none;cursor:pointer}
+.in-app .app-sec-h::-webkit-details-marker{display:none}
+.in-app .app-recent{display:flex;flex-direction:column}
+.in-app .app-crow{display:flex;align-items:center;border-radius:12px}
+.in-app .app-crow[aria-current]{background:var(--wash)}
+.in-app .app-crow>button[data-chat]{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;font:15px/1.3 var(--sans);color:var(--ink);background:none;border:0;padding:8px 4px 8px 10px;cursor:pointer}
+.in-app .app-crow span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.in-app .app-crow small{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted);margin-top:1px}
+.in-app .app-cmore{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;background:none;color:var(--muted);border-radius:10px;padding:0;cursor:pointer}
+.in-app .app-cmore svg{width:20px;height:20px}
+.in-app .app-arch[hidden]{display:none}
+.in-app .app-acct{margin-top:auto;padding-top:12px}
+.in-app .app-acct hr{margin:0 0 6px}
+.in-app .app-who{margin:4px 10px 0;font-size:13px;color:var(--muted);word-break:break-all}
+.in-app .app-legal{margin:10px 10px 0;font-size:12px;line-height:1.6;color:var(--muted)}
+.in-app .app-legal a{color:var(--muted);display:inline-block;padding:4px 0}
+
+/* actions sheet from the bottom */
+.in-app .app-sheet{display:flex;align-items:flex-end;position:fixed;inset:0;z-index:70;background:var(--veil);opacity:0;transition:opacity .2s}
+.in-app .app-sheet.on{opacity:1}
+.in-app .app-sheet>div{width:100%;max-width:560px;margin:0 auto;box-sizing:border-box;background:var(--paper);border-radius:20px 20px 0 0;padding:10px 12px calc(12px + env(safe-area-inset-bottom));transform:translateY(24px);transition:transform .2s}
+.in-app .app-sheet.on>div{transform:none}
+.in-app .app-sheet h4{margin:6px 0 8px;font-size:13px;font-weight:600;color:var(--muted);text-align:center}
+.in-app .app-sheet button{display:flex;align-items:center;gap:14px;width:100%;min-height:52px;font:17px var(--sans);color:var(--ink);background:none;border:0;border-radius:14px;padding:0 14px;cursor:pointer}
+.in-app .app-sheet button:active{background:var(--wash)}
+.in-app .app-sheet button svg{width:22px;height:22px;color:var(--muted)}
+.in-app .app-sheet button.danger,.in-app .app-sheet button.danger svg{color:var(--bad)}
+.in-app .app-sheet button.cancel{justify-content:center;font-weight:600;background:var(--wash);margin-top:8px}
+
+/* chat */
+.in-app.app-ai h2#ask,.in-app.app-ai .ai-tabs,.in-app.app-ai .ai-disc,.in-app.app-ai [data-ai-new]{display:none!important}
+.in-app.app-ai .ai-tabhint{margin:6px 0 14px;font-size:14px;line-height:1.45;color:var(--muted)}
+.in-app [data-ai-pane="chat"]{padding:4px 0 160px}
+.in-app .ai-crumb{margin:2px 0 10px}.in-app .ai-crumb:empty{display:none}
+.in-app .ai-crumb a,.in-app .ai-chip{display:inline-block;font:500 13px/1.3 var(--sans);color:var(--muted);background:var(--wash);border:0;border-radius:999px;padding:6px 12px;text-decoration:none;cursor:pointer}
+.in-app .ai-msg{max-width:100%;border:0;box-shadow:none;background:none;margin:0 0 14px}
+.in-app .ai-msg.me{margin-left:auto;width:fit-content;max-width:85%;background:var(--wash);border-radius:20px;padding:10px 15px;color:var(--ink)}
+.in-app .ai-msg.me b{font-weight:400;color:var(--ink)}
+.in-app .ai-msg.ai{padding:2px 0;color:var(--text)}
+.in-app .ai-reply{font-size:16px;line-height:1.6;color:var(--text)}
+.in-app .ai-reply p{margin:0 0 10px}.in-app .ai-reply ol,.in-app .ai-reply ul{margin:0 0 10px;padding-left:22px}.in-app .ai-reply li{margin:0 0 6px}
+.in-app .ai-srcs,.in-app .ai-file,.in-app .ai-sub{background:var(--wash);border:0;border-radius:16px;color:var(--text)}
+.in-app .ai-msg.ai-file{padding:14px 16px}
+.in-app .ai-src summary{color:var(--text)}
+.in-app button.ai-ref{color:var(--blue)}
+.in-app .ai-fb{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
+.in-app .ai-shot{border-radius:14px}
+.in-app .ai-st{display:inline-block;font:600 12px/1.4 var(--sans);border-radius:999px;padding:2px 10px;background:var(--wash2);color:var(--muted);border:0}
+.in-app .ai-st.ok{color:var(--ok)}
+/* the empty chat */
+.in-app .ai-empty:not([hidden]){display:flex;flex-direction:column;min-height:calc(100vh - 212px);min-height:calc(100dvh - 212px);padding:0}
+html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:128px}
+.in-app .ai-empty-logo{display:block;width:52px;height:52px;border-radius:14px;margin:auto auto 16px}
+.in-app .ai-empty h3{font-size:26px;line-height:1.15;letter-spacing:-.02em;text-align:center;margin:0 0 8px}
 .in-app .ai-empty>p.muted{text-align:center;font-size:15px;line-height:1.45;max-width:320px;margin:0 auto}
 .in-app .ai-ex{margin-top:auto;padding-top:28px;gap:8px}
-.in-app .ai-ex button{background:var(--wash);border:0;border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.35;color:var(--text);-webkit-tap-highlight-color:transparent}
-.in-app .ai-ex button:active{background:var(--blue-wash)}
+.in-app .ai-ex button{font:15px/1.35 var(--sans);text-align:left;color:var(--text);background:var(--wash);border:0;border-radius:16px;padding:13px 16px;cursor:pointer}
+.in-app .ai-ex button:active{background:var(--wash2)}
+/* the question box */
+.in-app [data-ai-form]{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;border:0;border-radius:0;box-shadow:none;background:linear-gradient(to top,var(--paper) 78%,rgba(0,0,0,0));padding:14px 12px calc(8px + env(safe-area-inset-bottom))}
+.in-app .ai-compose{display:flex;align-items:flex-end;gap:2px;background:var(--wash);border:1px solid var(--rule);border-radius:26px;padding:4px}
+.in-app .ai-compose:focus-within{border-color:var(--rule-strong)}
+.in-app .ai-compose textarea{flex:1;min-width:0;background:transparent!important;border:0!important;border-radius:0!important;padding:9px 4px!important;margin:0;resize:none;min-height:40px;max-height:160px;line-height:22px!important}
+.in-app .ai-cam{flex:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:none;color:var(--muted);cursor:pointer}
+.in-app .ai-cam span{display:none}.in-app .ai-cam svg{width:24px;height:24px}
+.in-app .ai-cam[hidden]{display:none}
+.in-app .ai-send{flex:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--btn);color:#fff;cursor:pointer}
+.in-app .ai-send span{display:none}.in-app .ai-send svg{display:block;width:20px;height:20px}
+.in-app .ai-send:disabled{background:var(--wash2);color:var(--muted)}
+.in-app .ai-send.ai-stop{background:var(--ink);color:var(--paper)}
+.in-app [data-ai-form] .btns{margin:4px 0 0;justify-content:center;min-height:0}
+.in-app [data-ai-left]{font-size:12px;color:var(--muted)}
+.in-app .ai-disc-short{display:block;margin:2px 0 0;font-size:11px;line-height:1.4;color:var(--muted);text-align:center}
+.in-app .ai-att img{border:0;border-radius:12px}
+/* out of free questions: one clear card and nothing else to tap */
+.in-app [data-ai-note]{background:none;border:0;padding:0;margin:0}
+.in-app .ai-pay{display:flex;flex-direction:column;align-items:center;text-align:center;min-height:calc(100dvh - 140px);justify-content:center;padding:0 8px}
+.in-app .ai-pay img{border-radius:14px;margin-bottom:18px}
+.in-app .ai-pay h3{font-size:24px;line-height:1.2;letter-spacing:-.02em;margin:0 0 10px}
+.in-app .ai-pay p{font-size:16px;line-height:1.5;color:var(--muted);max-width:330px;margin:0 0 24px}
+.in-app .ai-pay .btn{width:100%;max-width:360px;padding:15px 18px;font-size:17px}
+.in-app .ai-locked [data-ai-pane="chat"]{display:none!important}
+
+/* sites, machines, cases */
+.in-app [data-ai-pane="sites"],.in-app [data-ai-pane="cases"],.in-app [data-ai-pane="machine"],.in-app [data-ai-pane="team"],.in-app [data-ai-pane="api"]{padding-bottom:40px}
+.in-app .ai-site{background:var(--wash);border:0;border-radius:18px;overflow:hidden;margin:0 0 12px;padding:0}
+.in-app .ai-sitehead{display:flex;align-items:center;gap:8px;padding:12px 8px 12px 16px;background:none;border:0}
+.in-app .ai-sitehead>div{flex:1;min-width:0}
+.in-app .ai-sitebtns{display:flex;align-items:center;gap:2px;flex:none}
+.in-app .ai-more{width:36px;height:36px;display:grid;place-items:center;border:0;background:none;color:var(--muted);border-radius:10px;padding:0;cursor:pointer}
+.in-app .ai-more svg{width:20px;height:20px}
+.in-app .ai-mrow,.in-app a.card.ai-mrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border:0;border-top:1px solid var(--rule);border-radius:0;background:none;color:var(--text);text-decoration:none}
+.in-app a.card.ai-mrow{background:var(--wash);border:0;border-radius:16px;margin:0 0 8px}
+.in-app .ai-mrow:hover{text-decoration:none}
+.in-app .ai-mrow .muted{font-size:14px}
+.in-app .ai-mini{display:grid;gap:8px;padding:12px 16px}
+.in-app .ai-mhead{margin:6px 0 14px}.in-app .ai-mhead h3{font-size:24px;letter-spacing:-.02em;margin:4px 0}
+.in-app [data-ai-machine]>a[data-back]{display:inline-block;margin:8px 0 4px;font-size:15px}
+.in-app [data-ai-machine] .card.pfs{padding:14px 16px;margin:14px 0}
+.in-app [data-ai-machine] .card.pfs textarea{width:100%;box-sizing:border-box;margin:8px 0}
+.in-app .ai-pmh{font-size:17px;margin:22px 0 8px}
+.in-app .ai-case{background:var(--wash);border:0;border-radius:18px;padding:14px 16px;margin:0 0 10px}
+.in-app .ai-case .muted{font-size:14px;line-height:1.5}
+.in-app .ai-case .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.in-app .ai-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.in-app .ai-real{font-size:14px;line-height:1.5}
+.in-app .ai-del{display:flex;align-items:center;gap:10px;margin:28px 0 0;font:16px var(--sans);color:var(--bad);background:none;border:0;padding:10px 0;cursor:pointer}
+.in-app .ai-del svg{width:20px;height:20px}
+.in-app [data-ai-pane] .btns{gap:8px}
+
+/* profile, sign-in and the other pages opened from the app */
+.in-app .pfs{padding:16px}
+.in-app main section.card{margin:12px 0}
+.in-app main section.card h2{font-size:18px;margin:0 0 6px}
+.in-app [data-login]{gap:8px}
+.in-app [data-login] input,.in-app [data-login-pw] input{border-radius:12px!important}
+.in-app [data-login] .btn{border-radius:12px;white-space:nowrap}
+.in-app [data-login-pw]{max-width:none!important}
+
+/* first screen for a signed-out user */
+.in-app .app-welcome{display:flex;flex-direction:column;padding:24px 4px calc(150px + env(safe-area-inset-bottom))}
+.in-app .app-welcome img{width:60px;height:60px;border-radius:16px}
+.in-app .app-welcome h1{font-size:30px;line-height:1.1;letter-spacing:-.02em;margin:16px 0 6px}
+.in-app .app-wel-lead{font-size:17px;line-height:1.45;color:var(--muted);margin:0 0 20px}
+.in-app .app-welcome ul{list-style:none;margin:0 0 22px;padding:0}
+.in-app .app-welcome li{position:relative;padding:0 0 10px 24px;font-size:16px;line-height:1.45;color:var(--text)}
+.in-app .app-welcome li::before{content:"";position:absolute;left:4px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.in-app .app-wel-exh{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.in-app .app-wel-ex{display:block;min-height:44px;box-sizing:border-box;font-size:15px;line-height:1.4;color:var(--text);background:var(--wash);border:0;border-radius:16px;padding:12px 16px;margin:0 0 8px;text-decoration:none}
+.in-app .app-wel-ex:hover{text-decoration:none}.in-app .app-wel-ex:active{background:var(--wash2)}
+.in-app .app-wel-cta{position:fixed;left:0;right:0;bottom:0;z-index:20;background:linear-gradient(to top,var(--paper) 80%,rgba(0,0,0,0));padding:16px 16px calc(10px + env(safe-area-inset-bottom))}
+.in-app .app-wel-btn{display:block;text-align:center;padding:15px 18px;font-size:17px;border-radius:14px}
+.in-app .app-wel-btn:focus-visible,.in-app .app-wel-ex:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.in-app .app-wel-free{text-align:center;font-size:14px;color:var(--muted);margin:8px 0 0}
+html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
+
+/* the app on a computer (Mac): the menu stays open on the left, the chat is one centred column */
+@media (min-width:1024px){
+.in-app.app-ai body{padding-left:300px}
+.in-app.app-ai .app-drawer{transform:none;width:300px;border-right:1px solid var(--rule)}
+.in-app.app-ai .app-veil{display:none}
+.in-app.app-ai .app-bar [data-app-menu]{display:none}
+.in-app.app-ai main .wrap{max-width:760px;padding:0 24px}
+.in-app.app-ai [data-ai-form]{left:300px;padding-left:max(24px,calc((100vw - 300px - 760px) / 2 + 24px));padding-right:max(24px,calc((100vw - 300px - 760px) / 2 + 24px))}
+}
+.in-app .ai-locked:has([data-ai-pane="chat"][hidden]) [data-ai-note]{display:none}
+.in-app .card .btn.ghost,.in-app .ai-case .btn.ghost,.in-app a.btn.small.ghost{background:var(--wash2)}
+.in-app .ai-empty-logo,.in-app .ai-pay img,.in-app .app-welcome img,.in-app .app-brand img{box-shadow:0 0 0 1px var(--rule)}
+.in-app.app-ai [data-ai-pane="machine"]:not([hidden])~* .ai-tabhint,.in-app.app-ai:has([data-ai-pane="machine"]:not([hidden])) .ai-tabhint{display:none}
+.in-app .app-sheet>div{background:var(--wash)}.in-app .app-sheet button.cancel{background:var(--wash2)}
+/* the same buttons on the website */
+.ai-sitebtns{display:flex;align-items:center;gap:4px}
+.ai-more{width:32px;height:32px;display:inline-grid;place-items:center;border:0;background:none;color:var(--muted);border-radius:8px;padding:0;cursor:pointer}.ai-more svg{width:20px;height:20px}
+.ai-del{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font:inherit;color:var(--bad);background:none;border:0;padding:8px 0;cursor:pointer}.ai-del svg{width:18px;height:18px}
+.app-sheet{position:fixed;inset:0;z-index:70;align-items:flex-end;background:rgba(0,0,0,.35)}
+.app-sheet.on{display:flex}.app-sheet>div{width:100%;max-width:480px;margin:0 auto;background:var(--paper);border-radius:16px 16px 0 0;padding:10px 12px 14px}
+.app-sheet button{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;font:inherit;background:none;border:0;color:var(--ink);padding:0 12px;cursor:pointer}.app-sheet button svg{width:20px;height:20px}.app-sheet button.danger{color:var(--bad)}.app-sheet button.cancel{justify-content:center;font-weight:600}
 </style></head><body>
 <div class="preview">Early access · courses are being reviewed by field engineers</div>
 <header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/" aria-current>Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/fault/philips-brilliance-10-gantry-intermittently-fails-to-start-b49641bec2/" hreflang="ru">RU</a></div></div></header>
@@ -686,6 +798,19 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
     menu: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     edit: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h8"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
     stop: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>',
+    sites: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8.5 7.5h1M14.5 7.5h1M8.5 11.5h1M14.5 11.5h1"/></svg>',
+    cases: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h4"/></svg>',
+    team: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 20c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5M16 5.2a3 3 0 0 1 0 5.6M20.5 20c0-2.4-1.4-4.4-3.5-5.2"/></svg>',
+    api: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 8 4.5 12l4 4M15.5 8l4 4-4 4"/></svg>',
+    archive: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="5" rx="1.2"/><path d="M5.5 9v10h13V9M10 13h4"/></svg>',
+    trash: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></svg>',
+    user: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-4 3.4-6.6 7.5-6.6s7.5 2.6 7.5 6.6"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+    restore: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>',
+    star: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
+    out: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4.5a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5H14M10 8l-4 4 4 4M6 12h10"/></svg>',
+    globe: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.6 3.5 5.4 3.5 8.5s-1.1 5.9-3.5 8.5c-2.4-2.6-3.5-5.4-3.5-8.5S9.6 6.1 12 3.5z"/></svg>',
+    more: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="5.5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18.5" cy="12" r="1.7"/></svg>',
     back: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   };
   const inApp = document.documentElement.classList.contains("in-app");
@@ -693,26 +818,48 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
   function appBar(left, title, right) {
     const bar = document.createElement("div");
     bar.className = "app-bar";
-    bar.innerHTML = left + '<b data-app-title>' + esc(title) + "</b>" + (right || '<span class="app-gap"></span>');
+    bar.innerHTML = '<span class="app-l">' + left + '</span><b data-app-title>' + esc(title) + '</b><span class="app-r">' + (right || "") + "</span>";
     document.body.prepend(bar);
     return bar;
+  }
+  // a sheet of actions from the bottom of the screen (iOS / Android style); items: {label, icon, danger, fn}
+  function sheet(title, items, cancel) {
+    const w = document.createElement("div");
+    w.className = "app-sheet";
+    w.innerHTML = '<div role="dialog" aria-modal="true">' + (title ? "<h4>" + esc(title) + "</h4>" : "") +
+      items.map((it, i) => '<button type="button" data-i="' + i + '"' + (it.danger ? ' class="danger"' : "") + ">" + (IC[it.icon] || "") + "<span>" + esc(it.label) + "</span></button>").join("") +
+      '<button type="button" class="cancel">' + esc(cancel) + "</button></div>";
+    const close = () => { w.classList.remove("on"); setTimeout(() => w.remove(), 200); };
+    w.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b && e.target !== w) return;
+      close();
+      if (b && b.dataset.i) items[+b.dataset.i].fn();
+    });
+    document.body.append(w);
+    requestAnimationFrame(() => w.classList.add("on"));
   }
   function appShell(box, A, me) {
     document.documentElement.classList.add("app-ai");
     const bar = appBar('<button type="button" data-app-menu aria-label="' + esc(A.menu) + '">' + IC.menu + "</button>", "SE AI",
-      me && me.email ? '<button type="button" data-app-new aria-label="' + esc(A.newChat) + '" title="' + esc(A.newChat) + '">' + IC.edit + "</button>" : "");
+      me && me.email ? '<button type="button" data-app-more hidden aria-label="' + esc(A.chatMenu) + '">' + IC.more + '</button><button type="button" data-app-new aria-label="' + esc(A.newChat) + '" title="' + esc(A.newChat) + '">' + IC.edit + "</button>" : "");
     const lang = document.querySelector(".top-right a[hreflang]"), auth = document.querySelector("[data-auth]");
     const legal = document.querySelector("footer .app-only");
     const drawer = document.createElement("nav");
     drawer.className = "app-drawer";
-    drawer.innerHTML = '<div class="app-brand">SE AI</div>' +
+    const nav = (go, icon, label) => '<button type="button" class="app-nav" data-go="' + go + '">' + IC[icon] + "<span>" + esc(label) + "</span></button>";
+    drawer.innerHTML = '<div class="app-brand"><img src="/img/se-ai-192.png" alt="" width="28" height="28"><span>SE AI</span></div>' +
       (me && me.email
-        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + '</button><button type="button" data-go="api">' + esc(A.tabApi) + '</button><div class="app-recent" data-recent hidden><p class="app-recent-h">' + esc(A.recent) + '</p><div data-recent-list></div></div><hr>' +
-          '<a href="' + (S.lang === "ru" ? "/ru" : "") + '/my/profile/">' + esc(A.profile) + "</a>"
-        : '<a href="' + A.loginUrl + '">' + esc(A.signIn) + "</a>") +
-      (lang ? '<a href="' + lang.getAttribute("href") + '" hreflang="' + lang.getAttribute("hreflang") + '">' + esc(lang.textContent === "EN" ? "English" : "Русский") + "</a>" : "") +
-      (me && me.email ? '<button type="button" data-go="out">' + esc(A.signOut) + '</button><p class="app-who">' + esc(me.email) + "</p>" : "") +
-      (legal ? '<p class="app-legal">' + legal.innerHTML + "</p>" : "");
+        ? '<button type="button" class="app-nav app-newchat" data-go="new">' + IC.edit + "<span>" + esc(A.newChat) + "</span></button>" +
+          nav("sites", "sites", A.tabSites) + nav("cases", "cases", A.tabCases) + nav("team", "team", A.tabTeam) + nav("api", "api", A.tabApi) +
+          '<div class="app-recent" data-recent hidden><p class="app-sec-h">' + esc(A.recent) + '</p><div data-recent-list></div></div>' +
+          '<details class="app-arch" data-arch hidden><summary class="app-sec-h">' + esc(A.archivedH) + ' <span data-arch-n></span></summary><div data-arch-list></div></details>' +
+          '<div class="app-acct"><hr>' +
+          '<a class="app-nav" href="' + (S.lang === "ru" ? "/ru" : "") + '/my/profile/">' + IC.user + "<span>" + esc(A.profile) + "</span></a>"
+        : '<div class="app-acct"><a class="app-nav" href="' + A.loginUrl + '">' + IC.user + "<span>" + esc(A.signIn) + "</span></a>") +
+      (lang ? '<a class="app-nav" href="' + lang.getAttribute("href") + '" hreflang="' + lang.getAttribute("hreflang") + '">' + IC.globe + "<span>" + esc(lang.textContent === "EN" ? "English" : "Русский") + "</span></a>" : "") +
+      (me && me.email ? '<button type="button" class="app-nav" data-go="out">' + IC.out + "<span>" + esc(A.signOut) + '</span></button><p class="app-who">' + esc(me.email) + "</p>" : "") +
+      (legal ? '<p class="app-legal">' + legal.innerHTML + "</p>" : "") + "</div>";
     const veil = document.createElement("div");
     veil.className = "app-veil";
     document.body.append(veil, drawer);
@@ -732,21 +879,33 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
     const loadRecent = () => rec && api("/api/ai/recent").then((r) => {
       const a = (r.ok && r.data.chats) || [];
       rec.hidden = !a.length;
-      rec.querySelector("[data-recent-list]").innerHTML = a.slice(0, 12).map((c) => '<button type="button" data-chat="' + c.id + '"' + (box._chatId && box._chatId() === c.id ? " aria-current" : "") + "><span>" + esc(c.title || A.tabChat) + "</span>" + (c.label ? "<small>" + esc(c.label) + "</small>" : "") + "</button>").join("");
+      const row = (c, arch) => '<div class="app-crow"' + (box._chatId && box._chatId() === c.id ? " aria-current" : "") + '><button type="button" data-chat="' + c.id + '"><span>' + esc(c.title || A.tabChat) + "</span>" + (c.label ? "<small>" + esc(c.label) + "</small>" : "") + '</button><button type="button" class="app-cmore" data-chat-more="' + c.id + '"' + (arch ? " data-arch" : "") + ' aria-label="' + esc(A.chatMenu) + '">' + IC.more + "</button></div>";
+      rec.querySelector("[data-recent-list]").innerHTML = a.slice(0, 12).map((c) => row(c, false)).join("");
+      const ar = (r.ok && r.data.archived) || [], arch = drawer.querySelector("[data-arch]");
+      if (arch) { arch.hidden = !ar.length; arch.querySelector("[data-arch-n]").textContent = ar.length ? "· " + ar.length : ""; arch.querySelector("[data-arch-list]").innerHTML = ar.map((c) => row(c, true)).join(""); }
     }).catch(() => {});
     if (rec) {
-      rec.addEventListener("click", (e) => { const b = e.target.closest("[data-chat]"); if (!b) return; e.stopPropagation(); open(false); box._openChat && box._openChat(+b.dataset.chat); title.textContent = "SE AI"; scrollTo(0, 0); });
+      drawer.addEventListener("click", (e) => {
+        const mo = e.target.closest("[data-chat-more]");
+        if (mo) { e.stopPropagation(); box._chatMenu && box._chatMenu(+mo.dataset.chatMore, mo.hasAttribute("data-arch")); return; }
+        const b = e.target.closest("[data-chat]"); if (!b) return; e.stopPropagation(); open(false); box._openChat && box._openChat(+b.dataset.chat); title.textContent = "SE AI"; scrollTo(0, 0);
+      });
       box.addEventListener("seai:recent", loadRecent);
       loadRecent();
     }
     bar.querySelector("[data-app-menu]").addEventListener("click", () => { open(true); loadRecent(); });
     veil.addEventListener("click", () => open(false));
     drawer.addEventListener("click", (e) => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go); });
+    const more = bar.querySelector("[data-app-more]");
+    if (more) {
+      box.addEventListener("seai:chat", () => { const pane = box.querySelector('[data-ai-pane="chat"]'); more.hidden = !(box._chatId && box._chatId()) || pane.hidden; });
+      more.addEventListener("click", () => box._chatMenu && box._chatId() && box._chatMenu(box._chatId(), false));
+    }
     const nw = bar.querySelector("[data-app-new]");
     if (nw) nw.addEventListener("click", () => go("new"));
     // a machine opened from Sites shows its own pane: keep the title in step
     const chatPane = box.querySelector('[data-ai-pane="chat"]');
-    new MutationObserver(() => { if (!chatPane.hidden) { title.textContent = "SE AI"; drawer.querySelectorAll("[data-go]").forEach((b) => b.toggleAttribute("aria-current", b.dataset.go === "chat")); } }).observe(chatPane, { attributes: true, attributeFilter: ["hidden"] });
+    new MutationObserver(() => { box.dispatchEvent(new Event("seai:chat")); if (!chatPane.hidden) { title.textContent = "SE AI"; drawer.querySelectorAll("[data-go]").forEach((b) => b.toggleAttribute("aria-current", b.dataset.go === "chat")); } }).observe(chatPane, { attributes: true, attributeFilter: ["hidden"] });
     const ta = box.querySelector("[data-ai-form] textarea");
     if (ta) { ta.rows = 1; ta.placeholder = A.emptyH + "…"; }
     drawer.querySelector('[data-go="chat"]')?.setAttribute("aria-current", "");
@@ -787,7 +946,8 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
       cur = st;
       if (st.left <= 0) {
         form.hidden = true; note.hidden = false;
-        if (st.mode === "trial" && store) note.innerHTML = esc(A.storeOver) + ' <button type="button" class="btn small" data-buy>' + esc(buyLabel()) + "</button>";
+        if (st.mode === "trial" && store) { note.innerHTML = '<div class="ai-pay"><img src="/img/se-ai-192.png" alt="" width="56" height="56"><h3>' + esc(A.payH) + "</h3><p>" + esc(A.payP) + '</p><button type="button" class="btn" data-buy>' + esc(buyLabel()) + "</button></div>";
+        box.classList.add("ai-locked"); }
         else note.textContent = st.mode === "trial" ? (inApp ? A.appOver : A.trial_over) : A.limit;
       }
     };
@@ -824,18 +984,18 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
       window.seaiPurchase = (pur) => api("/api/ai/store/" + store, pur).then((r) => {
         if (r.ok) {
           if (pur.token && SEAI.ack) SEAI.ack(pur.token);
-          if (r.data.ai && r.data.ai.left > 0) { form.hidden = false; note.hidden = true; }
+          if (r.data.ai && r.data.ai.left > 0) { form.hidden = false; note.hidden = true; box.classList.remove("ai-locked"); }
           show(r.data.ai);
           if (pur.fresh) alert(A.subOn);
         } else if (pur.fresh) alert(A.subErr);
       }).catch(() => { if (pur.fresh) alert(A.subErr); });
       note.addEventListener("click", (e) => { if (e.target.closest("[data-buy]")) buy(); });
-      const hr = document.querySelector(".app-drawer hr");
+      const hr = document.querySelector(".app-drawer .app-acct hr");
       if (hr) {
         const b = document.createElement("button");
-        b.type = "button"; b.textContent = A.subMenu;
+        b.type = "button"; b.className = "app-nav"; b.innerHTML = IC.star + "<span>" + esc(A.subMenu) + "</span>";
         b.addEventListener("click", () => { document.documentElement.classList.remove("app-open"); if (cur && cur.mode === "sub") SEAI.manage(); else buy(); });
-        hr.before(b);
+        hr.after(b);
       }
       try { SEAI.restore(); } catch (e) {}
     }
@@ -874,7 +1034,7 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
       : '<button type="button" class="btn small ghost" data-close-open="' + j.id + '">' + esc(A.closeBtn) + '</button><form class="ai-mini" data-close-form="' + j.id + '" hidden><textarea name="cause" rows="2" maxlength="500" required placeholder="' + esc(A.causePh) + '"></textarea><textarea name="fix" rows="2" maxlength="500" placeholder="' + esc(A.fixPh) + '"></textarea><p class="muted">' + esc(A.closeNote) + '</p><button class="btn small">' + esc(A.closeSave) + "</button></form>";
     const approveBtn = (kind, id, label) => '<button class="btn small" data-approve="' + kind + ":" + id + '">' + esc(label) + "</button>";
     const request = (j, o) => A.reqText.replace("{equipment}", j.equipment || "").replace("{serial}", j.serial || "—").replace("{part}", o.part || "").replace("{number}", o.part_number || "—").replace("{qty}", o.qty);
-    const caseCard = (j) => '<div class="card pfs ai-case" id="case-' + j.id + '"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc(j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + "</p>" + (j.status === "draft" ? "" : closeBox(j)) + '<div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>";
+    const caseCard = (j) => '<div class="card pfs ai-case" id="case-' + j.id + '"><div class="ai-row"><b>#' + j.id + " · " + esc(j.equipment) + "</b>" + stat(j.status === "draft") + '</div><p class="muted">' + esc(j.site) + " · " + esc((A.prio || {})[j.priority] || j.priority) + "<br>" + esc(j.fault) + (j.cause ? "<br>" + esc(A.suspected) + ": " + esc(j.cause) : "") + "</p>" + (j.status === "draft" ? "" : closeBox(j)) + '<div class="btns">' + (j.status === "draft" ? approveBtn("job", j.id, A.approveCase) : "") + (j.report ? '<a class="btn small ghost" href="' + S.api + "/api/ai/report/" + j.id + '.pdf">' + esc(A.reportPdf) + "</a>" + (j.report_status === "draft" ? approveBtn("report", j.id, A.approveReport) : stat(false)) : "") + "</div>" + (j.orders || []).map((o) => '<div class="ai-sub"><div class="ai-row"><span>' + esc(A.parts) + ": " + esc(o.part) + " × " + o.qty + "</span>" + stat(o.status === "draft") + '</div><p class="muted">' + (o.part_number ? esc(A.number) + " " + esc(o.part_number) : esc(A.noNumber)) + "<br>" + esc(o.reason) + '</p><div class="btns">' + (o.status === "draft" ? approveBtn("order", o.id, A.approveOrder) : "") + '<button class="btn small ghost" data-copy="' + esc(request(j, o)) + '">' + esc(A.copy) + "</button></div></div>").join("") + "</div>";
     const pmCard = (p) => '<div class="card pfs ai-case" id="pm-' + p.id + '"><div class="ai-row"><b>' + esc(p.due) + " · " + esc(p.equipment) + "</b>" + stat(p.status === "draft") + '</div><p class="muted">' + esc(p.task) + "<br>" + esc(A.basis) + ": " + esc(p.basis) + "</p>" + (p.status === "draft" ? '<div class="btns">' + approveBtn("pm", p.id, A.approveVisit) + "</div>" : "") + "</div>";
     const loadCases = () => api("/api/ai/cases").then((r) => {
       if (!r.ok) return;
@@ -912,6 +1072,7 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
     };
     const replyHTML = (d) => '<div class="ai-reply">' + fmt(d.reply) + "</div>" + ((d.sources || []).length ? '<div class="ai-srcs"><b>' + esc(A.sources) + "</b>" + d.sources.map((s) => '<details class="ai-src" data-src="' + esc(s.ref) + '"><summary><span class="ai-ref">[' + esc(s.ref) + "]</span> " + (s.title ? '<span class="ai-src-t">' + esc(s.title) + "</span> · " : "") + esc((A.trustL || {})[s.trust] || s.label) + (s.equipment ? " · " + esc(s.equipment) : "") + "</summary>" + (s.text ? "<p>" + esc(s.text) + "</p>" : "") + (s.source ? '<p class="muted">' + esc(s.source) + "</p>" : "") + "</details>").join("") + "</div>" : "");
     const paintCrumb = () => {
+      box.dispatchEvent(new Event("seai:chat"));
       crumb.innerHTML = chat.machine_id ? '<a href="#" data-open-machine="' + chat.machine_id + '">' + esc(chat.label) + "</a>"
         : newFor ? esc(A.newChatFor) + " " + esc(newFor.label)
         : chat.id ? (inApp ? '<button type="button" class="ai-chip" data-file-manual>' + esc(A.fileChip) + "</button>" : '<span class="muted">' + esc(A.notFiled) + '</span> <button type="button" class="btn small ghost" data-file-manual>' + esc(A.fileBtn) + "</button>") : inApp ? "" : '<span class="muted">' + esc(A.chatHint) + "</span>";
@@ -924,6 +1085,12 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
       fresh.hidden = false; paintCrumb(); tab("chat"); box.dispatchEvent(new Event("seai:recent"));
     });
     box._openChat = openChat; box._chatId = () => chat.id;
+    const chatDone = (id) => { if (chat.id === id) startChat(null); box.dispatchEvent(new Event("seai:recent")); };
+    box._chatMenu = (id, archived) => sheet("", [
+      archived ? { label: A.unarchive, icon: "restore", fn: () => api("/api/ai/chats/" + id + "/archive", { archived: false }).then(() => box.dispatchEvent(new Event("seai:recent"))) }
+               : { label: A.archive, icon: "archive", fn: () => api("/api/ai/chats/" + id + "/archive", { archived: true }).then(() => chatDone(id)) },
+      { label: A.del, icon: "trash", danger: true, fn: () => { if (confirm(A.delChatQ)) api("/api/ai/chats/" + id + "/delete", {}).then(() => chatDone(id)); } },
+    ], A.cancel);
     const machineOptions = () => treeData.sites.map((s) => '<optgroup label="' + esc(s.name) + '">' + s.machines.map((m) => '<option value="' + m.id + '">' + esc(m.equipment + (m.serial ? " · " + m.serial : "")) + "</option>").join("") + "</optgroup>").join("");
     const fileCard = (sug) => {
       // the AI recognised the machine: one tap files the chat; "other" lets the engineer pick or type it
@@ -1052,13 +1219,14 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
       sitesBox.innerHTML = '<div class="btns"><button type="button" class="btn small" data-add-site>' + esc(A.addSite) + "</button></div>" +
         '<form class="card pfs ai-mini" data-site-form hidden><input name="name" required placeholder="' + esc(A.siteName) + '"><input name="city" placeholder="' + esc(A.city) + '"><button class="btn small">' + esc(A.save) + "</button></form>" +
         (treeData.sites.length ? "" : '<p class="muted">' + esc(A.noSites) + "</p>") +
-        treeData.sites.map((s) => '<div class="card ai-site"><div class="ai-row ai-sitehead"><div><b>' + esc(s.name) + "</b>" + (s.city ? ' <span class="muted">· ' + esc(s.city) + "</span>" : "") + '</div><button type="button" class="btn small ghost" data-add-machine="' + s.id + '">' + esc(A.addMachine) + "</button></div>" +
+        treeData.sites.map((s) => '<div class="card ai-site"><div class="ai-row ai-sitehead"><div><b>' + esc(s.name) + "</b>" + (s.city ? ' <span class="muted">· ' + esc(s.city) + "</span>" : "") + '</div><span class="ai-sitebtns"><button type="button" class="btn small ghost" data-add-machine="' + s.id + '">' + esc(A.addMachine) + '</button><button type="button" class="ai-more" data-site-more="' + s.id + '" aria-label="' + esc(A.more) + '">' + IC.more + "</button></span></div>" +
           '<form class="ai-mini" data-machine-form="' + s.id + '" hidden><input name="equipment" required placeholder="' + esc(A.equipment) + '"><input name="serial" placeholder="' + esc(A.serial) + '"><button class="btn small">' + esc(A.save) + "</button></form>" +
           s.machines.map((m) => '<a href="#" class="ai-mrow" data-open-machine="' + m.id + '"><span><b>' + esc(m.equipment) + "</b><br><span class=\"muted\">" + (m.serial ? "SN " + esc(m.serial) + " · " : "") + esc(A.chatsN) + ": " + m.chats + "</span></span>" + (m.open ? '<span class="ai-st">' + esc(A.openN) + ": " + m.open + "</span>" : "") + "</a>").join("") + "</div>").join("") +
         (treeData.unfiled.length ? '<h3 class="ai-pmh">' + esc(A.unfiled) + "</h3>" + treeData.unfiled.map((c) => '<a href="#" class="card ai-mrow" data-open-chat="' + c.id + '"><span>' + esc(c.title) + '<br><span class="muted">' + esc(c.updated) + "</span></span></a>").join("") : "");
     });
     sitesBox.addEventListener("click", (e) => {
-      const as = e.target.closest("[data-add-site]"), am = e.target.closest("[data-add-machine]");
+      const as = e.target.closest("[data-add-site]"), am = e.target.closest("[data-add-machine]"), sm = e.target.closest("[data-site-more]");
+      if (sm) { const id = +sm.dataset.siteMore; sheet("", [{ label: A.delSite, icon: "trash", danger: true, fn: () => { if (confirm(A.delSiteQ)) api("/api/ai/sites/" + id + "/delete", {}).then(loadTree); } }], A.cancel); return; }
       if (as) { const f = sitesBox.querySelector("[data-site-form]"); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("input").focus(); }
       if (am) { const f = sitesBox.querySelector('[data-machine-form="' + am.dataset.addMachine + '"]'); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("input").focus(); }
     });
@@ -1078,9 +1246,11 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
         '<div class="btns"><button type="button" class="btn" data-new-here>' + esc(A.newChatHere) + "</button></div>" +
         '<div class="card pfs"><b>' + esc(A.notesH) + '</b><textarea rows="3" maxlength="3000" placeholder="' + esc(A.notesPh) + '">' + esc(m.notes || "") + '</textarea><div class="btns"><button type="button" class="btn small ghost" data-save-notes>' + esc(A.save) + '</button><span class="muted" data-notes-msg></span></div></div>' +
         '<h3 class="ai-pmh">' + esc(A.chatsH) + "</h3>" + (m.chats.length ? m.chats.map((c) => '<a href="#" class="card ai-mrow" data-open-chat="' + c.id + '"><span><b>' + esc(c.title) + '</b><br><span class="muted">' + esc(c.updated) + " · " + esc(c.summary.slice(0, 140)) + "</span></span></a>").join("") : '<p class="muted">' + esc(A.noChats) + "</p>") +
-        (m.jobs.length ? '<h3 class="ai-pmh">' + esc(A.casesH) + "</h3>" + m.jobs.map(caseCard).join("") : "") + (m.pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + m.pm.map(pmCard).join("") : "");
+        (m.jobs.length ? '<h3 class="ai-pmh">' + esc(A.casesH) + "</h3>" + m.jobs.map(caseCard).join("") : "") + (m.pm.length ? '<h3 class="ai-pmh">' + esc(A.pmH) + "</h3>" + m.pm.map(pmCard).join("") : "") +
+        '<button type="button" class="ai-del" data-del-machine>' + IC.trash + "<span>" + esc(A.delMachine) + "</span></button>";
       mBox.querySelector("[data-back]").addEventListener("click", (e) => { e.preventDefault(); tab("sites"); });
       mBox.querySelector("[data-new-here]").addEventListener("click", () => startChat({ id: m.id, label: m.label }));
+      mBox.querySelector("[data-del-machine]").addEventListener("click", () => { if (confirm(A.delMachineQ)) api("/api/ai/machines/" + m.id + "/delete", {}).then(() => tab("sites")); });
       mBox.querySelector("[data-save-notes]").addEventListener("click", () => api("/api/ai/machines/" + m.id, { notes: mBox.querySelector("textarea").value }).then((x) => { mBox.querySelector("[data-notes-msg]").textContent = x.ok ? A.saved : A.err; }));
     });
     paintCrumb();
