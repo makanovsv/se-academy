@@ -499,6 +499,11 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
 }
 /* personal key for Claude / ChatGPT / API */
 [data-ai-api] .card{margin-top:12px}[data-ai-api] h3{margin:0 0 6px}.api-code{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.api-code code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px;background:var(--wash);border:1px solid var(--rule);border-radius:8px;padding:8px 10px}.api-once{color:var(--warn);font-weight:600}
+
+/* 06.11 evening: live agent steps, stop button, recent chats in the menu */
+.ai-live{list-style:none;margin:6px 0 0;padding:0;font-size:.9em;color:var(--muted)}.ai-live li{padding:2px 0 2px 16px;position:relative}.ai-live li::before{content:"";position:absolute;left:2px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--rule-strong)}.ai-live li:last-child::before{background:var(--blue)}
+.app-recent{display:flex;flex-direction:column;margin-top:6px}.app-recent-h{margin:10px 20px 4px;font-size:.8em;color:var(--muted)}
+.in-app .app-drawer .app-recent button{display:flex;flex-direction:column;align-items:flex-start;width:100%;box-sizing:border-box;text-align:left;font:inherit;font-size:14px;color:var(--ink);background:none;border:0;border-radius:8px;padding:7px 20px;cursor:pointer}.in-app .app-drawer .app-recent button:hover,.in-app .app-drawer .app-recent button[aria-current]{background:var(--rule)}.app-recent button span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.app-recent button small{font-size:.78em;color:var(--muted)}
 </style></head><body>
 <div class="preview">Ранний доступ · курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/" aria-current>Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/trainings/">Тренинги</a><a href="/ru/library/">Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/ru/ai/">AI</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/program/pacs/" hreflang="en">EN</a></div></div></header>
@@ -566,8 +571,8 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
 }};</script><script>// Student layer: sign-in, paid lessons, server progress, online exam. Talks to api.serviceengineer.academy.
 (function () {
   const S = window.SEA, t = S.t;
-  const api = (path, body) =>
-    fetch(S.api + path, body ? { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : { credentials: "include" }).then(async (r) => ({ ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }));
+  const api = (path, body, signal) =>
+    fetch(S.api + path, body ? { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal } : { credentials: "include" }).then(async (r) => ({ ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }));
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const list = (a) => (a && a.length ? "<ul>" + a.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "");
   const lsGet = (s) => { try { return JSON.parse(localStorage.getItem("sea:" + s) || "[]"); } catch (e) { return []; } };
@@ -649,6 +654,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
   const IC = {
     menu: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     edit: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h8"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+    stop: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>',
     back: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   };
   const inApp = document.documentElement.classList.contains("in-app");
@@ -670,7 +676,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     drawer.className = "app-drawer";
     drawer.innerHTML = '<div class="app-brand">SE AI</div>' +
       (me && me.email
-        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + '</button><button type="button" data-go="api">' + esc(A.tabApi) + "</button><hr>" +
+        ? '<button type="button" data-go="new">' + esc(A.newChat) + '</button><button type="button" data-go="chat">' + esc(A.tabChat) + '</button><button type="button" data-go="sites">' + esc(A.tabSites) + '</button><button type="button" data-go="cases">' + esc(A.tabCases) + '</button><button type="button" data-go="team">' + esc(A.tabTeam) + '</button><button type="button" data-go="api">' + esc(A.tabApi) + '</button><div class="app-recent" data-recent hidden><p class="app-recent-h">' + esc(A.recent) + '</p><div data-recent-list></div></div><hr>' +
           '<a href="' + (S.lang === "ru" ? "/ru" : "") + '/my/profile/">' + esc(A.profile) + "</a>"
         : '<a href="' + A.loginUrl + '">' + esc(A.signIn) + "</a>") +
       (lang ? '<a href="' + lang.getAttribute("href") + '" hreflang="' + lang.getAttribute("hreflang") + '">' + esc(lang.textContent === "EN" ? "English" : "Русский") + "</a>" : "") +
@@ -690,7 +696,19 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
       drawer.querySelectorAll("[data-go]").forEach((b) => b.toggleAttribute("aria-current", b.dataset.go === name));
       scrollTo(0, 0);
     };
-    bar.querySelector("[data-app-menu]").addEventListener("click", () => open(true));
+    // recent chats: the last conversations one tap away, like ChatGPT and Claude
+    const rec = drawer.querySelector("[data-recent]");
+    const loadRecent = () => rec && api("/api/ai/recent").then((r) => {
+      const a = (r.ok && r.data.chats) || [];
+      rec.hidden = !a.length;
+      rec.querySelector("[data-recent-list]").innerHTML = a.slice(0, 12).map((c) => '<button type="button" data-chat="' + c.id + '"' + (box._chatId && box._chatId() === c.id ? " aria-current" : "") + "><span>" + esc(c.title || A.tabChat) + "</span>" + (c.label ? "<small>" + esc(c.label) + "</small>" : "") + "</button>").join("");
+    }).catch(() => {});
+    if (rec) {
+      rec.addEventListener("click", (e) => { const b = e.target.closest("[data-chat]"); if (!b) return; e.stopPropagation(); open(false); box._openChat && box._openChat(+b.dataset.chat); title.textContent = "SE AI"; scrollTo(0, 0); });
+      box.addEventListener("seai:recent", loadRecent);
+      loadRecent();
+    }
+    bar.querySelector("[data-app-menu]").addEventListener("click", () => { open(true); loadRecent(); });
     veil.addEventListener("click", () => open(false));
     drawer.addEventListener("click", (e) => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go); });
     const nw = bar.querySelector("[data-app-new]");
@@ -820,8 +838,9 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
       if (!r.ok) return;
       chat = { id: r.data.id, machine_id: r.data.machine_id, label: r.data.label }; newFor = null; out.innerHTML = "";
       (r.data.messages || []).forEach((m) => bubble(m.role === "user" ? "me" : "ai", m.role === "user" ? "<b>" + esc(m.content) + "</b>" : replyHTML({ reply: m.content })));
-      fresh.hidden = false; paintCrumb(); tab("chat");
+      fresh.hidden = false; paintCrumb(); tab("chat"); box.dispatchEvent(new Event("seai:recent"));
     });
+    box._openChat = openChat; box._chatId = () => chat.id;
     const machineOptions = () => treeData.sites.map((s) => '<optgroup label="' + esc(s.name) + '">' + s.machines.map((m) => '<option value="' + m.id + '">' + esc(m.equipment + (m.serial ? " · " + m.serial : "")) + "</option>").join("") + "</optgroup>").join("");
     const fileCard = (sug) => {
       // the AI recognised the machine: one tap files the chat; "other" lets the engineer pick or type it
@@ -881,11 +900,34 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
       return card;
     };
     const wait = (card) => { card.classList.add("queued"); card.previousElementSibling.classList.add("queued"); card.innerHTML = "<p class='muted'>" + esc(A.queued) + "</p>"; };
+    // what the agent is doing right now: its searches and drafts, read every second while it works
+    const stepText = (s) => s.tool === "search_knowledge" ? A.stSearch + " «" + s.query + "» · " + A.stFound + " " + s.found
+      : s.tool === "find_parts" ? A.stParts + " «" + s.query + "» · " + A.stFound + " " + s.found
+      : s.tool === "create_work_order" ? A.stOrder + (s.work_order_id ? " №" + s.work_order_id : "")
+      : s.tool === "draft_service_report" ? A.stReport : s.tool === "draft_parts_order" ? A.stPartsOrder
+      : s.tool === "schedule_maintenance" ? A.stPm : "";
+    const sendIcon = sendBtn.innerHTML, sendLabel = sendBtn.getAttribute("aria-label");
+    let busy = null;
+    const busyOn = (ctl) => { busy = ctl; sendBtn.classList.add("ai-stop"); sendBtn.innerHTML = "<span>" + esc(A.stop) + "</span>" + IC.stop; sendBtn.setAttribute("aria-label", A.stop); sendBtn.type = "button"; };
+    const busyOff = () => { busy = null; sendBtn.classList.remove("ai-stop"); sendBtn.innerHTML = sendIcon; sendBtn.setAttribute("aria-label", sendLabel); sendBtn.type = "submit"; };
+    sendBtn.addEventListener("click", (e) => { if (busy) { e.preventDefault(); busy.abort(); } });
     const send = (body) => {
       const card = ask(body);
-      sendBtn.disabled = true;
-      return api("/api/ai/agent", body).then((r) => {
-        sendBtn.disabled = false;
+      const rid = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+      const ctl = new AbortController();
+      busyOn(ctl);
+      let seen = 0;
+      const poll = setInterval(() => api("/api/ai/progress/" + rid).then((r) => {
+        const st = (r.ok && r.data.steps) || [], w = card.querySelector(".ai-wait");
+        if (!w || st.length === seen) return;
+        seen = st.length;
+        let ul = card.querySelector(".ai-live");
+        if (!ul) { ul = document.createElement("ul"); ul.className = "ai-live"; w.after(ul); }
+        ul.innerHTML = st.map(stepText).filter(Boolean).map((x) => "<li>" + esc(x) + "</li>").join("");
+      }).catch(() => {}), 1200);
+      const stopPoll = () => clearInterval(poll);
+      return api("/api/ai/agent", Object.assign({}, body, { rid }), ctl.signal).then((r) => {
+        stopPoll(); busyOff(); box.dispatchEvent(new Event("seai:recent"));
         if (r.ok && r.data.reply) {
           card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button></div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
@@ -893,7 +935,11 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
         } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
         else card.innerHTML = "<p>" + esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err) + "</p>";
         show(r.data.ai);
-      }).catch(() => { sendBtn.disabled = false; qSet([...qGet(), body]); wait(card); });
+      }).catch((e) => {
+        stopPoll(); busyOff();
+        if (e && e.name === "AbortError") { card.innerHTML = "<p class='muted'>" + esc(A.stopped) + "</p>"; setTimeout(() => box.dispatchEvent(new Event("seai:recent")), 15000); return; }
+        qSet([...qGet(), body]); wait(card);
+      });
     };
     let flushing = false;
     const flush = () => {
@@ -907,6 +953,7 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
     if (navigator.onLine === false) qGet().forEach((b) => wait(ask(b))); else flush();
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      if (busy) return;
       const q = ta.value.trim() || (img ? A.photoQ : ""); if (!q) return;
       const body = { text: q };
       if (chat.id) body.chat_id = chat.id; else if (newFor) body.machine_id = newFor.id;
