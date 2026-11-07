@@ -754,13 +754,47 @@ button.ai-ref{font:inherit;color:var(--blue);font-weight:600;background:none;bor
       if (!st) return;
       if (st.mode === "admin") { left.textContent = ""; return; }
       left.textContent = (st.mode === "trial" ? A.trialLeft : A.courseLeft) + st.left;
-      if (st.left <= 0) { form.hidden = true; note.hidden = false; note.textContent = st.mode === "trial" ? A.trial_over : A.limit; }
+      cur = st;
+      if (st.left <= 0) {
+        form.hidden = true; note.hidden = false;
+        if (st.mode === "trial" && store) note.innerHTML = esc(A.storeOver) + ' <button type="button" class="btn small" data-buy>' + esc(buyLabel()) + "</button>";
+        else note.textContent = st.mode === "trial" ? (inApp ? A.appOver : A.trial_over) : A.limit;
+      }
     };
+    // 07.11: inside the Android and iPhone apps the SE AI subscription is bought from the store (Google Play, App Store).
+    // The page hands the store's signed purchase to the server, which opens AI on this account on the site and in the apps.
+    // Outside the store build the app shows no price and no way to pay: the stores do not allow pointing elsewhere.
+    const store = window.SEAI && SEAI.store ? String(SEAI.store() || "") : "";
+    let cur = null, storePrice = "", acct = "";
+    const buyLabel = () => A.subBuy + (storePrice ? " · " + storePrice + A.perMonth : "");
     if (inApp) appShell(box, A, me);
     if ((!me || !me.email) && new URLSearchParams(location.search).get("join")) { try { localStorage.setItem("sea:join", new URLSearchParams(location.search).get("join")); } catch (e) {} }
     if (!me || !me.email) { note.hidden = false; note.innerHTML = esc(A.login) + ' <a class="btn small" href="' + A.loginUrl + '">' + esc(A.loginBtn) + "</a>"; return; }
     box.querySelector("[data-ai-tabs]").hidden = false;
     form.hidden = false; show(me.ai);
+    if (store) {
+      const sha = (x) => crypto.subtle.digest("SHA-256", new TextEncoder().encode(x)).then((b) => [...new Uint8Array(b)].map((v) => v.toString(16).padStart(2, "0")).join(""));
+      const ready = sha("seai:" + me.email).then((h) => { acct = store === "apple" ? h.slice(0, 8) + "-" + h.slice(8, 12) + "-4" + h.slice(13, 16) + "-a" + h.slice(17, 20) + "-" + h.slice(20, 32) : h; });
+      const buy = () => ready.then(() => SEAI.buy(acct));
+      window.seaiStore = (info) => { storePrice = (info && info.price) || ""; const b = note.querySelector("[data-buy]"); if (b) b.textContent = buyLabel(); };
+      window.seaiPurchase = (pur) => api("/api/ai/store/" + store, pur).then((r) => {
+        if (r.ok) {
+          if (pur.token && SEAI.ack) SEAI.ack(pur.token);
+          if (r.data.ai && r.data.ai.left > 0) { form.hidden = false; note.hidden = true; }
+          show(r.data.ai);
+          if (pur.fresh) alert(A.subOn);
+        } else if (pur.fresh) alert(A.subErr);
+      }).catch(() => { if (pur.fresh) alert(A.subErr); });
+      note.addEventListener("click", (e) => { if (e.target.closest("[data-buy]")) buy(); });
+      const hr = document.querySelector(".app-drawer hr");
+      if (hr) {
+        const b = document.createElement("button");
+        b.type = "button"; b.textContent = A.subMenu;
+        b.addEventListener("click", () => { document.documentElement.classList.remove("app-open"); if (cur && cur.mode === "sub") SEAI.manage(); else buy(); });
+        hr.before(b);
+      }
+      try { SEAI.restore(); } catch (e) {}
+    }
     const ta = form.querySelector("textarea"), att = box.querySelector("[data-ai-att]"), file = box.querySelector("[data-ai-file]"), empty = box.querySelector("[data-ai-empty]");
     let img = null;
     const setImg = (d) => { img = d; att.hidden = !d; if (d) att.querySelector("img").src = d; };
