@@ -544,9 +544,9 @@ html.in-app:has(.ai-empty:not([hidden])) [data-ai-pane="chat"]{padding-bottom:12
 .in-app .ai-empty-logo{display:block;width:52px;height:52px;border-radius:14px;margin:auto auto 16px}
 .in-app .ai-empty h3{font-size:26px;line-height:1.15;letter-spacing:-.02em;text-align:center;margin:0 0 8px}
 .in-app .ai-empty>p.muted{text-align:center;font-size:15px;line-height:1.45;max-width:320px;margin:0 auto}
-.in-app .ai-ex{margin-top:auto;padding-top:28px;gap:8px}
-.in-app .ai-ex button{font:15px/1.35 var(--sans);text-align:left;color:var(--text);background:var(--wash);border:0;border-radius:16px;padding:13px 16px;cursor:pointer}
-.in-app .ai-ex button:active{background:var(--wash2)}
+/* 08.11.2026 SM: new chat in the app is just the greeting, no examples */
+.in-app .ai-ex{display:none}
+.in-app .ai-empty>p.muted{margin-bottom:auto}
 /* the question box */
 .in-app [data-ai-form]{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;border:0;border-radius:0;box-shadow:none;background:linear-gradient(to top,var(--paper) 78%,rgba(0,0,0,0));padding:14px 12px calc(8px + env(safe-area-inset-bottom))}
 .in-app .ai-compose{display:flex;align-items:flex-end;gap:2px;background:var(--wash);border:1px solid var(--rule);border-radius:26px;padding:4px}
