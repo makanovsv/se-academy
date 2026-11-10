@@ -394,7 +394,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 
 .ai-mic[hidden]{display:none}.ai-msg.me.queued{opacity:.7}
 /* team: shared cases of a company's engineers */
-.tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}
+.tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}.tm-switch{font:inherit;font-weight:700;font-size:1.1rem;padding:6px 10px;border:1px solid var(--line,#c9d4db);border-radius:9px;background:transparent;color:inherit;max-width:60%}
 .tm-filters{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
 .ai-chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 a.tm-case{display:block;color:inherit;text-decoration:none;margin-bottom:10px}
@@ -1275,26 +1275,28 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
     paintCrumb();
     // ---- team (06.11.2026): the company's engineers share cases, call each other with @, the AI answers inside the case
     const TM = A.team, teamBox = box.querySelector("[data-ai-team]");
-    let team = null, teamFilter = "all", pendingShare = false, teamNote = "", calls = new Map();
+    let team = null, teamFilter = "all", pendingShare = false, teamNote = "", calls = new Map(), creating = false;
+    const tid = () => (team ? team.team.id : undefined);   // 09.11.2026: a person can be in several teams
     const loc = S.lang === "ru" ? "ru-RU" : "en-GB";
     const when = (ts) => { const d = new Date(ts * 1000); return d.toLocaleDateString(loc, { day: "numeric", month: "short" }) + " " + d.toLocaleTimeString(loc, { hour: "2-digit", minute: "2-digit" }); };
     const stPill = (s) => '<span class="ai-st tm-' + s + (s === "solved" ? " ok" : "") + '">' + esc(TM["st_" + s]) + "</span>";
     const paintTeam = () => {
       const top = teamNote ? '<p class="note">' + esc(teamNote) + "</p>" : "";
       teamNote = "";
-      if (!team) {
-        teamBox.innerHTML = top + '<div class="card pfs"><h3>' + esc(TM.createH) + '</h3><p class="muted">' + esc(TM.createP) + '</p><form class="ai-mini" data-tm-create><input name="name" maxlength="80" required placeholder="' + esc(TM.namePh) + '"><button class="btn small">' + esc(TM.createBtn) + '</button></form><p class="muted">' + esc(TM.joinNote) + "</p></div>";
+      if (!team || creating) {
+        teamBox.innerHTML = top + (team ? '<button type="button" class="btn small ghost" data-tm-cancel>← ' + esc(team.team.name) + "</button>" : "") + '<div class="card pfs"><h3>' + esc(team ? TM.anotherH : TM.createH) + '</h3><p class="muted">' + esc(TM.createP) + '</p><form class="ai-mini" data-tm-create><input name="name" maxlength="80" required placeholder="' + esc(TM.namePh) + '"><button class="btn small">' + esc(TM.createBtn) + '</button></form><p class="muted">' + esc(TM.joinNote) + "</p></div>";
         return;
       }
-      const admin = team.role === "admin";
+      const admin = team.role === "admin", many = (team.teams || []).length > 1;
       const list = team.cases.filter((k) => teamFilter === "all" || (teamFilter === "open" ? k.status !== "solved" : k.status === teamFilter));
-      teamBox.innerHTML = top + '<div class="ai-row tm-head"><h3>' + esc(team.team.name) + '</h3><button type="button" class="btn small" data-tm-new>' + esc(TM.newCase) + "</button></div>" +
+      const title = many ? '<select class="tm-switch" data-tm-switch aria-label="' + esc(TM.switchTeam) + '">' + team.teams.map((t) => '<option value="' + t.id + '"' + (t.id === team.team.id ? " selected" : "") + ">" + esc(t.name) + "</option>").join("") + '<option value="new">' + esc(TM.anotherBtn) + "</option></select>" : "<h3>" + esc(team.team.name) + "</h3>";
+      teamBox.innerHTML = top + '<div class="ai-row tm-head">' + title + '<button type="button" class="btn small" data-tm-new>' + esc(TM.newCase) + "</button></div>" +
         '<div class="tm-filters">' + ["all", "open", "help", "solved"].map((f) => '<button type="button" class="ai-chip' + (f === teamFilter ? " on" : "") + '" data-tm-filter="' + f + '">' + esc(TM["f_" + f]) + "</button>").join("") + "</div>" +
         (list.length ? list.map((k) => '<a href="#team-' + k.id + '" class="card pfs ai-case tm-case' + (k.unread ? " unread" : "") + '" data-tm-open="' + k.id + '"><div class="ai-row"><b>' + esc(k.title) + "</b>" + stPill(k.status) + '</div><p class="muted">' + esc(k.author_name) + " · " + when(k.updated) + (k.n ? " · " + esc(TM.msgs) + ": " + k.n : "") + (k.unread ? ' · <b class="tm-new">' + esc(TM.unread) + "</b>" : "") + "</p></a>").join("") : '<p class="muted">' + esc(team.cases.length ? TM.noneHere : TM.noCases) + "</p>") +
         '<details class="card pfs tm-people"' + (team.members.length < 2 && admin ? " open" : "") + '><summary><b>' + esc(TM.members) + "</b> · " + team.members.length + "</summary>" +
         team.members.map((m) => '<div class="ai-row"><span>' + esc(m.name) + ' <span class="muted">' + esc(m.email) + (m.role === "admin" ? " · " + esc(TM.admin) : "") + "</span></span>" + (admin && m.email !== team.me ? '<button type="button" class="btn small ghost" data-tm-remove="' + esc(m.email) + '">' + esc(TM.remove) + "</button>" : "") + "</div>").join("") +
         (admin ? '<form class="ai-mini" data-tm-invite><b>' + esc(TM.invite) + '</b><input name="emails" required placeholder="' + esc(TM.invitePh) + '"><button class="btn small">' + esc(TM.inviteBtn) + '</button><p class="muted" data-tm-invited hidden></p></form><div class="ai-mini"><b>' + esc(TM.link) + '</b><p class="muted">' + esc(TM.linkNote) + '</p><button type="button" class="btn small ghost" data-tm-link>' + esc(TM.linkBtn) + '</button><input data-tm-linkout readonly hidden></div>' : "") +
-        '<div class="btns"><button type="button" class="btn small ghost" data-tm-leave>' + esc(TM.leave) + "</button></div></details>";
+        '<div class="btns"><button type="button" class="btn small ghost" data-tm-leave>' + esc(TM.leave) + "</button>" + (many ? "" : '<button type="button" class="btn small ghost" data-tm-another>' + esc(TM.anotherBtn) + "</button>") + "</div></details>";
     };
     const openCase = (id) => api("/api/team/case/" + id).then((r) => {
       if (!r.ok) { if (location.hash === "#team-" + id) history.replaceState(null, "", location.pathname + location.search); return loadTeam(); }
@@ -1318,7 +1320,7 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
     const shareBtn = document.createElement("button");
     shareBtn.type = "button"; shareBtn.className = "ai-chip tm-share"; shareBtn.hidden = true; shareBtn.textContent = TM.share;
     crumb.after(shareBtn);
-    const share = () => api("/api/team/share", { chat_id: chat.id, lang: S.lang }).then((r) => { if (r.ok) { tab("team"); openCase(r.data.id); } });
+    const share = () => api("/api/team/share", { chat_id: chat.id, team: tid(), lang: S.lang }).then((r) => { if (r.ok) { tab("team"); openCase(r.data.id); } });
     const updateShare = () => {
       shareBtn.hidden = !(team && chat.id);
       if (pendingShare && team && chat.id) { pendingShare = false; share(); }
@@ -1349,9 +1351,9 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
       if (o && confirm(AP.sure)) api("/api/ai/key", { action: "off" }).then(() => loadApi());
       if (c && navigator.clipboard) navigator.clipboard.writeText(c.dataset.apiCopy).then(() => { c.textContent = AP.copied; }, () => {});
     });
-    const loadTeam = () => api("/api/team").then((r) => {
+    const loadTeam = (pick) => api("/api/team" + (pick ? "?team=" + pick : "")).then((r) => {
       if (!r.ok) return;
-      team = r.data.team ? r.data : null; updateShare();
+      team = r.data.team ? r.data : null; creating = false; updateShare();
       const h = location.hash.match(/^#team-(\d+)$/);
       if (h && team) openCase(+h[1]); else paintTeam();
     });
@@ -1361,9 +1363,11 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
       if (g("[data-tm-open]")) { e.preventDefault(); openCase(+g("[data-tm-open]").dataset.tmOpen); }
       if (g("[data-tm-back]")) { history.replaceState(null, "", location.pathname + location.search); loadTeam(); }
       if (g("[data-tm-new]")) { pendingShare = true; startChat(null); }
-      if (g("[data-tm-remove]") && confirm(TM.removeQ)) api("/api/team/remove", { email: g("[data-tm-remove]").dataset.tmRemove }).then(loadTeam);
-      if (g("[data-tm-leave]") && confirm(TM.leaveQ)) api("/api/team/leave", {}).then((r) => { if (!r.ok && r.data.error === "last_admin") alert(TM.lastAdmin); loadTeam(); });
-      if (g("[data-tm-link]")) api("/api/team/link", { lang: S.lang }).then((r) => {
+      if (g("[data-tm-remove]") && confirm(TM.removeQ)) api("/api/team/remove", { email: g("[data-tm-remove]").dataset.tmRemove, team: tid() }).then(() => loadTeam());
+      if (g("[data-tm-leave]") && confirm(TM.leaveQ)) api("/api/team/leave", { team: tid() }).then((r) => { if (!r.ok && r.data.error === "last_admin") alert(TM.lastAdmin); loadTeam(); });
+      if (g("[data-tm-another]")) { creating = true; paintTeam(); }
+      if (g("[data-tm-cancel]")) { creating = false; paintTeam(); }
+      if (g("[data-tm-link]")) api("/api/team/link", { team: tid(), lang: S.lang }).then((r) => {
         if (!r.ok) return;
         const o = teamBox.querySelector("[data-tm-linkout]"); o.hidden = false; o.value = r.data.url; o.select();
         if (navigator.clipboard) navigator.clipboard.writeText(r.data.url).then(() => { g("[data-tm-link]").textContent = TM.linkCopied; }, () => {});
@@ -1372,6 +1376,8 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
       if (g("[data-tm-solve]")) { const f = teamBox.querySelector("[data-tm-solved]"); f.hidden = !f.hidden; if (!f.hidden) f.querySelector("textarea").focus(); }
     });
     teamBox.addEventListener("change", (e) => {
+      const sw = e.target.closest("[data-tm-switch]");
+      if (sw) { if (sw.value === "new") { creating = true; paintTeam(); } else { teamFilter = "all"; loadTeam(sw.value); } return; }
       const s = e.target.closest("[data-tm-call]"); if (!s || !s.value) return;
       const name = s.options[s.selectedIndex].text, t2 = s.form.querySelector("textarea");
       calls.set(s.value, name); t2.value = (t2.value ? t2.value.replace(/\s*$/, " ") : "") + "@" + name + " "; s.value = ""; t2.focus();
@@ -1379,10 +1385,10 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
     teamBox.addEventListener("submit", (e) => {
       e.preventDefault();
       const f = e.target, v = (k) => (f.querySelector('[name="' + k + '"]') || {}).value?.trim() || "";
-      if (f.matches("[data-tm-create]")) return api("/api/team/create", { name: v("name"), lang: S.lang }).then((r) => { if (r.ok) { team = r.data; updateShare(); paintTeam(); } });
+      if (f.matches("[data-tm-create]")) return api("/api/team/create", { name: v("name"), lang: S.lang }).then((r) => { if (r.ok) { team = r.data; creating = false; updateShare(); paintTeam(); } else if (r.data.error === "too_many_teams") { teamNote = TM.tooMany; creating = false; paintTeam(); } });
       if (f.matches("[data-tm-invite]")) {
         const emails = v("emails").split(/[\s,;]+/).filter(Boolean);
-        return api("/api/team/invite", { emails, lang: S.lang }).then((r) => { const p = f.querySelector("[data-tm-invited]"); p.hidden = false; p.textContent = r.ok ? TM.invited + " " + r.data.sent : TM.badEmails; if (r.ok) f.querySelector("input").value = ""; });
+        return api("/api/team/invite", { emails, team: tid(), lang: S.lang }).then((r) => { const p = f.querySelector("[data-tm-invited]"); p.hidden = false; p.textContent = r.ok ? TM.invited + " " + r.data.sent : TM.badEmails; if (r.ok) f.querySelector("input").value = ""; });
       }
       if (f.matches("[data-tm-solved]")) {
         if (v("solution").length < 5) return;
