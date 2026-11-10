@@ -394,7 +394,7 @@ h1{font-size:clamp(32px,4.4vw,54px)}
 
 .ai-mic[hidden]{display:none}.ai-msg.me.queued{opacity:.7}
 /* team: shared cases of a company's engineers */
-.tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}.tm-switch{font:inherit;font-weight:700;font-size:1.1rem;padding:6px 10px;border:1px solid var(--line,#c9d4db);border-radius:9px;background:transparent;color:inherit;max-width:60%}
+.tm-head{align-items:center;gap:10px;margin:6px 0}.tm-head h3{margin:0}.tm-head .btns{margin:0;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.tm-switch{font:inherit;font-weight:700;font-size:1.1rem;padding:6px 10px;border:1px solid var(--line,#c9d4db);border-radius:9px;background:transparent;color:inherit;max-width:60%}
 .tm-filters{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
 .ai-chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 a.tm-case{display:block;color:inherit;text-decoration:none;margin-bottom:10px}
@@ -1313,13 +1313,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const admin = team.role === "admin", many = (team.teams || []).length > 1;
       const list = team.cases.filter((k) => teamFilter === "all" || (teamFilter === "open" ? k.status !== "solved" : k.status === teamFilter));
       const title = many ? '<select class="tm-switch" data-tm-switch aria-label="' + esc(TM.switchTeam) + '">' + team.teams.map((t) => '<option value="' + t.id + '"' + (t.id === team.team.id ? " selected" : "") + ">" + esc(t.name) + "</option>").join("") + '<option value="new">' + esc(TM.anotherBtn) + "</option></select>" : "<h3>" + esc(team.team.name) + "</h3>";
-      teamBox.innerHTML = top + '<div class="ai-row tm-head">' + title + '<button type="button" class="btn small" data-tm-new>' + esc(TM.newCase) + "</button></div>" +
+      teamBox.innerHTML = top + '<div class="ai-row tm-head">' + title + '<span class="btns">' + (many ? "" : '<button type="button" class="btn small ghost" data-tm-another>' + esc(TM.anotherBtn) + "</button>") + '<button type="button" class="btn small" data-tm-new>' + esc(TM.newCase) + "</button></span></div>" +
         '<div class="tm-filters">' + ["all", "open", "help", "solved"].map((f) => '<button type="button" class="ai-chip' + (f === teamFilter ? " on" : "") + '" data-tm-filter="' + f + '">' + esc(TM["f_" + f]) + "</button>").join("") + "</div>" +
         (list.length ? list.map((k) => '<a href="#team-' + k.id + '" class="card pfs ai-case tm-case' + (k.unread ? " unread" : "") + '" data-tm-open="' + k.id + '"><div class="ai-row"><b>' + esc(k.title) + "</b>" + stPill(k.status) + '</div><p class="muted">' + esc(k.author_name) + " · " + when(k.updated) + (k.n ? " · " + esc(TM.msgs) + ": " + k.n : "") + (k.unread ? ' · <b class="tm-new">' + esc(TM.unread) + "</b>" : "") + "</p></a>").join("") : '<p class="muted">' + esc(team.cases.length ? TM.noneHere : TM.noCases) + "</p>") +
         '<details class="card pfs tm-people"' + (team.members.length < 2 && admin ? " open" : "") + '><summary><b>' + esc(TM.members) + "</b> · " + team.members.length + "</summary>" +
         team.members.map((m) => '<div class="ai-row"><span>' + esc(m.name) + ' <span class="muted">' + esc(m.email) + (m.role === "admin" ? " · " + esc(TM.admin) : "") + "</span></span>" + (admin && m.email !== team.me ? '<button type="button" class="btn small ghost" data-tm-remove="' + esc(m.email) + '">' + esc(TM.remove) + "</button>" : "") + "</div>").join("") +
         (admin ? '<form class="ai-mini" data-tm-invite><b>' + esc(TM.invite) + '</b><input name="emails" required placeholder="' + esc(TM.invitePh) + '"><button class="btn small">' + esc(TM.inviteBtn) + '</button><p class="muted" data-tm-invited hidden></p></form><div class="ai-mini"><b>' + esc(TM.link) + '</b><p class="muted">' + esc(TM.linkNote) + '</p><button type="button" class="btn small ghost" data-tm-link>' + esc(TM.linkBtn) + '</button><input data-tm-linkout readonly hidden></div>' : "") +
-        '<div class="btns"><button type="button" class="btn small ghost" data-tm-leave>' + esc(TM.leave) + "</button>" + (many ? "" : '<button type="button" class="btn small ghost" data-tm-another>' + esc(TM.anotherBtn) + "</button>") + "</div></details>";
+        '<div class="btns"><button type="button" class="btn small ghost" data-tm-leave>' + esc(TM.leave) + "</button></div></details>";
     };
     const openCase = (id) => api("/api/team/case/" + id).then((r) => {
       if (!r.ok) { if (location.hash === "#team-" + id) history.replaceState(null, "", location.pathname + location.search); return loadTeam(); }
