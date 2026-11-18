@@ -1592,6 +1592,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
     // the sidebar is built for guests: drop the "locked" marks on lessons the student owns
     document.querySelectorAll(".lock").forEach((s) => { const m = (s.closest("a")?.getAttribute("href") || "").match(/course\/([^/]+)\//); if (m && owns(m[1])) s.remove(); });
+    // course page: a buyer sees "you have access" instead of the price box (first buyer was confused, 18.11.2026)
+    document.querySelectorAll("aside.enrol [data-pay][data-course]").forEach((b) => {
+      const c = b.dataset.course, box = b.closest("aside.enrol");
+      if (!owns(c) || !box) return;
+      const ru = S.lang === "ru", first = document.querySelector('a[href*="/course/' + c + '/"]:not([href$="/course/' + c + '/"])');
+      box.innerHTML = '<div class="label">' + (ru ? "Курс ваш" : "You have access") + '</div><p style="margin:10px 0 16px">' + (ru ? "Все уроки, экзамен и сертификат открыты." : "All lessons, the exam and the certificate are open to you.") + "</p>" + (first ? '<a class="btn" href="' + first.getAttribute("href") + '">' + (ru ? "Начать с урока 1" : "Start lesson 1") + "</a>" : "") + '<a class="btn ghost" href="' + S.my + '">' + (ru ? "Моё обучение" : "My learning") + "</a>";
+    });
 
     // lesson video (served by the API: free lessons to everyone, paid lessons to owners)
     document.querySelectorAll("[data-video]").forEach((box) => {
