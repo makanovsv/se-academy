@@ -1500,7 +1500,9 @@ html.in-app:has(.app-welcome) [data-ai-pane="chat"]{padding-bottom:0}
   const token = new URLSearchParams(location.search).get("t");
   if (form && token) {
     form.hidden = true; msg.textContent = t.checking;
-    api("/api/auth", { token }).then((r) => { if (r.ok) location.replace(S.my); else { form.hidden = false; msg.textContent = t.badToken; } });
+    // a used link is not an error if this browser is already signed in (mail filters open links first, 18.11.2026)
+    const bad = () => { form.hidden = false; msg.textContent = t.badToken; };
+    api("/api/auth", { token }).then((r) => { if (r.ok) return location.replace(S.my); api("/api/me").then(({ data }) => { if (data && data.email) location.replace(S.my); else bad(); }).catch(bad); });
   } else if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
