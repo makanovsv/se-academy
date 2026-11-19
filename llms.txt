@@ -100,6 +100,8 @@ Team access: every course can be bought for a team; companies can request an off
 ## SE AI — troubleshooting assistant
 
 - [SE AI](https://serviceengineer.academy/ai/): describe a fault on medical equipment and get a step-by-step check plan grounded in real repair cases and service documentation; it does not invent part numbers. 3 free questions after sign-up; included for 3 months with any course; or $12 a month.
+- [SE AI vs ChatGPT](https://serviceengineer.academy/ai/vs-chatgpt/): how a troubleshooting assistant grounded in service manuals and field cases differs from general-purpose AI, and when to use which.
+- [Connect SE AI to Claude or ChatGPT (MCP)](https://serviceengineer.academy/ai/connect/): MCP server https://api.serviceengineer.academy/mcp
 
 ## Free reference
 
