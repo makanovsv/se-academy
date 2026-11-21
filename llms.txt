@@ -107,7 +107,9 @@ Team access: every course can be bought for a team; companies can request an off
 ## For companies
 
 - [Training for teams](https://serviceengineer.academy/teams/): one table of every engineer's courses, exam scores and certificates; training records as PDF or CSV for JCI and ISO audits; assign courses with due dates. 5 seats for the price of 4. Example company: https://api.serviceengineer.academy/training?demo=1
-- [How to document the competency of biomedical engineers](https://serviceengineer.academy/guides/document-biomedical-engineer-competency/): what auditors look for and a simple training record that holds up
+- [How to document the competency of biomedical engineers](https://serviceengineer.academy/guides/document-biomedical-engineer-competency/): what auditors look for and a simple training record that holds up, with what ISO 13485 clause 6.2 and ISO 9001 clause 7.2 expect and a CSV template
+- [Factory vs independent service training](https://serviceengineer.academy/guides/factory-vs-independent-service-training/): when engineers need manufacturer training, when vendor-neutral courses are enough, and how to combine both
+- [How to run training for a team of service engineers](https://serviceengineer.academy/guides/team-training-service-engineers/): skills matrix, course assignment, assessment, records and refresher dates
 
 ## Free reference
 
