@@ -103,6 +103,11 @@ Team access: every course can be bought for a team; companies can request an off
 - [SE AI vs ChatGPT](https://serviceengineer.academy/ai/vs-chatgpt/): how a troubleshooting assistant grounded in service manuals and field cases differs from general-purpose AI, and when to use which.
 - [Connect SE AI to Claude or ChatGPT (MCP)](https://serviceengineer.academy/ai/connect/): MCP server https://api.serviceengineer.academy/mcp
 
+## For companies
+
+- [Training for teams](https://serviceengineer.academy/teams/): one table of every engineer's courses, exam scores and certificates; training records as PDF or CSV for JCI and ISO audits; assign courses with due dates. 5 seats for the price of 4. Example company: https://api.serviceengineer.academy/training?demo=1
+- [How to document the competency of biomedical engineers](https://serviceengineer.academy/guides/document-biomedical-engineer-competency/): what auditors look for and a simple training record that holds up
+
 ## Free reference
 
 - [Fault library](https://serviceengineer.academy/faults/): real fault cases by equipment type

@@ -786,7 +786,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
 @media (max-width:900px){.h-card{right:12px}}
 @media (max-width:560px){.h-stage{padding-bottom:0}.h-card{position:relative;right:auto;width:auto;margin:-40px 12px 0}}
 :root{--ok-wash:oklch(94% .04 150)}
-@media (max-width:1100px) and (min-width:641px){.brand span{display:none}}
+@media (max-width:1340px) and (min-width:641px){.brand span{display:none}}
 .h-facts{align-items:flex-start}
 .h-facts div{flex-direction:column}
 .h-facts dd{order:-1}
@@ -801,9 +801,16 @@ footer a{display:inline-block;margin:0 14px 4px 0}
 .c-start-p{font-size:15px;color:var(--text)}
 .c-start-p b{font-size:20px;color:var(--ink)}
 .c-start-t{flex-basis:100%;font-size:14px;color:var(--muted)}
+
+/* /teams/ and the guide (21.11) */
+.tm{padding-bottom:70px;max-width:900px}.tm h1{margin:18px 0 12px}.tm h2{margin:40px 0 10px}.tm .btns{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.tm-shot{margin:28px 0 0}.tm-shot img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:10px}
+.tm-list{padding-left:20px}.tm-list li{margin:6px 0}.tm-faq{border-top:1px solid var(--rule-strong)}.tm-more{margin-top:30px}
+.tm-article article{max-width:720px}.tm-article p{line-height:1.6}.tm-tw{overflow-x:auto;margin:18px 0}
+.tm-table{border-collapse:collapse;width:100%;font-size:14px}.tm-table th,.tm-table td{border:1px solid var(--rule);padding:8px;text-align:left;vertical-align:top}.tm-table th{background:var(--wash)}
 </style></head><body>
 <div class="preview">Early access: courses are being reviewed by field engineers</div>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/programs/">Programs</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/ai/connect/" hreflang="ru">RU</a></div></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/courses/">Courses</a><a href="/programs/">Programs</a><a href="/teams/">For teams</a><a href="/trainings/">Live trainings</a><a href="/library/">Library</a><a href="/faculty/">Instructors</a><a href="/ai/">AI</a><a href="/verify/">Certificates</a></nav><div class="top-right"><a class="my" href="/my/">My learning</a><a href="/login/" data-auth>Sign in</a><a href="/ru/ai/connect/" hreflang="ru">RU</a></div></div></header>
 <main><div class="wrap" style="max-width:860px;padding-bottom:60px"><div class="crumbs"><a href="/">Academy</a> / <a href="/ai/">SE AI</a> / MCP</div><h1 style="margin:18px 0 14px">SE AI in Claude, ChatGPT and other AI apps</h1><p class="lead">Connect SE AI to your AI assistant and it can troubleshoot medical equipment faults from our knowledge base and look up spare parts by part number. Sign in with your e-mail; no key to paste.</p>
 <div class="label" style="margin-top:26px">Server address (MCP)</div><p style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><code style="font-size:17px;padding:10px 12px;border:1px solid var(--ink);word-break:break-all">https://api.serviceengineer.academy/mcp</code><button class="btn" style="cursor:pointer" onclick="navigator.clipboard&&navigator.clipboard.writeText('https://api.serviceengineer.academy/mcp');this.textContent='✓'">Copy</button></p>
 <h2>How to connect</h2><h3>Claude (web and desktop)</h3><p>Settings → Connectors → Add custom connector. Paste the server address, press Connect and sign in with your SE AI e-mail.</p><h3>ChatGPT</h3><p>Settings → Apps & Connectors → create a connector (developer mode). Paste the server address, authentication OAuth.</p><h3>Claude Code</h3><p>In a terminal: <code>claude mcp add --transport http se-ai https://api.serviceengineer.academy/mcp</code>, then /mcp to sign in.</p><h3>Other apps</h3><p>Any MCP client with Streamable HTTP and OAuth 2.1. If an app cannot do OAuth, make a personal key in SE AI: menu → Connect to Claude / ChatGPT.</p>
