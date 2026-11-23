@@ -118,6 +118,8 @@ Team access: every course can be bought for a team; companies can request an off
 - [Where to train as an MRI service engineer](https://serviceengineer.academy/guides/mri-service-engineer-training-options/): manufacturer, independent and online MRI service training compared, with published prices, length and who can enrol
 - [Where to train as a CT service engineer](https://serviceengineer.academy/guides/ct-service-engineer-training-options/): manufacturer, independent and online CT service training compared, with published prices and length
 - [Where to train as an X-ray service engineer](https://serviceengineer.academy/guides/xray-service-engineer-training-options/): manufacturer, independent and online X-ray service training compared, with published prices and length
+- [Where to train as an ultrasound service engineer](https://serviceengineer.academy/guides/ultrasound-service-engineer-training-options/): manufacturer, independent and online ultrasound service training compared, with published prices and length
+- [Where to learn steriliser service](https://serviceengineer.academy/guides/steriliser-service-training-options/): manufacturer, independent and online steriliser and CSSD equipment service training compared, with published prices
 - [How to run training for a team of service engineers](https://serviceengineer.academy/guides/team-training-service-engineers/): skills matrix, course assignment, assessment, records and refresher dates
 
 ## Free reference
