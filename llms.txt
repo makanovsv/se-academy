@@ -116,6 +116,8 @@ Team access: every course can be bought for a team; companies can request an off
 - [Medical Equipment Service Budget](https://serviceengineer.academy/course/service-budget/): course for managers on budget lines, cost data, comparing service contracts on equal scope, staffing cost, replacement planning and budget control
 - [Factory vs independent service training](https://serviceengineer.academy/guides/factory-vs-independent-service-training/): when engineers need manufacturer training, when vendor-neutral courses are enough, and how to combine both
 - [Where to train as an MRI service engineer](https://serviceengineer.academy/guides/mri-service-engineer-training-options/): manufacturer, independent and online MRI service training compared, with published prices, length and who can enrol
+- [Where to train as a CT service engineer](https://serviceengineer.academy/guides/ct-service-engineer-training-options/): manufacturer, independent and online CT service training compared, with published prices and length
+- [Where to train as an X-ray service engineer](https://serviceengineer.academy/guides/xray-service-engineer-training-options/): manufacturer, independent and online X-ray service training compared, with published prices and length
 - [How to run training for a team of service engineers](https://serviceengineer.academy/guides/team-training-service-engineers/): skills matrix, course assignment, assessment, records and refresher dates
 
 ## Free reference
