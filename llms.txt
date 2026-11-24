@@ -120,6 +120,8 @@ Team access: every course can be bought for a team; companies can request an off
 - [Where to train as an X-ray service engineer](https://serviceengineer.academy/guides/xray-service-engineer-training-options/): manufacturer, independent and online X-ray service training compared, with published prices and length
 - [Where to train as an ultrasound service engineer](https://serviceengineer.academy/guides/ultrasound-service-engineer-training-options/): manufacturer, independent and online ultrasound service training compared, with published prices and length
 - [Where to learn steriliser service](https://serviceengineer.academy/guides/steriliser-service-training-options/): manufacturer, independent and online steriliser and CSSD equipment service training compared, with published prices
+- [Where to train in ventilator and anaesthesia machine service](https://serviceengineer.academy/guides/ventilator-anaesthesia-service-training-options/): manufacturer, independent and online ventilator and anaesthesia machine service training compared, with published prices and length
+- [Where to train in patient monitor and defibrillator service](https://serviceengineer.academy/guides/patient-monitor-defibrillator-service-training-options/): manufacturer, independent and online patient monitor and defibrillator service training compared, with published prices and length
 - [How to run training for a team of service engineers](https://serviceengineer.academy/guides/team-training-service-engineers/): skills matrix, course assignment, assessment, records and refresher dates
 
 ## Free reference
