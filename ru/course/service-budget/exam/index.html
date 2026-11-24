@@ -836,6 +836,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
 .m-card .btn{align-self:flex-start;margin-top:auto}
 .m-lesson{background:var(--blue-wash);border-color:transparent}
 @media (max-width:720px){.m-start{padding:18px}.m-cards{grid-template-columns:1fr}}
+.m-start-q2{margin:22px 0 10px;font-size:14px}
 </style></head><body>
 <div class="preview">Ранний доступ: курсы проходят проверку инженерами-практиками</div>
 <header class="top"><div class="wrap"><a class="brand" href="/ru/"><svg class="sq" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#002fa7"/><circle cx="50" cy="50" r="34" fill="none" stroke="#fff" stroke-width="9"/><circle cx="50" cy="50" r="15" fill="none" stroke="#fff" stroke-width="9"/><rect x="50" y="50" width="50" height="50" fill="#fff"/><path d="M88.5 50A38.5 38.5 0 0 1 50 88.5L50 79.5A29.5 29.5 0 0 0 79.5 50Z" fill="#002fa7"/><path d="M69.5 50A19.5 19.5 0 0 1 50 69.5L50 60.5A10.5 10.5 0 0 0 60.5 50Z" fill="#002fa7"/></svg><span>Service Engineer<small>Academy</small></span></a><nav class="main"><a href="/ru/courses/" aria-current>Курсы</a><a href="/ru/programs/">Программы</a><a href="/ru/teams/">Для команд</a><a href="/ru/trainings/">Тренинги</a><a href="/ru/library/">Библиотека</a><a href="/ru/faculty/">Тренеры</a><a href="/ru/ai/">AI</a><a href="/verify/">Сертификаты</a></nav><div class="top-right"><a class="my" href="/ru/my/">Моё обучение</a><a href="/ru/login/" data-auth>Войти</a><a href="/course/service-budget/exam/" hreflang="en">EN</a></div></div></header>
@@ -1669,8 +1670,8 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     const started = (me.grants || []).length || Object.keys(me.progress || {}).length;
     if (started) return;
     const ru = S.lang === "ru", P = ru ? "/ru" : "";
-    const L = ru ? { h: "С чего начать", q: "Какое оборудование вы обслуживаете?", free: "Бесплатный урок", min: "мин", open: "Открыть бесплатный урок", ai: "SE AI: 3 бесплатных вопроса", aiT: "Спросите про неисправность, которая у вас сейчас на объекте. Ответ по сервисным случаям и мануалам.", aiB: "Задать вопрос", aiQ: (n) => n + ": на аппарате ошибка ... Что проверить в первую очередь?", all: "Все курсы" }
-      : { h: "Start here", q: "What equipment do you service?", free: "Free lesson", min: "min", open: "Open the free lesson", ai: "SE AI: 3 free questions", aiT: "Ask about a fault you have on site right now. Answers come from service cases and manuals.", aiB: "Ask a question", aiQ: (n) => n + ": the machine shows error ... What should I check first?", all: "All courses" };
+    const L = ru ? { h: "С чего начать", q: "Какое оборудование вы обслуживаете?", free: "Бесплатный урок", min: "мин", open: "Открыть бесплатный урок", ai: "SE AI: 3 бесплатных вопроса", aiT: "Спросите про неисправность, которая у вас сейчас на объекте. Ответ по сервисным случаям и мануалам.", aiB: "Задать вопрос", aiQ: (n) => n + ": на аппарате ошибка ... Что проверить в первую очередь?", other: "Другое оборудование:" }
+      : { h: "Start here", q: "What equipment do you service?", free: "Free lesson", min: "min", open: "Open the free lesson", ai: "SE AI: 3 free questions", aiT: "Ask about a fault you have on site right now. Answers come from service cases and manuals.", aiB: "Ask a question", aiQ: (n) => n + ": the machine shows error ... What should I check first?", other: "Other equipment:" };
     let k = null;
     try { k = localStorage.getItem("sea:equip"); } catch (e) {}
     if (!k && me.equipment) k = me.equipment;
@@ -1678,10 +1679,11 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     if (!D.items.some((x) => x.k === k)) k = null;
     const draw = () => {
       const it = D.items.find((x) => x.k === k);
-      box.innerHTML = '<h2 class="m-start-h">' + esc(L.h) + '</h2><p class="m-start-q">' + esc(L.q) + '</p><div class="m-chips">' +
-        D.items.map((x) => '<button type="button" class="m-chip' + (x.k === k ? " on" : "") + '" data-k="' + esc(x.k) + '" aria-pressed="' + (x.k === k) + '">' + esc(x.n) + "</button>").join("") + "</div>" +
-        (it ? '<div class="m-cards"><a class="m-card m-lesson" href="' + esc(it.u) + '"><span class="label">' + esc(L.free) + " · " + it.m + " " + L.min + '</span><b>' + esc(it.l) + '</b><span class="muted">' + esc(it.c) + '</span><span class="btn">' + esc(L.open) + '</span></a>' +
-          '<div class="m-card m-ai"><span class="label">' + esc(L.ai) + "</span><p>" + esc(L.aiT) + '</p><a class="btn ghost" data-ask href="' + P + '/ai/">' + esc(L.aiB) + "</a></div></div>" : "");
+      const chips = '<div class="m-chips">' + D.items.map((x) => '<button type="button" class="m-chip' + (x.k === k ? " on" : "") + '" data-k="' + esc(x.k) + '" aria-pressed="' + (x.k === k) + '">' + esc(x.n) + "</button>").join("") + "</div>";
+      const cards = it ? '<div class="m-cards"><a class="m-card m-lesson" href="' + esc(it.u) + '"><span class="label">' + esc(L.free) + " · " + it.m + " " + L.min + '</span><b>' + esc(it.l) + '</b><span class="muted">' + esc(it.c) + '</span><span class="btn">' + esc(L.open) + '</span></a>' +
+          '<div class="m-card m-ai"><span class="label">' + esc(L.ai) + "</span><p>" + esc(L.aiT) + '</p><a class="btn ghost" data-ask href="' + P + '/ai/">' + esc(L.aiB) + "</a></div></div>" : "";
+      // equipment known: the lesson comes first (on a phone 21 buttons would push it below the fold)
+      box.innerHTML = '<h2 class="m-start-h">' + esc(L.h) + "</h2>" + (it ? cards + '<p class="m-start-q m-start-q2">' + esc(L.other) + "</p>" + chips : '<p class="m-start-q">' + esc(L.q) + "</p>" + chips);
       box.hidden = false;
       const ask = box.querySelector("[data-ask]");
       if (ask) ask.addEventListener("click", () => { try { localStorage.setItem("sea:pendq", L.aiQ(it.n)); } catch (e) {} });
@@ -1697,6 +1699,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     if (k && !me.equipment) api("/api/interest", { equipment: k, guess: 1 });
     draw();
     const empty = document.querySelector("[data-my-empty]"); if (empty) empty.hidden = true;
+    const lead = document.querySelector("[data-my] > .lead"); if (lead) lead.hidden = true; // "Sign in with your e-mail..." makes no sense once signed in
   }
 
   // ---- login page
