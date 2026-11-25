@@ -1,0 +1,30 @@
+﻿Electrical safety test log (IEC 62353)
+Organisation,
+Standard and edition,IEC 62353:2014
+Safety analyser model and serial number,
+Analyser calibration date,
+Analyser calibration due,
+"Limits: see /guides/iec-62353-test-limits/ and the manufacturer's service manual. Where the manufacturer is stricter, the manufacturer wins."
+
+Date,Asset ID,Device type,Manufacturer / model,Serial number,Location,Reason (acceptance / periodic / after repair + job no.),Protection class (I / II / internally powered),"Applied parts (type B / BF / CF, defib-proof)",Visual inspection (pass / fail),PE resistance (Ω),PE limit (Ω),"Insulation resistance (MΩ, or 'not performed' + reason)",Insulation limit (MΩ),Equipment leakage (µA),Equipment leakage method (direct / differential / alternative),Equipment leakage limit (µA),"Applied part 1 (name, type)",AP1 leakage (µA),AP1 method,AP1 limit (µA),"Applied part 2 (name, type)",AP2 leakage (µA),AP2 method,AP2 limit (µA),Functional test (pass / fail),Overall result (pass / fail),Status after test,Next test due,Engineer,Signature,Notes
+2026-03-10,EXAMPLE-0001,Patient monitor,EXAMPLE Maker A / M-100,EXAMPLE-SN-12345,"ICU, bed 4",Periodic,I,ECG: CF defib-proof; SpO2: BF; NIBP: BF,Pass,0.12,0.3,Not performed: excluded by service manual,,85,"Direct, worst polarity",500,"ECG (CF, defib-proof)",4,Alternative,50,SpO2 (BF),12,Alternative,5000,Pass,Pass,In service,2027-03-10,EXAMPLE,,EXAMPLE ROW - delete before use
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

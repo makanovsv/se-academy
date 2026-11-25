@@ -138,6 +138,10 @@ Team access: every course can be bought for a team; companies can request an off
 - [MRI system preventive maintenance checklist](https://serviceengineer.academy/guides/mri-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/mri-pm-checklist.csv)
 - [IEC 62353 test limits](https://serviceengineer.academy/guides/iec-62353-test-limits/): protective earth, insulation and leakage current limits for in-service and after-repair testing of medical electrical equipment, in one table
 - [How to renew CBET and other ACI certifications](https://serviceengineer.academy/guides/cbet-recertification-ceu/): 30 CEUs in 3 years, the six categories and caps, 15 CEUs minimum in Category IV, fees, deadline and grace period, from AAMI's published rules
+- [Medical equipment inventory template](https://serviceengineer.academy/guides/medical-equipment-inventory-template/): free CSV template for a medical equipment inventory with risk class, PM interval and status columns
+- [Annual PM schedule template](https://serviceengineer.academy/guides/annual-pm-schedule-template/): free CSV template for a 12-month planned maintenance schedule, with typical starting intervals by equipment type (the manufacturer's manual sets the real interval)
+- [Electrical safety test log template](https://serviceengineer.academy/guides/electrical-safety-test-log-template/): free CSV log for IEC 62353 tests: protective earth, insulation, leakage, pass/fail and decision
+- [Medical equipment service glossary](https://serviceengineer.academy/guides/medical-equipment-service-glossary/): 110 service engineering terms explained in plain words, each with its own anchor, in English and Russian
 
 ## Free reference
 

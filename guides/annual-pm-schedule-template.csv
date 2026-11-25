@@ -1,0 +1,27 @@
+﻿Annual PM schedule
+Organisation,
+Year,
+Prepared by,
+Approved by,
+"Marks: PM = planned maintenance, ES = electrical safety test, CAL = calibration/verification, Q = QA test. The manufacturer's service manual sets the actual interval for each model."
+
+Device type,Models,Units,Typical interval (starting point only - check the manual),Interval in the manual (fill in),Manual reference,Serviced by,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Notes
+EXAMPLE: Patient monitor,EXAMPLE M-100,24,12 months,12 months,"Service manual, ch. 7",In-house,PM+ES (6),PM+ES (6),PM+ES (6),PM+ES (6),,,,,,,,,EXAMPLE ROW - spread over 4 months to level the workload
+Patient monitor,,,12 months,,,,,,,,,,,,,,,,
+Defibrillator / AED,,,6-12 months; user readiness check as the manufacturer says,,,,,,,,,,,,,,,,
+ECG recorder,,,12 months,,,,,,,,,,,,,,,,
+Ventilator,,,"12 months or operating hours, whichever comes first",,,,,,,,,,,,,,,,
+Anaesthesia machine,,,6-12 months; pre-use checkout by the user,,,,,,,,,,,,,,,,
+Infusion / syringe pump,,,12-24 months,,,,,,,,,,,,,,,,
+Electrosurgical unit,,,6-12 months,,,,,,,,,,,,,,,,
+Ultrasound system,,,12 months,,,,,,,,,,,,,,,,
+X-ray radiography / fluoroscopy,,,"12 months, plus QA tests under local rules",,,,,,,,,,,,,,,,
+Mobile C-arm,,,12 months,,,,,,,,,,,,,,,,
+Mammography,,,"Per manufacturer, plus QC programme under local rules",,,,,,,,,,,,,,,,
+CT scanner,,,Per manufacturer; often several visits a year,,,,,,,,,,,,,,,,
+MRI system,,,Per manufacturer; often several visits a year; cold head and compressor by hours,,,,,,,,,,,,,,,,
+Steam steriliser,,,Quarterly and yearly engineer tests; daily user tests (e.g. Bowie-Dick),,,,,,,,,,,,,,,,
+Haemodialysis machine,,,"Per manufacturer, by operating hours and calendar time",,,,,,,,,,,,,,,,
+Dialysis water treatment,,,Per plant manufacturer and procedure,,,,,,,,,,,,,,,,
+Laboratory analyser,,,Per manufacturer; daily/weekly user maintenance,,,,,,,,,,,,,,,,
+UPS for medical equipment,,,12 months; batteries per manufacturer,,,,,,,,,,,,,,,,
