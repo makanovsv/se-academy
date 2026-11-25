@@ -123,6 +123,17 @@ Team access: every course can be bought for a team; companies can request an off
 - [Where to train in ventilator and anaesthesia machine service](https://serviceengineer.academy/guides/ventilator-anaesthesia-service-training-options/): manufacturer, independent and online ventilator and anaesthesia machine service training compared, with published prices and length
 - [Where to train in patient monitor and defibrillator service](https://serviceengineer.academy/guides/patient-monitor-defibrillator-service-training-options/): manufacturer, independent and online patient monitor and defibrillator service training compared, with published prices and length
 - [How to run training for a team of service engineers](https://serviceengineer.academy/guides/team-training-service-engineers/): skills matrix, course assignment, assessment, records and refresher dates
+- [Free preventive maintenance checklists](https://serviceengineer.academy/guides/preventive-maintenance-checklists/): printable PM checklists for 10 equipment types, taken from the Level 1 course lessons, each with a CSV record sheet; use with the manufacturer's service manual
+- [Patient monitor preventive maintenance checklist](https://serviceengineer.academy/guides/patient-monitor-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/patient-monitor-pm-checklist.csv)
+- [Defibrillator preventive maintenance checklist](https://serviceengineer.academy/guides/defibrillator-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/defibrillator-pm-checklist.csv)
+- [Ventilator preventive maintenance checklist](https://serviceengineer.academy/guides/ventilator-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/ventilator-pm-checklist.csv)
+- [Anaesthesia machine preventive maintenance checklist](https://serviceengineer.academy/guides/anaesthesia-machine-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/anaesthesia-machine-pm-checklist.csv)
+- [Infusion pump preventive maintenance checklist](https://serviceengineer.academy/guides/infusion-pump-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/infusion-pump-pm-checklist.csv)
+- [Electrosurgical unit preventive maintenance checklist](https://serviceengineer.academy/guides/electrosurgical-unit-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/electrosurgical-unit-pm-checklist.csv)
+- [Ultrasound scanner preventive maintenance checklist](https://serviceengineer.academy/guides/ultrasound-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/ultrasound-pm-checklist.csv)
+- [X-ray system preventive maintenance checklist](https://serviceengineer.academy/guides/xray-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/xray-pm-checklist.csv)
+- [CT scanner preventive maintenance checklist](https://serviceengineer.academy/guides/ct-scanner-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/ct-scanner-pm-checklist.csv)
+- [MRI system preventive maintenance checklist](https://serviceengineer.academy/guides/mri-pm-checklist/): free PM checklist with a CSV record sheet (https://serviceengineer.academy/guides/mri-pm-checklist.csv)
 
 ## Free reference
 

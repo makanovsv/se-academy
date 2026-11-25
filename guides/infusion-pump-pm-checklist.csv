@@ -1,0 +1,23 @@
+﻿Infusion and syringe pump preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,Use the manufacturer's battery test and record the measured runtime or condition,,,,
+2,"Replace swollen, leaking or failing packs with the specified type only",,,,
+3,Follow the manufacturer's steps after pack replacement and recheck battery alarms,,,,
+4,Check the mains-failure alarm by pulling mains during a run,,,,
+5,"Inspect for fluid residue, corrosion and cracks at every PM",,,,
+6,Compare the ward's disinfectant with the manufacturer's compatible list,,,,
+7,"Clear the maintenance reminder only after the PM is complete, by the manufacturer's procedure",,,,
+8,"Record values, instruments, parts and the next due date",,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

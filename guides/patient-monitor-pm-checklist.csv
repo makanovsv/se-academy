@@ -1,0 +1,28 @@
+﻿Patient monitor preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,Monitor free of patient; cleaned with an agent the manufacturer allows,,,,
+2,"Asset number, serial, software version and fitted modules recorded",,,,
+3,Hospital configuration exported or photographed before any change,,,,
+4,"Housing, display, mains cord, patient connectors, labels and mounting inspected",,,,
+5,Every accessory flexed and inspected; damaged or non-compatible ones replaced or removed,,,,
+6,"Power-on self-test, start-up tone, keys, knob and touch screen checked",,,,
+7,"Each alarm priority provoked, seen and heard at the bedside and at the central station",,,,
+8,"Alarm volume range, alarm pause time-out and nurse call output checked",,,,
+9,Mains-to-battery switch-over without restart; battery status or run time recorded against the manufacturer's criterion,,,,
+10,Error log read and relevant entries recorded before any clearing,,,,
+11,Date and time correct or synchronised; correction noted,,,,
+12,"Central station shows correct bed, waveforms and alarms",,,,
+13,Configuration compared with the saved record and restored,,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

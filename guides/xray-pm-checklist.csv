@@ -1,0 +1,23 @@
+﻿X-ray system preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,Prepare the test sheet with the limits for this model before the visit,,,,
+2,Check meter and safety analyser calibration dates,,,,
+3,Make as-found measurements before cleaning or adjusting,,,,
+4,"Test every safety function, including warning lights and emergency stops",,,,
+5,"Measure kV, time, reproducibility, linearity, output and HVL; fluoroscopy dose rates and timer where relevant",,,,
+6,"Check light field against X-ray field, centring, distance indicator, automatic collimation, AEC",,,,
+7,Run phantom images with the baseline setup; save images and settings,,,,
+8,Finish with IEC 62353 electrical safety testing and a report with a clear fitness-for-use statement,,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

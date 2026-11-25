@@ -1,0 +1,23 @@
+﻿Defibrillator preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,"Get the exact complaint, the mode and the event log before changing anything",,,,
+2,"If the device failed in clinical use: preserve it and the log, take it out of service, inform the responsible person",,,,
+3,"Test with known good battery, cable and pads into the analyser",,,,
+4,"Check configuration: mode at power-on, sync, energy defaults, filters, printing",,,,
+5,Use the manufacturer's troubleshooting table for error codes,,,,
+6,Escalate HV faults with full information; arrange a replacement unit,,,,
+7,"Before return: full performance verification, electrical safety, final self-test, clinical settings, in-date battery and pads",,,,
+8,"Record measured values, instruments, parts, result, next due date and label",,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

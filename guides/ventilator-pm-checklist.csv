@@ -1,0 +1,26 @@
+﻿Ventilator preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,"Register entry exists: model, serial, revision and options, software, location, last PM date and hours, next due date and hours",,,,
+2,Kit part number confirmed for this serial number and options (with or without turbine / compressor),,,,
+3,Kit contents checked against the list on arrival; O2 cell and battery dates checked,,,,
+4,"Machine out of use, tagged, decontaminated; time agreed with the department for the full procedure",,,,
+5,"Hour counters, software version and error log recorded before work",,,,
+6,General inspection done; defects outside the kit recorded,,,,
+7,"Gas isolated and depressurised; kit fitted per procedure, no unapproved lubricant",,,,
+8,"Separate-schedule items replaced if due (O2 cell, batteries, coin cell, HEPA, compressor kit)",,,,
+9,Required calibrations done on a verified gas supply,,,,
+10,"Full checkout passed; analyzer verification, alarms, battery switch-over and electrical safety done",,,,
+11,"PM reminder reset only after the work; report written with part numbers, lots, measured values and analyzer details; next due date set",,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

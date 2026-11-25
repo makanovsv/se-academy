@@ -1,0 +1,21 @@
+﻿Electrosurgical unit preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,Test the generator with known-good accessories before blaming it,,,,
+2,Inspect every reusable accessory along its full length under good light,,,,
+3,Check each footswitch pedal for correct mode and immediate release,,,,
+4,Confirm single-use items are not reprocessed and pads are within expiry,,,,
+5,"Follow the manufacturer's PM interval or the local rule, whichever is stricter",,,,
+6,"Record generator software version, analyser identity, every value and limit, and removed items",,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,

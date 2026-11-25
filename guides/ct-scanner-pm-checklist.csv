@@ -1,0 +1,28 @@
+﻿CT scanner preventive maintenance checklist
+Asset number,
+Serial number,
+Model / software,
+Location,
+Date,
+Engineer,
+Analyser / tools and calibration date,
+
+No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
+1,"Interview operators; read error log, tube counters, quality log; check disk space, archive and backup",,,,
+2,Listen to the gantry at speed before shutdown; measure room temperature and humidity,,,,
+3,Confirm no patients are booked and the clinic has a backup plan,,,,
+4,"Shut down by procedure, isolate, lock and tag, verify absence of voltage, wait the discharge time",,,,
+5,Engage the rotor lock before any work inside the rotating part,,,,
+6,Record as-found condition with photographs before cleaning,,,,
+7,"Slip ring: brushes against wear criterion, ring tracks, carbon dust removed by vacuum and approved materials; no compressed air, no lubricant",,,,
+8,Data link cleaned by approved method; belt and bearing checked; nothing loose on the rotor,,,,
+9,"Table: movement, play, travel accuracy, emergency release, pedals, controls",,,,
+10,Lasers aligned to scan plane and isocentre per manufacturer method; offset recorded,,,,
+11,Cables and connectors inspected; HV cables only externally,,,,
+12,"Every emergency stop, door interlock and warning light tested",,,,
+13,"Warm-up, air calibration, phantom check and test images before release; results recorded and compared",,,,
+
+Parts replaced (part numbers),
+Decision: in service / restricted / out of service,
+Next due date,
+Signature,
