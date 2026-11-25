@@ -1404,9 +1404,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     const wait = (card) => { card.classList.add("queued"); card.previousElementSibling.classList.add("queued"); card.innerHTML = "<p class='muted'>" + esc(A.queued) + "</p>"; };
     // what the agent is doing right now: its searches and drafts, read every second while it works
-    const stepText = (s) => s.tool === "search_knowledge" ? A.stSearch + " «" + s.query + "» · " + A.stFound + " " + s.found
-      : s.tool === "find_parts" ? A.stParts + " «" + s.query + "» · " + A.stFound + " " + s.found
-      : s.tool === "create_work_order" ? A.stOrder + (s.work_order_id ? " №" + s.work_order_id : "")
+    // 25.11.2026: the agent also searches in Russian (the field records are Russian); outside /ru show such a query without its words
+    const stQ = (q) => S.lang === "ru" ? " «" + q + "»" : /[а-яё]/i.test(q) ? "" : " “" + q + "”";
+    const stepText = (s) => s.tool === "search_knowledge" ? (stQ(s.query) || !A.stSearchAll ? A.stSearch + stQ(s.query) : A.stSearchAll) + " · " + A.stFound + " " + s.found
+      : s.tool === "find_parts" ? (stQ(s.query) || !A.stPartsAll ? A.stParts + stQ(s.query) : A.stPartsAll) + " · " + A.stFound + " " + s.found
+      : s.tool === "create_work_order" ? A.stOrder + (s.work_order_id ? (S.lang === "ru" ? " №" : " #") + s.work_order_id : "")
       : s.tool === "draft_service_report" ? A.stReport : s.tool === "draft_parts_order" ? A.stPartsOrder
       : s.tool === "schedule_maintenance" ? A.stPm : "";
     const sendIcon = sendBtn.innerHTML, sendLabel = sendBtn.getAttribute("aria-label");
