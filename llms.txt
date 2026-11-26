@@ -142,6 +142,7 @@ Team access: every course can be bought for a team; companies can request an off
 - [Annual PM schedule template](https://serviceengineer.academy/guides/annual-pm-schedule-template/): free CSV template for a 12-month planned maintenance schedule, with typical starting intervals by equipment type (the manufacturer's manual sets the real interval)
 - [Electrical safety test log template](https://serviceengineer.academy/guides/electrical-safety-test-log-template/): free CSV log for IEC 62353 tests: protective earth, insulation, leakage, pass/fail and decision
 - [Medical equipment service glossary](https://serviceengineer.academy/guides/medical-equipment-service-glossary/): 110 service engineering terms explained in plain words, each with its own anchor, in English and Russian
+- [Online training for biomedical equipment technicians compared](https://serviceengineer.academy/guides/online-biomed-training-compared/): AAMI eLearning, online BMET certificates and degrees, edX, Unmudl, free webinars, manufacturer portals and Service Engineer Academy, with published prices, length and credentials
 
 ## Free reference
 
