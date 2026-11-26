@@ -1690,8 +1690,8 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     const started = (me.grants || []).length || Object.keys(me.progress || {}).length;
     if (started) return;
     const ru = S.lang === "ru", P = ru ? "/ru" : "";
-    const L = ru ? { h: "С чего начать", q: "Какое оборудование вы обслуживаете?", free: "Бесплатный урок", min: "мин", open: "Открыть бесплатный урок", ai: "SE AI: 3 бесплатных вопроса", aiT: "Спросите про неисправность, которая у вас сейчас на объекте. Ответ по сервисным случаям и мануалам.", aiB: "Задать вопрос", aiQ: (n) => n + ": на аппарате ошибка ... Что проверить в первую очередь?", other: "Другое оборудование:" }
-      : { h: "Start here", q: "What equipment do you service?", free: "Free lesson", min: "min", open: "Open the free lesson", ai: "SE AI: 3 free questions", aiT: "Ask about a fault you have on site right now. Answers come from service cases and manuals.", aiB: "Ask a question", aiQ: (n) => n + ": the machine shows error ... What should I check first?", other: "Other equipment:" };
+    const L = ru ? { h: "С чего начать", q: "Какое оборудование вы обслуживаете?", free: "Уроки 1–2 бесплатно", min: "мин", open: "Открыть бесплатный урок", ai: "SE AI: 3 бесплатных вопроса", aiT: "Спросите про неисправность, которая у вас сейчас на объекте. Ответ по сервисным случаям и мануалам.", aiB: "Задать вопрос", aiQ: (n) => n + ": на аппарате ошибка ... Что проверить в первую очередь?", other: "Другое оборудование:" }
+      : { h: "Start here", q: "What equipment do you service?", free: "Lessons 1–2 free", min: "min", open: "Open the free lesson", ai: "SE AI: 3 free questions", aiT: "Ask about a fault you have on site right now. Answers come from service cases and manuals.", aiB: "Ask a question", aiQ: (n) => n + ": the machine shows error ... What should I check first?", other: "Other equipment:" };
     let k = null;
     try { k = localStorage.getItem("sea:equip"); } catch (e) {}
     if (!k && me.equipment) k = me.equipment;
@@ -1724,6 +1724,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
 
   // ---- login page
   // where to go after sign-in: the course, lesson or guide the person was reading (24.11.2026)
+  const refPath = () => { try { if (document.referrer && new URL(document.referrer).origin === location.origin) return new URL(document.referrer).pathname; } catch (e) {} return ""; };
   const loginNext = () => {
     const ok = (p) => p && /^\/(ru\/)?(course|program|guides|ai|model)\/[A-Za-z0-9_\-\/]*$/.test(p) ? p : "";
     let p = ok(new URLSearchParams(location.search).get("next"));
@@ -1762,7 +1763,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
         return;
       }
       form.querySelector("button").disabled = true;
-      api("/api/login", { email, lang: S.lang, next: loginNext() }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
+      api("/api/login", { email, lang: S.lang, next: loginNext(), from: refPath() }).then((r) => { msg.textContent = r.ok ? t.sent : (r.data.error || "error"); form.querySelector("button").disabled = false; });
     });
   }
 
@@ -1809,7 +1810,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     // lesson video (served by the API: free lessons to everyone, paid lessons to owners)
     document.querySelectorAll("[data-video]").forEach((box) => {
       const course = box.dataset.course, lesson = box.dataset.lesson;
-      if (box.dataset.free !== "1" && !owns(course)) return;
+      if (box.dataset.free !== "1" && !owns(course) && !(box.dataset.reg === "1" && me && me.email)) return;
       api("/api/videos?course=" + encodeURIComponent(course) + "&lang=" + S.lang).then((r) => {
         if (!r.ok || !(r.data.lessons || []).includes(lesson)) return;
         box.innerHTML = '<video controls preload="metadata" playsinline src="' + S.api + "/api/video?course=" + encodeURIComponent(course) + "&lesson=" + encodeURIComponent(lesson) + "&lang=" + S.lang + '"></video>';
@@ -1824,13 +1825,22 @@ footer a{display:inline-block;margin:0 14px 4px 0}
 
     // paid lesson
     const locked = document.querySelector('[data-locked="lesson"]');
-    if (locked && me && me.email && owns(locked.dataset.course)) {
-      locked.innerHTML = "<p class='muted'>" + esc(t.loading) + "</p>";
+    const regOpen = !!(locked && me && me.email && locked.dataset.reg === "1" && !owns(locked.dataset.course));
+    if (locked && me && me.email && (owns(locked.dataset.course) || regOpen)) {
+      const spot = regOpen ? document.createElement("div") : locked;
+      if (regOpen) locked.before(spot);
+      spot.innerHTML = "<p class='muted'>" + esc(t.loading) + "</p>";
       api("/api/lesson?course=" + encodeURIComponent(locked.dataset.course) + "&lesson=" + encodeURIComponent(locked.dataset.lesson) + "&lang=" + S.lang).then((r) => {
-        if (!r.ok) { locked.innerHTML = "<p>" + esc(t.noAccess) + "</p>"; return; }
+        if (!r.ok) { spot.innerHTML = "<p>" + esc(t.noAccess) + "</p>"; return; }
         const wrap = document.createElement("div");
         wrap.innerHTML = renderLesson(r.data) + '<div class="complete-bar"><button class="btn" type="button" data-mark2>' + (S.lang === "ru" ? "Отметить пройденным" : "Mark as completed") + "</button></div>";
-        locked.replaceWith(wrap);
+        spot.replaceWith(wrap);
+        if (regOpen) {  // signed in, not bought: lesson 2, then the offer for the rest of the course
+          locked.querySelectorAll("[data-reg-h],[data-reg-cap]").forEach((x) => x.remove());
+          const oh = locked.querySelector("[data-offer-h]"); if (oh) { oh.textContent = locked.dataset.cont; oh.style.marginTop = "0"; }
+          locked.classList.add("offer-end");
+          if (locked.dataset.pmc) { const n = document.createElement("p"); n.innerHTML = '<a href="' + locked.dataset.pmc + '">' + (S.lang === "ru" ? "Ваш бесплатный чек-лист планового ТО" : "Your free preventive maintenance checklist") + " →</a>"; wrap.prepend(n); }
+        }
         wireQuiz(wrap);
         const mb = wrap.querySelector("[data-mark2]"), course = locked.dataset.course, n = +locked.dataset.n;
         if (lsGet(course).includes(n)) mb.disabled = true;
@@ -1839,7 +1849,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     }
 
     // end of the free lesson (26.11.2026): owners skip the offer; others can leave an e-mail and get the PM checklist
-    document.querySelectorAll("[data-offer-end]").forEach((box) => {
+    document.querySelectorAll("[data-offer-end],[data-reg-cap]").forEach((box) => {
       const pay = box.querySelector("[data-pay][data-course]");
       if (pay && owns(pay.dataset.course)) { box.remove(); return; }
       const f = box.querySelector("[data-capture]"), msg = box.querySelector("[data-capture-msg]"), ru = S.lang === "ru";
@@ -1851,14 +1861,14 @@ footer a{display:inline-block;margin:0 14px 4px 0}
         const email = f.email.value.trim().toLowerCase(), fix = emailTypo(email);
         if (fix && warned !== email) { warned = email; msg.textContent = (ru ? "Может быть, " : "Did you mean ") + fix + "? " + (ru ? "Нажмите ещё раз, чтобы отправить как есть." : "Press again to send as typed."); return; }
         f.querySelector("button").disabled = true;
-        api("/api/login", { email, lang: S.lang, next: f.dataset.next }).then((r) => {
+        api("/api/login", { email, lang: S.lang, next: f.dataset.next, from: location.pathname }).then((r) => {
           msg.textContent = r.ok ? (ru ? "Готово: откройте письмо и нажмите ссылку, она приведёт вас к материалу. Ссылка действует 30 минут." : "Done: open the e-mail and click the link, it takes you straight there. The link is valid for 30 minutes.") : r.data.error === "too_many" ? (ru ? "Слишком много попыток, попробуйте через 10 минут." : "Too many attempts, try again in 10 minutes.") : (r.data.error || "error");
           f.querySelector("button").disabled = false;
         });
       });
     });
 
-    if (locked && !(me && me.email)) { const p = document.createElement("p"); p.innerHTML = '<a href="' + (S.lang === "ru" ? "/ru/" : "/") + 'login/">' + esc(t.signIn) + "</a>"; locked.appendChild(p); }
+    if (locked && !(me && me.email) && locked.dataset.reg !== "1") { const p = document.createElement("p"); p.innerHTML = '<a href="' + (S.lang === "ru" ? "/ru/" : "/") + 'login/">' + esc(t.signIn) + "</a>"; locked.appendChild(p); }
 
     // exam
     const ex = document.querySelector('[data-locked="exam"]');
