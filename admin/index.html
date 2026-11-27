@@ -1275,6 +1275,64 @@ document.addEventListener("DOMContentLoaded", function () {
       rd.onerror = () => alert(ruA ? "Не удалось прочитать файл." : "Could not read the file.");
       rd.readAsDataURL(f);
     });
+    // 27.11.2026 SM: the engineer's own Google Drive. Access only to files picked here or saved by SE AI (drive.file);
+    // the browser talks to Google itself, the token stays in this page and is never sent to our server.
+    const GD = { key: "AIzaSyAhEEWECLcKcve0ZVbjN1hGt7ik_joxzn4", app: "118471972862", scope: "https://www.googleapis.com/auth/drive.file" };
+    let gdTok = null, gdExp = 0, gdClient = null;
+    const loadJs = (src) => new Promise((ok, bad) => { if (document.querySelector('script[src="' + src + '"]')) return ok(); const s = document.createElement("script"); s.src = src; s.async = true; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
+    const gdToken = () => (gdTok && Date.now() < gdExp ? Promise.resolve(gdTok) : loadJs("https://accounts.google.com/gsi/client").then(() => new Promise((ok, bad) => {
+      gdClient = gdClient || google.accounts.oauth2.initTokenClient({ client_id: "118471972862-86qj9c8s8lq43592mokesfgemfsn480m.apps.googleusercontent.com", scope: GD.scope, callback: () => {} });
+      gdClient.callback = (r) => { if (r && r.access_token) { gdTok = r.access_token; gdExp = Date.now() + (r.expires_in - 120) * 1000; ok(gdTok); } else bad(r); };
+      gdClient.error_callback = bad;
+      gdClient.requestAccessToken({ prompt: "", hint: (me && me.email) || "" });
+    })));
+    const gdFetch = (url, opt) => gdToken().then((t) => fetch(url, Object.assign({}, opt, { headers: Object.assign({ Authorization: "Bearer " + t }, (opt || {}).headers) }))).then((r) => { if (!r.ok) throw new Error("drive " + r.status); return r; });
+    const gdPick = () => gdToken().then((t) => loadJs("https://apis.google.com/js/api.js").then(() => new Promise((ok) => gapi.load("picker", ok))).then(() => new Promise((ok) => {
+      const P = google.picker;
+      const v = new P.DocsView(P.ViewId.DOCS).setIncludeFolders(true).setMimeTypes("application/pdf,text/plain,application/zip,application/x-zip-compressed,text/csv,application/json,text/xml,application/xml,application/vnd.google-apps.document,application/vnd.google-apps.spreadsheet,image/jpeg,image/png,image/webp");
+      new P.PickerBuilder().addView(v).setOAuthToken(t).setDeveloperKey(GD.key).setAppId(GD.app).setLocale(ruA ? "ru" : "en")
+        .setCallback((d) => { if (d.action === P.Action.PICKED) ok(d.docs[0]); else if (d.action === P.Action.CANCEL) ok(null); }).build().setVisible(true);
+    })));
+    const GEXP = { "application/vnd.google-apps.document": ["text/plain", ".txt"], "application/vnd.google-apps.spreadsheet": ["text/csv", ".csv"], "application/vnd.google-apps.presentation": ["text/plain", ".txt"] };
+    const fromDrive = () => gdPick().then((f) => {
+      if (!f) return;
+      const ex = GEXP[f.mimeType];
+      if (!ex && f.sizeBytes > 12 * 1024 * 1024) { alert(ruA ? "Файл больше 12 МБ. Выберите файл поменьше или ZIP." : "The file is over 12 MB. Pick a smaller one or a ZIP."); return; }
+      attName.textContent = (ruA ? "Загружаю с Диска: " : "Loading from Drive: ") + f.name; att.hidden = false; att.querySelector("img").hidden = true;
+      const url = "https://www.googleapis.com/drive/v3/files/" + encodeURIComponent(f.id) + (ex ? "/export?mimeType=" + encodeURIComponent(ex[0]) : "?alt=media&supportsAllDrives=true");
+      return gdFetch(url).then((r) => r.blob()).then((b) => new Promise((ok, bad) => {
+        const name = ex && !/\.\w{2,4}$/.test(f.name) ? f.name + ex[1] : f.name;
+        if (/^image\//.test(b.type)) return shrink(new File([b], name, { type: b.type })).then((d) => ok(setImg(d)), bad);
+        const rd = new FileReader(); rd.onload = () => ok(setDoc({ name, data: String(rd.result) })); rd.onerror = bad; rd.readAsDataURL(b);
+      }));
+    }).catch((er) => { console.warn(er); if (!doc && !img) { att.hidden = true; attName.textContent = ""; } if (!(er && /popup_closed|access_denied/.test(er.type || er.error || ""))) alert(ruA ? "Не удалось взять файл с Google Диска." : "Could not get the file from Google Drive."); });
+    const gdFolder = () => { let id = ""; try { id = localStorage.getItem("gdFolder") || ""; } catch (e) {}
+      const check = id ? gdFetch("https://www.googleapis.com/drive/v3/files/" + id + "?fields=id,trashed").then((r) => r.json()).then((j) => (j.trashed ? "" : j.id)).catch(() => "") : Promise.resolve("");
+      return check.then((ok) => ok || gdFetch("https://www.googleapis.com/drive/v3/files?q=" + encodeURIComponent("name='SE AI' and mimeType='application/vnd.google-apps.folder' and trashed=false") + "&fields=files(id)").then((r) => r.json())
+        .then((j) => (j.files && j.files[0] ? j.files[0].id : gdFetch("https://www.googleapis.com/drive/v3/files?fields=id", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: "SE AI", mimeType: "application/vnd.google-apps.folder" }) }).then((r) => r.json()).then((x) => x.id)))
+        .then((fid) => { try { localStorage.setItem("gdFolder", fid); } catch (e) {} return fid; })); };
+    const toDrive = (msg, btn) => {
+      const rep = msg.querySelector(".ai-reply"); if (!rep) return;
+      let q = msg.previousElementSibling; while (q && !q.classList.contains("me")) q = q.previousElementSibling;
+      const qt = q ? q.innerText.trim() : "", d = new Date(), stamp = d.toISOString().slice(0, 16).replace("T", " ");
+      const title = "SE AI " + stamp + (qt ? " — " + qt.split("\n")[0].slice(0, 60) : "");
+      const html = '<html><head><meta charset="utf-8"></head><body>' + (qt ? "<h2>" + esc(qt) + "</h2>" : "") + rep.innerHTML + "<p><i>" + esc(A.discShort) + " SE AI, serviceengineer.academy/ai, " + stamp + "</i></p></body></html>";
+      btn.disabled = true; const was = btn.textContent; btn.textContent = ruA ? "Сохраняю…" : "Saving…";
+      gdFolder().then((fid) => {
+        const bd = "seai" + Math.random().toString(36).slice(2);
+        const body = "--" + bd + "\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n" + JSON.stringify({ name: title, mimeType: "application/vnd.google-apps.document", parents: [fid] }) + "\r\n--" + bd + "\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + html + "\r\n--" + bd + "--";
+        return gdFetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink", { method: "POST", headers: { "Content-Type": "multipart/related; boundary=" + bd }, body }).then((r) => r.json());
+      }).then((x) => { btn.outerHTML = '<a class="btn small ghost" target="_blank" rel="noopener" href="' + esc(x.webViewLink || "https://drive.google.com/") + '">' + esc(ruA ? "Сохранено на Диске ↗" : "Saved to Drive ↗") + "</a>"; })
+        .catch((er) => { console.warn(er); btn.disabled = false; btn.textContent = was; if (!(er && /popup_closed|access_denied/.test(er.type || er.error || ""))) alert(ruA ? "Не удалось сохранить на Google Диск." : "Could not save to Google Drive."); });
+    };
+    if (!inApp) {
+      const cam = box.querySelector("[data-ai-cam]"), gb = document.createElement("button");
+      gb.type = "button"; gb.className = "ai-cam"; gb.dataset.aiDrive = "";
+      gb.title = ruA ? "Взять файл со своего Google Диска" : "Take a file from your Google Drive";
+      gb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8 3h8l6 10.5-4 7H6l-4-7z"/><path d="M8 3l6 10.5H2M16 3 10 13.5M22 13.5h-8l-4 7"/></svg><span>' + (ruA ? "Диск" : "Drive") + "</span>";
+      gb.addEventListener("click", fromDrive); cam.after(gb);
+      box.addEventListener("click", (e) => { const b = e.target.closest("[data-drive-save]"); if (b) toDrive(b.closest(".ai-msg"), b); });
+    }
     const grow = () => { if (!inApp) return; ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 160) + "px"; };
     // voice: the Android app runs the phone's speech recognition and hands the text back through window.seaiVoice
     // the iPhone app reads error codes and serial plates with the camera (window.SEAI.scan)
@@ -1454,7 +1512,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return api("/api/ai/agent", Object.assign({}, body, { rid }), ctl.signal).then((r) => {
         stopPoll(); busyOff(); box.dispatchEvent(new Event("seai:recent"));
         if (r.ok && r.data.reply) {
-          card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button></div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
+          card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button>" + (inApp ? "" : '<button type="button" class="btn small ghost" data-drive-save>' + esc(ruA ? "Сохранить на Google Диск" : "Save to Google Drive") + "</button>") + "</div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
           if (r.data.suggest && !chat.machine_id) fileCard(r.data.suggest);
           if (r.data.file && /^partial/.test(r.data.file.partial || "")) { const n = document.createElement("p"); n.className = "muted"; n.style.cssText = "margin-top:8px;font-size:13px"; const [k, t] = r.data.file.partial.slice(8).split("/"); n.textContent = ruA ? `Файл большой: прочитано ${k} из ${t} частей, те, что ближе к вопросу. Спросите точнее, и я посмотрю другие.` : `Large file: read ${k} of ${t} parts, the ones closest to your question. Ask more precisely to look at others.`; card.appendChild(n); }
