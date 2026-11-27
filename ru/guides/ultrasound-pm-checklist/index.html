@@ -1751,7 +1751,8 @@ footer a{display:inline-block;margin:0 14px 4px 0}
   const GSI_ID = "118471972862-86qj9c8s8lq43592mokesfgemfsn480m.apps.googleusercontent.com";
   let gsiNext = "", gsiMsg = null, gsiLoad = null;
   function gsiButton(before, next, msgEl) {
-    if (!before || !before.parentNode) return;
+    // not inside the SE AI app: Google sign-in there ends in Safari, and the app's own browser never gets the session (SM 27.11.2026)
+    if (!before || !before.parentNode || inApp) return;
     const box = document.createElement("div"); box.className = "gsi-box"; box.style.cssText = "margin:14px 0 10px;min-height:44px";
     const or = document.createElement("p"); or.className = "muted"; or.style.cssText = "margin:0 0 10px;font-size:14px"; or.textContent = S.lang === "ru" ? "или по ссылке на почту:" : "or with a link to your e-mail:";
     before.before(box); before.before(or);
