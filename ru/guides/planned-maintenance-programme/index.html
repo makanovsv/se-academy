@@ -1893,6 +1893,14 @@ footer a{display:inline-block;margin:0 14px 4px 0}
   } else if (form) {
     if (gBack === "0") msg.textContent = S.lang === "ru" ? "Не получилось войти через Google. Войдите по ссылке на почту." : "Google sign-in did not work. Please use the e-mail link below.";
     gsiButton(form, loginNext() || S.my, msg);
+    // 27.11.2026: opened by the SE AI app for Google sign-in (system browser): only the Google button; the API returns the person to the app
+    if (new URLSearchParams(location.search).get("app") === "1") {
+      const ru = S.lang === "ru", note = document.createElement("p");
+      note.style.cssText = "font-size:17px;margin:0 0 6px"; note.textContent = ru ? "Вход в приложение SE AI через Google. После входа вы вернётесь в приложение." : "Sign in to the SE AI app with Google. You will return to the app afterwards.";
+      const gb = form.parentNode.querySelector(".gsi-box"); (gb || form).before(note);
+      form.hidden = true; const or = gb && gb.nextElementSibling; if (or && or.tagName === "P") or.hidden = true;
+      if (pwForm) { pwForm.hidden = true; const d = pwForm.closest("details"); if (d) d.hidden = true; }
+    }
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const email = form.email.value.trim();
