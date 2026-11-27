@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>SE AI · Google Drive</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; font: 16px/1.5 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; color: #0f172a; background: #fff; }
+  main { max-width: 520px; margin: 0 auto; padding: 32px 16px; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p { color: #475569; margin: 0 0 16px; }
+  a.btn, button { display: inline-block; border: 0; border-radius: 10px; padding: 12px 18px; font: inherit; font-weight: 600; background: #1D4ED8; color: #fff; text-decoration: none; cursor: pointer; }
+  a.ghost { background: #EFF4FF; color: #1D4ED8; margin-left: 8px; }
+  .err { color: #b91c1c; }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="h"></h1>
+  <p id="p"></p>
+  <div id="act"></div>
+</main>
+<script>
+// 27.11.2026: the SE AI app opens this page to let the engineer choose the Drive folder for answers and reports.
+// Google's own picker shows the engineer's Drive; picking a folder gives the app (drive.file) access to that folder only.
+// The token lives only in this page and never reaches our server. The result goes back as seai://drive?f=<id>&n=<name>.
+(function () {
+  var CLIENT = "118471972862-86qj9c8s8lq43592mokesfgemfsn480m.apps.googleusercontent.com";
+  var KEY = "AIzaSyAhEEWECLcKcve0ZVbjN1hGt7ik_joxzn4", APP = "118471972862";
+  var SCOPE = "https://www.googleapis.com/auth/drive.file";
+  var HERE = location.origin + location.pathname;
+  var q = new URLSearchParams(location.search), h = new URLSearchParams(location.hash.slice(1));
+  var st = (h.get("state") || "").split("|");
+  var ru = (q.get("lang") || st[0] || "ru") === "ru";
+  var T = ru ? {
+    h: "Папка на Google Диске", go: "Выбрать папку", wait: "Открываю ваш Google Диск…",
+    pick: "Выберите папку, куда SE AI будет сохранять ответы и сервисные отчёты.",
+    back: "Вернуться в приложение", err: "Не удалось открыть Google Диск. Вернитесь в приложение и попробуйте ещё раз.",
+    done: "Папка выбрана. Возвращаю в приложение…"
+  } : {
+    h: "Folder on Google Drive", go: "Choose a folder", wait: "Opening your Google Drive…",
+    pick: "Choose the folder where SE AI will save answers and service reports.",
+    back: "Back to the app", err: "Could not open Google Drive. Go back to the app and try again.",
+    done: "Folder chosen. Taking you back to the app…"
+  };
+  document.documentElement.lang = ru ? "ru" : "en";
+  var $ = function (id) { return document.getElementById(id); };
+  $("h").textContent = T.h;
+  var back = function (qs) { location.href = "seai://drive?" + qs; };
+  var show = function (text, cls, buttons) {
+    $("p").textContent = text; $("p").className = cls || ""; $("act").innerHTML = "";
+    (buttons || []).forEach(function (b) { var a = document.createElement("a"); a.className = "btn" + (b.ghost ? " ghost" : ""); a.href = "#"; a.textContent = b.t; a.onclick = function (e) { e.preventDefault(); b.f(); }; $("act").appendChild(a); });
+  };
+  var cancel = { t: T.back, ghost: true, f: function () { back("cancel=1"); } };
+  var auth = function () {
+    var u = "https://accounts.google.com/o/oauth2/v2/auth?" + new URLSearchParams({
+      client_id: CLIENT, redirect_uri: HERE, response_type: "token", scope: SCOPE, include_granted_scopes: "true",
+      state: (ru ? "ru" : "en") + "|" + (q.get("hint") || ""), login_hint: q.get("hint") || "", prompt: "select_account"
+    });
+    location.href = u;
+  };
+  var tok = h.get("access_token");
+  if (h.get("error")) { show(T.err, "err", [{ t: T.go, f: auth }, cancel]); return; }
+  if (!tok) { show(T.wait); auth(); return; }
+  history.replaceState(null, "", HERE + "?lang=" + (ru ? "ru" : "en"));
+  show(T.wait);
+  var s = document.createElement("script");
+  s.src = "https://apis.google.com/js/api.js";
+  s.onerror = function () { show(T.err, "err", [cancel]); };
+  s.onload = function () {
+    gapi.load("picker", function () {
+      var P = google.picker;
+      var open = function () {
+        var v = new P.DocsView(P.ViewId.FOLDERS).setIncludeFolders(true).setSelectFolderEnabled(true).setMimeTypes("application/vnd.google-apps.folder");
+        new P.PickerBuilder().addView(v).setOAuthToken(tok).setDeveloperKey(KEY).setAppId(APP)
+          .setLocale(ru ? "ru" : "en").setTitle(T.pick)
+          .setCallback(function (d) {
+            if (d.action === P.Action.PICKED && d.docs && d.docs[0]) {
+              show(T.done);
+              back(new URLSearchParams({ f: d.docs[0].id, n: d.docs[0].name || "" }).toString());
+            } else if (d.action === P.Action.CANCEL) {
+              show(T.pick, "", [{ t: T.go, f: open }, cancel]);
+            }
+          }).build().setVisible(true);
+      };
+      show(T.pick, "", [{ t: T.go, f: open }, cancel]);
+      open();
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>
