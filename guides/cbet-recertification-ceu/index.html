@@ -1221,11 +1221,24 @@ footer a{display:inline-block;margin:0 14px 4px 0}
       try { SEAI.restore(); } catch (e) {}
     }
     const ta = form.querySelector("textarea"), att = box.querySelector("[data-ai-att]"), file = box.querySelector("[data-ai-file]"), empty = box.querySelector("[data-ai-empty]");
-    let img = null;
-    const setImg = (d) => { img = d; att.hidden = !d; if (d) att.querySelector("img").src = d; };
+    let img = null, doc = null;
+    const ruA = S.lang === "ru";
+    // 27.11.2026 SM: a PDF, TXT or ZIP goes along with the question; the server takes the text out
+    const attName = (() => { const n = document.createElement("span"); n.className = "ai-att-name"; n.style.cssText = "font-size:14px;padding:6px 10px;word-break:break-all"; att.insertBefore(n, att.querySelector("[data-ai-att-x]")); return n; })();
+    const setImg = (d) => { img = d; if (d) doc = null; att.hidden = !d && !doc; att.querySelector("img").hidden = !d; if (d) att.querySelector("img").src = d; attName.textContent = doc ? "📎 " + doc.name : ""; };
+    const setDoc = (f) => { doc = f; if (f) img = null; att.hidden = !f && !img; att.querySelector("img").hidden = !!f || !img; attName.textContent = f ? "📎 " + f.name : ""; };
     box.querySelector("[data-ai-cam]").addEventListener("click", () => file.click());
-    box.querySelector("[data-ai-att-x]").addEventListener("click", () => setImg(null));
-    file.addEventListener("change", () => { const f = file.files[0]; file.value = ""; if (f) shrink(f).then(setImg).catch(() => alert(A.photoErr)); });
+    box.querySelector("[data-ai-att-x]").addEventListener("click", () => { setDoc(null); setImg(null); });
+    file.addEventListener("change", () => {
+      const f = file.files[0]; file.value = ""; if (!f) return;
+      if (/^image\//.test(f.type)) { shrink(f).then(setImg).catch(() => alert(A.photoErr)); return; }
+      if (!/\.(pdf|txt|log|csv|tsv|json|xml|ini|cfg|conf|md|html?|ya?ml|err|trc|zip)$/i.test(f.name)) { alert(ruA ? "Можно приложить фото, PDF, TXT или ZIP." : "You can attach a photo, PDF, TXT or ZIP."); return; }
+      if (f.size > 12 * 1024 * 1024) { alert(ruA ? "Файл больше 12 МБ. Пришлите его частью или в ZIP." : "The file is over 12 MB. Send part of it or a ZIP."); return; }
+      const rd = new FileReader();
+      rd.onload = () => setDoc({ name: f.name, data: String(rd.result) });
+      rd.onerror = () => alert(ruA ? "Не удалось прочитать файл." : "Could not read the file.");
+      rd.readAsDataURL(f);
+    });
     const grow = () => { if (!inApp) return; ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 160) + "px"; };
     // voice: the Android app runs the phone's speech recognition and hands the text back through window.seaiVoice
     // the iPhone app reads error codes and serial plates with the camera (window.SEAI.scan)
@@ -1408,6 +1421,7 @@ footer a{display:inline-block;margin:0 14px 4px 0}
           card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button></div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
           if (r.data.suggest && !chat.machine_id) fileCard(r.data.suggest);
+          if (r.data.file && /^partial/.test(r.data.file.partial || "")) { const n = document.createElement("p"); n.className = "muted"; n.style.cssText = "margin-top:8px;font-size:13px"; const [k, t] = r.data.file.partial.slice(8).split("/"); n.textContent = ruA ? `Файл большой: прочитано ${k} из ${t} частей, те, что ближе к вопросу. Спросите точнее, и я посмотрю другие.` : `Large file: read ${k} of ${t} parts, the ones closest to your question. Ask more precisely to look at others.`; card.appendChild(n); }
           // 27.11.2026: the course on the equipment asked about, once per page visit for each course
           const co = r.data.course;
           if (co && co.url && !(window.seaiShown = window.seaiShown || {})[co.slug]) {
@@ -1417,6 +1431,11 @@ footer a{display:inline-block;margin:0 14px 4px 0}
             card.appendChild(p);
           }
         } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
+        else if (/^file_/.test(r.data.error || "")) {
+          const FE = ruA ? { file_scanned: "В этом PDF нет текста, это скан. Пришлите фото нужных страниц.", file_binary: "Этот файл не текстовый, прочитать его нельзя. Подойдут PDF, TXT, лог или ZIP с ними.", file_zip_empty: "В архиве нет текстовых файлов или PDF.", file_bad_zip: "Архив повреждён." }
+            : { file_scanned: "This PDF has no text, it is a scan. Send photos of the pages you need.", file_binary: "This file is not text and cannot be read. PDF, TXT, logs or a ZIP of them work.", file_zip_empty: "The archive has no text files or PDFs.", file_bad_zip: "The archive is damaged." };
+          card.innerHTML = "<p>" + esc(FE[r.data.error] || (ruA ? "Не удалось прочитать файл." : "Could not read the file.")) + "</p>";
+        }
         else card.innerHTML = "<p>" + esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err) + "</p>";
         show(r.data.ai);
       }).catch((e) => {
@@ -1438,10 +1457,14 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (busy) return;
-      const q = ta.value.trim() || (img ? A.photoQ : ""); if (!q) return;
-      const body = { text: q };
+      const q = ta.value.trim() || (img ? A.photoQ : doc ? (ruA ? "Разберите этот файл: что в нём важно для ремонта?" : "Look at this file: what matters for the repair?") : ""); if (!q) return;
+      const body = { text: doc ? q + "\n📎 " + doc.name : q };
       if (chat.id) body.chat_id = chat.id; else if (newFor) body.machine_id = newFor.id;
       if (img) { body.image = img; setImg(null); }
+      if (doc) {
+        if (navigator.onLine === false) { alert(ruA ? "Нет сети: файл отправится, когда появится связь. Попробуйте ещё раз." : "No connection: try again when you are online."); return; }
+        body.file = { name: doc.name, data: doc.data }; setDoc(null);
+      }
       if (navigator.onLine === false) { qSet([...qGet(), body]); wait(ask(body)); } else send(body);
       ta.value = ""; grow();
     });
