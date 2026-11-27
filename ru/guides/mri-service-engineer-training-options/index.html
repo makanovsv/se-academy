@@ -1768,12 +1768,9 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     before.before(box); before.before(or);
     gsiLoad = gsiLoad || new Promise((ok, no) => { const sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc); });
     gsiLoad.then(() => {
-      google.accounts.id.initialize({ client_id: GSI_ID, ux_mode: "popup", callback: (resp) => {
-        api("/api/auth/google", { credential: resp.credential, lang: S.lang, from: refPath() || location.pathname }).then((r) => {
-          if (r.ok) { try { lsSet("me", null); } catch (e) {} location.href = gsiNext || S.my; }
-          else if (gsiMsg) gsiMsg.textContent = S.lang === "ru" ? "Не получилось войти через Google. Войдите по ссылке на почту." : "Google sign-in did not work. Please use the e-mail link.";
-        });
-      } });
+      // redirect mode (popups fail on phones and in-app browsers): Google posts the token to the API, the API sends the person to /login/?g=1
+      lsSet("gsiNext", next || S.my);
+      google.accounts.id.initialize({ client_id: GSI_ID, ux_mode: "redirect", login_uri: S.api + "/api/auth/google/redirect" });
       google.accounts.id.renderButton(box, { theme: "outline", size: "large", text: "continue_with", shape: "rectangular", locale: S.lang === "ru" ? "ru" : "en", width: 300 });
       gsiNext = gsiNext || next; gsiMsg = gsiMsg || msgEl;
     }).catch(() => { box.remove(); or.remove(); });
@@ -1790,13 +1787,20 @@ footer a{display:inline-block;margin:0 14px 4px 0}
   const form = document.querySelector("[data-login]");
   const msg = document.querySelector("[data-login-msg]");
   const token = new URLSearchParams(location.search).get("t");
-  if (form && token) {
+  const gBack = new URLSearchParams(location.search).get("g");
+  if (form && gBack === "1") {  // back from Google, signed in
+    form.hidden = true; msg.textContent = t.checking;
+    const nx = lsGet("gsiNext"), dest = typeof nx === "string" && /^\/(ru\/)?(course|program|guides|ai|model|courses|programs|my|fault)[A-Za-z0-9_\-\/]*$/.test(nx) ? nx : S.my;
+    lsSet("gsiNext", null); lsSet("me", null);
+    location.replace(dest);
+  } else if (form && token) {
     form.hidden = true; msg.textContent = t.checking;
     // a used link is not an error if this browser is already signed in (mail filters open links first, 18.11.2026)
     const bad = () => { form.hidden = false; msg.textContent = t.badToken; };
     const nx = new URLSearchParams(location.search).get("n"), dest = nx && /^\/(ru\/)?(course|program|guides|ai|model|courses|programs)\/[A-Za-z0-9_\-\/]*$/.test(nx) ? nx : S.my;
     api("/api/auth", { token }).then((r) => { if (r.ok) return location.replace(dest); api("/api/me").then(({ data }) => { if (data && data.email) location.replace(S.my); else bad(); }).catch(bad); });
   } else if (form) {
+    if (gBack === "0") msg.textContent = S.lang === "ru" ? "Не получилось войти через Google. Войдите по ссылке на почту." : "Google sign-in did not work. Please use the e-mail link below.";
     gsiButton(form, loginNext() || S.my, msg);
     form.addEventListener("submit", (e) => {
       e.preventDefault();
