@@ -1408,6 +1408,14 @@ footer a{display:inline-block;margin:0 14px 4px 0}
           card.innerHTML = replyHTML(r.data) + (r.data.chat ? '<div class="ai-fb" data-fb-chat="' + r.data.chat.id + '" data-fb-turn="' + out.querySelectorAll(".ai-msg.me").length + '"><span class="muted">' + esc(A.helpedQ) + '</span> <button type="button" class="btn small ghost" data-fb="1">' + esc(A.helped) + '</button><button type="button" class="btn small ghost" data-fb="0">' + esc(A.notHelped) + "</button></div>" : "") + '<div class="ai-acts"><button type="button" class="btn small ghost" data-copy-ans>' + esc(A.copyAns) + "</button></div>"; fresh.hidden = false; card.scrollIntoView({ block: "start", behavior: "smooth" });
           if (r.data.chat) { chat = { id: r.data.chat.id, machine_id: r.data.chat.machine_id, label: r.data.chat.label }; newFor = null; paintCrumb(); }
           if (r.data.suggest && !chat.machine_id) fileCard(r.data.suggest);
+          // 27.11.2026: the course on the equipment asked about, once per page visit for each course
+          const co = r.data.course;
+          if (co && co.url && !(window.seaiShown = window.seaiShown || {})[co.slug]) {
+            window.seaiShown[co.slug] = 1;
+            const p = document.createElement("p"); p.className = "ai-course muted"; p.style.marginTop = "10px";
+            p.innerHTML = (co.ru ? "Курс по этой технике: " : "Course on this equipment: ") + '<a href="' + esc(co.url) + '" data-ev="ai-course/' + esc(co.slug) + '">' + esc(co.title) + "</a>" + (co.ru ? " — уроки 1–2 бесплатно" : " — lessons 1–2 free");
+            card.appendChild(p);
+          }
         } else if (r.ok && r.data.html) card.innerHTML = safeHTML(r.data.html) + '<p class="muted">' + esc(A.noActions) + "</p>";
         else card.innerHTML = "<p>" + esc(r.data.error === "trial_over" ? A.trial_over : r.status === 429 ? A.limit : A.err) + "</p>";
         show(r.data.ai);
