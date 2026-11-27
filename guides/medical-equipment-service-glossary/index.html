@@ -2053,6 +2053,8 @@ footer a{display:inline-block;margin:0 14px 4px 0}
     renderStart(me);
     renderAI(me);
     const owns = (course) => !!(me && me.grants && me.grants.some((g) => g.course === course));
+    // 27.11.2026 SM: record which lesson a signed-in person opens (not the same as "Mark as completed")
+    { const lv = document.querySelector("[data-video][data-course][data-lesson]"); if (lv && me && me.email) api("/api/lesson-open", { course: lv.dataset.course, lesson: lv.dataset.lesson }); }
     // the sidebar is built for guests: drop the "locked" marks on lessons the student owns
     document.querySelectorAll(".lock").forEach((s) => { const m = (s.closest("a")?.getAttribute("href") || "").match(/course\/([^/]+)\//); if (m && owns(m[1])) s.remove(); });
     // course page: a buyer sees "you have access" instead of the price box (first buyer was confused, 18.11.2026)
