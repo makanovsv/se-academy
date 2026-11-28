@@ -17,6 +17,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 7,"Before return: full performance verification, electrical safety, final self-test, clinical settings, in-date battery and pads",,,,
 8,"Record measured values, instruments, parts, result, next due date and label",,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,

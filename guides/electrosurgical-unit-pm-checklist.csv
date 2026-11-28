@@ -15,6 +15,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 5,"Follow the manufacturer's PM interval or the local rule, whichever is stricter",,,,
 6,"Record generator software version, analyser identity, every value and limit, and removed items",,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,

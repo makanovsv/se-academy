@@ -17,6 +17,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 7,"Clear the maintenance reminder only after the PM is complete, by the manufacturer's procedure",,,,
 8,"Record values, instruments, parts and the next due date",,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,

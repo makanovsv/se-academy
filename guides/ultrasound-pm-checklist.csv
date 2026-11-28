@@ -30,6 +30,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 20,"Compare with the phantom baseline for that probe, and use a probe tester where available",,,,
 21,"Record one decision — in service, watch, repair or withdraw — tag the probe and inform the department in writing",,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,

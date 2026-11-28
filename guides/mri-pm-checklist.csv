@@ -26,6 +26,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 16,Configuration and calibration backup done or date verified; free disk space recorded; PACS transfer working,,,,
 17,"Close-out: no active errors, test scan, room clean, site logbook entry, report with findings and owners, verbal handover to person in charge",,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,

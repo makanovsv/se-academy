@@ -22,6 +22,7 @@ No,Step,Pass / Fail / N/A,Measured value,Limit,Notes
 12,"Central station shows correct bed, waveforms and alarms",,,,
 13,Configuration compared with the saved record and restored,,,,
 
+Full error log export saved as / where,
 Parts replaced (part numbers),
 Decision: in service / restricted / out of service,
 Next due date,
